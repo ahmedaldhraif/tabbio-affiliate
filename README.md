@@ -1,220 +1,75 @@
-<!-- Markdown with HTML -->
-<div align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://refref.ai/github-readme-header-dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://refref.ai/github-readme-header-light.png">
-  <img alt="RefRef" src="https://refref.ai/github-readme-header-light.png">
-</picture>
-</div>
+# Tabbio Affiliate
 
-<p align="center">
-  <a href='http://makeapullrequest.com'>
-    <img alt='PRs Welcome' src='https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=shields'/>
-  </a>
-  <a href="https://opensource.org/license/agpl-v3/">
-    <img src="https://img.shields.io/github/license/refrefhq/refref?logo=opensourceinitiative&logoColor=white&label=License&color=8A2BE2" alt="license">
-  </a>
-  <br>
-  <a href="https://refref.ai/community">
-    <img src="https://img.shields.io/badge/discord-7289da.svg?style=flat-square&logo=discord" alt="discord" style="height: 20px;">
-  </a>
-</p>
+Tabbio Affiliate is a complete frontend experience for Tabbio's partner program, built on the real [RefRef](https://github.com/amicalhq/refref) open-source codebase.
 
-<p align="center">
-  <a href="https://refref.ai">Website</a> - <a href="https://refref.ai/docs">Docs</a> - <a href="https://refref.ai/community">Community</a> - <a href="https://github.com/refrefhq/refref/issues/new?assignees=&labels=bug&template=bug_report.md">Bug reports</a>
-</p>
+It includes the public partner landing page and the complete partner workspace: onboarding, overview, clients, content creation, referral links and QR codes, earnings, downloadable resources, and settings.
 
-## Table of Contents
+> [!IMPORTANT]
+> This repository currently provides a frontend-only local prototype. Authentication, server APIs, database persistence, production attribution, AI generation, and real payouts are intentionally not connected yet. Every simulated workflow is labelled inside the product.
 
-- [🔮 Overview](#-overview)
-- [🚀 Getting Started](#-getting-started)
-- [✨ Features](#-features)
-- [🔰 Tech Stack](#-tech-stack)
-- [🤗 Contributing](#-contributing)
-- [🎗 License](#-license)
+## Run locally
 
-> [!CAUTION]
-> RefRef is still in alpha, expect bugs and breaking changes.
+Prerequisites:
 
-## 🔮 Overview
-
-Build powerful referral programs for your products with RefRef's open source referral management platform.
-
-## 🚀 Getting Started
-
-### Quick Start with Docker (Recommended)
-
-Get RefRef running in under a minute:
-
-```bash
-# Clone the repository
-git clone https://github.com/refrefhq/refref.git
-cd refref
-
-# Start everything with Docker Compose
-docker-compose up
-```
-
-That's it! 🎉 The webapp portal will be available at http://localhost:3000.
-
-Docker Compose automatically handles:
-
-- PostgreSQL database setup
-- Database migrations
-- Initial data seeding
-- Webapp portal configuration
-
-To configure optional services (Google OAuth, email), pass environment variables:
-
-```bash
-GOOGLE_CLIENT_ID=xxx GOOGLE_CLIENT_SECRET=xxx RESEND_API_KEY=xxx docker-compose up
-```
-
-### Local Development Setup
-
-If you prefer running RefRef locally without Docker:
-
-#### Prerequisites
-
-- Node.js 20+
+- Node.js 20 or newer
 - pnpm 10.23.0
-- PostgreSQL database
-- [portless](https://github.com/vercel-labs/portless) (`npm install -g portless`)
 
-#### Installation
-
-```bash
-# Install dependencies
-pnpm install
-
-# Set up environment variables
-cp apps/webapp/.env.example apps/webapp/.env
-
-# Edit .env and add your database URL and auth secret
-# Generate auth secret with: openssl rand -base64 32
-
-# Export DATABASE_URL for database commands
-export DATABASE_URL="postgresql://postgres:postgres@localhost:5432/refref"
-
-# Push database schema
-pnpm -F @refref/coredb db:push
-
-# (Optional) Seed with template data
-pnpm -F @refref/coredb db:seed
-
-# Start development server
-pnpm dev
+```powershell
+git clone https://github.com/ahmedaldhraif/tabbio-affiliate.git
+cd tabbio-affiliate
+pnpm install --frozen-lockfile
+pnpm dev:tabbio
 ```
 
-Each app gets a stable `.localhost` URL via [portless](https://github.com/vercel-labs/portless):
+Open [http://localhost:3100](http://localhost:3100).
 
-| App    | URL                                 |
-| ------ | ----------------------------------- |
-| Webapp | http://refref-webapp.localhost:1355 |
-| WWW    | http://refref-www.localhost:1355    |
-| API    | http://refref-api.localhost:1355    |
-| Refer  | http://refref-refer.localhost:1355  |
-| Acme   | http://refref-acme.localhost:1355   |
+## Product surfaces
 
-> Portless is a global CLI tool (`npm install -g portless`). The proxy auto-starts when you run `pnpm dev`. To bypass portless, set `PORTLESS=0 pnpm dev`.
+- Public partner landing page, earnings estimator, FAQ, terms, and referral previews
+- Four-step resumable partner onboarding
+- Partner overview with transparent demo metrics and balances
+- Client search, filtering, creation, status, and details
+- Deterministic local content drafting, editing, copy, save, and download
+- Referral-link creation, destination selection, QR generation, copy, download, and archive
+- Earnings balances, recent ledger sample, CSV export, and balance summary
+- Downloadable partner brand kit, approved copy, tokens, and playbook
+- Profile, notification, and public partner identity settings
+- Responsive desktop and mobile navigation, RTL development state, reduced motion, keyboard support, and accessible status feedback
 
-### Environment Variables
+Mutable prototype data is stored only in the browser's `localStorage` and can be reset from the interface.
 
-#### Required
+## Documentation
 
-- `DATABASE_URL` - PostgreSQL connection string (e.g., `postgresql://user:password@localhost:5432/refref`)
-- `BETTER_AUTH_SECRET` - Authentication secret key (generate with `openssl rand -base64 32`)
+| Document                                              | Purpose                                                                          |
+| ----------------------------------------------------- | -------------------------------------------------------------------------------- |
+| [PRODUCT.md](PRODUCT.md)                              | Concise product definition and scope                                             |
+| [PRD.md](PRD.md)                                      | Complete product requirements, workflows, data contracts, and production gates   |
+| [DESIGN.md](DESIGN.md)                                | Material 3 design system, tokens, responsive behavior, states, and accessibility |
+| [CLAUDE.md](CLAUDE.md)                                | Implementation authority and rules for coding agents                             |
+| [CHECKLIST.md](CHECKLIST.md)                          | Evidence-backed frontend acceptance checklist                                    |
+| [TABBIO_LOCAL.md](TABBIO_LOCAL.md)                    | Local development and verification commands                                      |
+| [RefRef provenance](docs/TABBIO_REFREF_PROVENANCE.md) | Upstream relationship, reuse boundary, and licensing notes                       |
 
-#### Optional
+## Verification
 
-- `GOOGLE_CLIENT_ID` & `GOOGLE_CLIENT_SECRET` - For Google OAuth authentication
-- `RESEND_API_KEY` - For sending emails via Resend
-- `BETTER_AUTH_URL` - Authentication URL (defaults to http://refref-webapp.localhost:1355)
+The checked-in frontend has passed:
 
-### Development Commands
+- Frozen-lockfile installation
+- Formatting, zero-warning application lint, and TypeScript checks
+- 6 unit tests
+- An 18-page static production export
+- 110 responsive route-width checks
+- Automated accessibility scans on 10 key routes with zero axe violations
+- Text zoom, reflow, reduced-motion, RTL, storage-failure, reset-race, and download checks
 
-```bash
-# Start development server
-pnpm dev
+See [CHECKLIST.md](CHECKLIST.md) for the exact local evidence and the production capabilities that remain deferred.
 
-# Build for production
-pnpm build
+## Architecture
 
-# Run linting
-pnpm lint
+The isolated Tabbio application lives in [`apps/tabbio-partners`](apps/tabbio-partners) and reuses the shared `@refref/ui` package. Root scripts filter development, build, and type-check operations to the Tabbio application without removing the upstream RefRef monorepo.
 
-# Format code
-pnpm format
+## RefRef and license
 
-# Type checking
-pnpm type:check
+This repository remains a GitHub fork of `amicalhq/refref`. Upstream history and attribution are preserved, and the `upstream` Git remote can be used to review future RefRef changes.
 
-# Database commands
-pnpm -F @refref/coredb db:push     # Push schema changes
-pnpm -F @refref/coredb db:migrate  # Run migrations
-pnpm -F @refref/coredb db:studio   # Open Drizzle Studio GUI
-pnpm -F @refref/coredb db:seed     # Seed with templates
-```
-
-## ✨ Features
-
-- **Referral Attribution**: JS snippet for tracking referrals, enabling accurate attribution of referrals to referrers
-
-- **Customizable Rewards**: Flexible reward system for different referral programs
-
-- **Referrer Portal**: UI components for referrers to refer and track rewards
-
-- **Partner Portal**: Dedicated interface for affiliates
-
-- **Personalized Pages**: Automatic personalization of referral landing pages
-
-- **Nudges**: Automated reminders to boost referral engagement
-
-- **Fraud Monitoring**: Detect and prevent fraudulent referral activity
-
-- **Manual Reward Approval**: Review and approve rewards manually
-
-- **Automatic Reward Approval**: Set rules for automatic reward validation
-
-- **Manual Reward Dispersal**: Control when rewards are sent out
-
-- **Automatic Reward Dispersal**: Schedule automated reward payments
-
-- **Engagement Analytics**: Track referral program performance metrics
-
-- **Testing Environment**: Sandbox for testing referral programs
-
-## 🔰 Tech Stack
-
-- 💻 [Typescript](https://www.typescriptlang.org/)
-- 🚀 [React](https://react.dev/)
-- ☘️ [Next.js](https://nextjs.org/)
-- 🎨 [TailwindCSS](https://tailwindcss.com/)
-- 🧑🏼‍🎨 [Shadcn](https://ui.shadcn.com/)
-- 🔒 [Better-Auth](https://better-auth.com/)
-- 🧘‍♂️ [Zod](https://zod.dev/)
-- 🐞 [Vitest](https://vitest.dev/)
-- 🗄️ [PostgreSQL](https://www.postgresql.org/)
-- 📚 [Fumadocs](https://github.com/fuma-nama/fumadocs)
-- 💽 [Drizzle](https://drizzle.dev/)
-- 🌀 [Turborepo](https://turbo.build/)
-
-## 🤗 Contributing
-
-Contributions are welcome! Please read the [Contributing Guide][contributing] to get started.
-
-- **💡 [Contributing Guide][contributing]**: Learn about our contribution process and coding standards.
-- **🐛 [Report an Issue][issues]**: Found a bug? Let us know!
-- **💬 [Start a Discussion][discussions]**: Have ideas or suggestions? We'd love to hear from you.
-
-# 🎗 License
-
-Released under [AGPLv3][license].
-
-<!-- REFERENCE LINKS -->
-
-[contributing]: https://github.com/refrefhq/refref/blob/main/CONTRIBUTING.md
-[license]: https://github.com/refrefhq/refref/blob/main/LICENSE
-[discussions]: https://discuss.refref.ai
-[issues]: https://github.com/refrefhq/refref/issues
-[pulls]: https://github.com/refrefhq/refref/pulls "submit a pull request"
+RefRef and this derivative repository are distributed under the [GNU Affero General Public License v3.0](LICENSE). Review the license and obtain legal advice before offering a modified network service.
