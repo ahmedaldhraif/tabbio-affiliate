@@ -3,12 +3,15 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
+    "build:tabbio": "turbo run build --filter=@tabbio/partners",
     "dev": "infisical run --env=dev -- turbo run dev || turbo run dev",
+    "dev:tabbio": "turbo run dev --filter=@tabbio/partners",
     "portless:list": "portless list",
     "portless:proxy": "portless proxy start",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "type:check": "turbo run type:check",
+    "typecheck:tabbio": "turbo run type:check --filter=@tabbio/partners",
     "test": "infisical run --env=dev -- turbo run test || turbo run test",
     "test:run": "infisical run --env=dev -- turbo run test:run || turbo run test:run"
   },

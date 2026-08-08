@@ -1,0 +1,17 @@
+{
+  "version": "prototype-2026-08-09",
+  "status": "replace with approved production brand kit",
+  "colors": {
+    "primary": "#5A2AFF",
+    "primaryStrong": "#512EFF",
+    "supportingViolet": "#6033FF",
+    "hero": "#030D28",
+    "accentPink": "#FE97E9",
+    "textStrong": "#2B2B2B",
+    "canvas": "#F9FBFA"
+  },
+  "fonts": {
+    "english": "Inter",
+    "arabic": "Cairo"
+  }
+}

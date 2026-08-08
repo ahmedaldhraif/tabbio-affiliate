@@ -1,0 +1,11 @@
+TABBIO PARTNER COPY: LOCAL PROTOTYPE
+Version: 2026-08-09
+
+Short introduction
+Turn a PDF CV into one live link that stays easy to share and update.
+
+Partner disclosure
+I may earn a commission if you subscribe through this link.
+
+Usage note
+These examples are placeholders for local UX testing. Legal and brand approval are required before production use.

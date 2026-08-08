@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="128" viewBox="0 0 520 128" role="img" aria-labelledby="title desc">
+  <title id="title">Tabbio prototype lockup</title>
+  <desc id="desc">The Tabbio prototype mark followed by the word tabbio.</desc>
+  <rect width="128" height="128" rx="36" fill="#5A2AFF"/>
+  <path fill="#fff" d="M64 22c2.7 21.8 12.2 31.3 34 34-21.8 2.7-31.3 12.2-34 34-2.7-21.8-12.2-31.3-34-34 21.8-2.7 31.3-12.2 34-34Z"/>
+  <circle cx="96" cy="31" r="7" fill="#FE97E9"/>
+  <text x="158" y="88" fill="#2B2B2B" font-family="Inter, Arial, sans-serif" font-size="76" font-weight="700" letter-spacing="-4">tabbio</text>
+</svg>
