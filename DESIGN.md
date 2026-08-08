@@ -61,7 +61,7 @@ Use a committed brand treatment on the public first viewport and a restrained tr
 | ----------------------- | ---------------------: | ------------------------------------------------------------ |
 | `brand.primary`         |              `#5A2AFF` | Primary actions, active navigation, links, focus accents     |
 | `brand.primaryStrong`   |              `#512EFF` | Pressed/strong brand state after contrast verification       |
-| `brand.heroDeep`        |              `#030D28` | Public hero texture base only                                |
+| `brand.heroField`       | `#5F9FF4` to `#7968EE` | Public blue-violet textured hero field                       |
 | `brand.earningGradient` | `#5A2AFF` to `#FE97E9` | Calculator result, one earnings focal surface, strongest CTA |
 | `text.strong`           |              `#2B2B2B` | Primary copy and important values                            |
 | `text.default`          |              `#4A4A4D` | Body copy and table values                                   |
@@ -106,6 +106,7 @@ Do not shrink financial explanations below the small-body role. Public long-form
 
 ### Icons and imagery
 
+- The geometric violet Tabbio `t` path extracted from the supplied designer SVG is the canonical prototype mark. Do not substitute a sparkle, generic app glyph, rounded-square badge, or invented logo treatment.
 - Use one outlined icon family already present in Tabbio. Every interactive icon has an accessible name and a visible tooltip on hover and focus where its label is otherwise absent.
 - The public textured hero can be rebuilt as an optimized responsive asset or CSS/canvas treatment after performance testing. It must not reduce text contrast.
 - The SVG screenshots are not shippable UI. Do not embed them as page images, crop their outlined text, or extract inaccessible controls from them.

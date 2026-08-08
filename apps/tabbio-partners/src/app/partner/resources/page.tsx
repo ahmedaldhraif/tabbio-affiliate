@@ -46,10 +46,10 @@ const resources = [
     filename: "tabbio-mark.svg",
     href: "/brand/tabbio-mark.svg",
     type: "SVG",
-    size: "504 B",
-    bytes: 504,
+    size: "842 B",
+    bytes: 842,
     checksum:
-      "2766FC7166139B39F2A2567A3998442BA6480D052D830B84A9076B513C3C14F3",
+      "36505612789FECCB8F70C54540615CFEF5BCFEBC9F030301AF970F0B3F0DD6F2",
     preview: true,
   },
   {
@@ -57,10 +57,10 @@ const resources = [
     filename: "tabbio-lockup.svg",
     href: "/brand/tabbio-lockup.svg",
     type: "SVG",
-    size: "652 B",
-    bytes: 652,
+    size: "1,056 B",
+    bytes: 1056,
     checksum:
-      "0F8C99AA14CE408B01A5C79B9DB8E8669C4C596631F2D4FAFF3E2A35AEEA4775",
+      "4DD87784F74AEE324FD9C26F409AABB286B21AA7C5ABCE4FE4625E3BB66B9C44",
     preview: true,
   },
   {
@@ -68,10 +68,10 @@ const resources = [
     filename: "tabbio-brand-tokens.json",
     href: "/brand/tabbio-brand-tokens.json",
     type: "JSON",
-    size: "379 B",
-    bytes: 379,
+    size: "439 B",
+    bytes: 439,
     checksum:
-      "2F59C1D8E3F0F47A880E0160E1905D3FF64A24A826B705E1489511E5BF625A4A",
+      "4E41C7C5A9AD70E984A5062C2C4A3A1060021EB529186A9563B7A1BDF88DEBCB",
     preview: false,
   },
   {
@@ -223,8 +223,8 @@ export default function ResourcesPage() {
     <div className="app-page">
       <PageHeader
         eyebrow="Prototype library"
-        title="Resources for useful promotion"
-        description="Download the real local prototype files, copy working text, and check the rule behind each share."
+        title="Resources"
+        description="Files and rules for promoting Tabbio"
         actions={
           <Button
             className="min-h-11 rounded-xl"

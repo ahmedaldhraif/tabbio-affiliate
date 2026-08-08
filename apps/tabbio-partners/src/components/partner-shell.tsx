@@ -8,6 +8,7 @@ import {
   Link2,
   MoreHorizontal,
   Palette,
+  Plus,
   RotateCcw,
   Settings,
   Users,
@@ -30,8 +31,20 @@ import { useDemo } from "@/components/demo-provider";
 
 const routes = [
   { href: "/partner", label: "Overview", icon: Home, exact: true },
-  { href: "/partner/clients", label: "Clients", icon: Users, exact: false },
-  { href: "/partner/create", label: "Create", icon: FileText, exact: false },
+  {
+    href: "/partner/clients",
+    label: "CV Builder",
+    mobileLabel: "Clients",
+    icon: Users,
+    exact: false,
+  },
+  {
+    href: "/partner/create",
+    label: "Content Builder",
+    mobileLabel: "Create",
+    icon: FileText,
+    exact: false,
+  },
   { href: "/partner/links", label: "Links", icon: Link2, exact: false },
   {
     href: "/partner/earnings",
@@ -53,7 +66,7 @@ const routes = [
   },
 ] as const;
 const mobileMain = routes.filter((route) =>
-  ["Overview", "Create", "Links", "Earnings"].includes(route.label),
+  ["Overview", "Content Builder", "Links", "Earnings"].includes(route.label),
 );
 
 function StateController() {
@@ -96,10 +109,25 @@ export function PartnerShell({ children }: { children: React.ReactNode }) {
       <Suspense>
         <StateController />
       </Suspense>
-      <div className="min-h-screen bg-[#f1f3f2] min-[840px]:p-2">
-        <aside className="fixed inset-y-2 left-2 z-30 hidden w-[232px] flex-col rounded-[20px] bg-white px-3 py-5 min-[840px]:flex">
-          <div className="px-3">
-            <BrandMark />
+      <div className="min-h-screen bg-[#f4f4f4] min-[840px]:p-2">
+        <aside className="fixed inset-y-2 left-2 z-30 hidden w-[240px] flex-col rounded-[20px] border border-[#e9e9e9] bg-[#fafafa] px-4 py-5 min-[840px]:flex">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <BrandMark compact />
+              <span className="rounded-full border border-[#d1d5db] bg-[#eff2f5] px-3 py-1 text-xs font-medium text-[#4a4a4d]">
+                Partner
+              </span>
+            </div>
+            <Button
+              asChild
+              variant="ghost"
+              size="icon"
+              className="size-11 rounded-full border border-[#e5e7eb] text-[#687080] hover:bg-white"
+            >
+              <Link href="/partner/create" aria-label="Create partner content">
+                <Plus className="size-5" aria-hidden="true" />
+              </Link>
+            </Button>
           </div>
           <nav
             className="mt-8 flex flex-1 flex-col gap-1"
@@ -110,15 +138,15 @@ export function PartnerShell({ children }: { children: React.ReactNode }) {
                 key={href}
                 href={href}
                 aria-current={active(href, exact) ? "page" : undefined}
-                className={`focus-ring flex min-h-11 items-center gap-3 rounded-xl px-3 text-sm font-medium transition-colors ${active(href, exact) ? "bg-[#eee9ff] text-[#4721bd]" : "text-[#61646b] hover:bg-[#f6f6f7] hover:text-[#2b2b2b]"}`}
+                className={`focus-ring flex min-h-11 items-center gap-3 rounded-xl px-2 text-sm font-medium transition-colors ${active(href, exact) ? "bg-[#eee9ff] text-[#512eff]" : "text-[#4a4a4d] hover:bg-white hover:text-[#2b2b2b]"}`}
               >
                 <Icon className="size-[18px]" aria-hidden="true" />
                 {label}
               </Link>
             ))}
           </nav>
-          <div className="space-y-3 border-t border-[#eceef0] pt-4">
-            <div className="flex items-center gap-3 px-2">
+          <div className="space-y-2 border-t border-[#eceef0] pt-4">
+            <div className="flex min-h-11 items-center gap-3 rounded-full border border-[#e5e7eb] bg-white px-2">
               <span className="grid size-9 place-items-center rounded-full bg-[#241153] text-xs font-bold text-white">
                 {partnerInitials || "YP"}
               </span>
@@ -126,7 +154,7 @@ export function PartnerShell({ children }: { children: React.ReactNode }) {
                 <p className="truncate text-sm font-semibold">
                   {settings.publicName}
                 </p>
-                <p className="text-xs text-[#6b7280]">Demo partner</p>
+                <p className="text-xs text-[#8a93a3]">Partner account</p>
               </div>
             </div>
             <Tooltip>
@@ -149,7 +177,7 @@ export function PartnerShell({ children }: { children: React.ReactNode }) {
             </Tooltip>
           </div>
         </aside>
-        <div className="min-h-[calc(100vh-16px)] bg-white min-[840px]:ml-[240px] min-[840px]:rounded-[20px]">
+        <div className="min-h-[calc(100vh-16px)] bg-white min-[840px]:ml-[248px] min-[840px]:rounded-[20px]">
           <div className="border-b border-[#eceef0] px-4 py-3 min-[840px]:hidden">
             <div className="flex items-center justify-between">
               <BrandMark />
@@ -158,7 +186,7 @@ export function PartnerShell({ children }: { children: React.ReactNode }) {
               </span>
             </div>
           </div>
-          <div className="px-4 pt-4 min-[840px]:px-8 min-[840px]:pt-6">
+          <div className="px-4 pt-4 min-[840px]:px-8 min-[840px]:pt-5">
             <DemoNotice />
           </div>
           <main id="main-content">{children}</main>
@@ -168,7 +196,7 @@ export function PartnerShell({ children }: { children: React.ReactNode }) {
         className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-5 border-t border-[#e5e7eb] bg-white/95 px-2 pb-[max(8px,env(safe-area-inset-bottom))] pt-2 backdrop-blur min-[840px]:hidden"
         aria-label="Partner mobile navigation"
       >
-        {mobileMain.map(({ href, label, icon: Icon, exact }) => (
+        {mobileMain.map(({ href, label, icon: Icon, exact, ...route }) => (
           <Link
             key={href}
             href={href}
@@ -176,7 +204,7 @@ export function PartnerShell({ children }: { children: React.ReactNode }) {
             className={`focus-ring flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl text-[11px] font-semibold ${active(href, exact) ? "bg-[#eee9ff] text-[#4b23c6]" : "text-[#6b7280]"}`}
           >
             <Icon className="size-5" aria-hidden="true" />
-            {label}
+            {"mobileLabel" in route ? route.mobileLabel : label}
           </Link>
         ))}
         <Link

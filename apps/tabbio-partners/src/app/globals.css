@@ -101,16 +101,25 @@ a {
 .hero-atmosphere {
   background:
     radial-gradient(
-      circle at 78% 18%,
-      rgba(90, 42, 255, 0.78),
-      transparent 36%
+      circle at 82% 20%,
+      rgba(82, 45, 255, 0.95),
+      transparent 38%
     ),
     radial-gradient(
-      circle at 14% 88%,
-      rgba(254, 151, 233, 0.2),
-      transparent 32%
+      circle at 12% 12%,
+      rgba(93, 177, 255, 0.88),
+      transparent 43%
     ),
-    #070318;
+    linear-gradient(135deg, #5f9ff4 0%, #7968ee 48%, #b995ee 72%, #e5e5e7 100%);
+}
+.hero-atmosphere::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  opacity: 0.24;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.72'/%3E%3C/svg%3E");
 }
 .page-wrap {
   width: min(100% - 32px, 1180px);

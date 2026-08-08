@@ -176,8 +176,8 @@ export default function SettingsPage() {
     <div className="app-page">
       <PageHeader
         eyebrow="Browser settings"
-        title="Partner settings"
-        description="Manage the local public profile and notification preferences. Provider, agreement, and security states remain separate and honest."
+        title="Settings"
+        description="Manage your public page and notifications"
         actions={
           <Button
             form="partner-settings-form"

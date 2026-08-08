@@ -75,7 +75,8 @@ This checklist converts the current frontend-only scope into a verifiable releas
 - Automated accessibility: 10 key routes at 390px with zero axe violations. Gradient contrast remained a manual-review item and passed visual review.
 - Persistence: corrupt payload, blocked storage, reset-race, and shared onboarding identity regressions passed.
 - Interaction details: controlled mobile menu, exact 840px shell breakpoint, destination-aware referral preview, fractional estimator normalization, stale-draft invalidation, and 44px shared controls passed.
-- Downloads: 6-file 6,012-byte partner kit ZIP, 3,117-byte QR image, recent-ledger sample CSV, and balance summary were opened or content-checked locally.
+- Downloads: partner kit ZIP and manifest, QR image, recent-ledger sample CSV, and balance summary were opened or content-checked locally. Asset byte counts and SHA-256 values match the current bundled files.
+- Designer-source fidelity: the original geometric Tabbio mark path, blue-violet textured landing field, calculator split, landing section order, 240px partner rail, page titles, metric hierarchy, content builder, links, earnings, resources, and settings were compared against the supplied SVG exports at their native 1512px width.
 - Local lab only: landing and overview recorded approximately 48ms FCP/LCP and zero CLS. These are not field-performance or production-hosting claims.
 
 ## Deferred production evidence

@@ -1,5 +1,3 @@
-import { Sparkle } from "lucide-react";
-
 export function BrandMark({
   light = false,
   compact = false,
@@ -9,14 +7,22 @@ export function BrandMark({
 }) {
   return (
     <span
-      className={`inline-flex items-center gap-2 font-bold tracking-[-0.035em] ${light ? "text-white" : "text-[#2b2b2b]"}`}
+      className={`inline-flex items-center gap-2.5 font-semibold tracking-[-0.035em] ${light ? "text-white" : "text-[#374151]"}`}
       role="img"
       aria-label="Tabbio"
     >
-      <span className="grid size-8 place-items-center rounded-xl bg-[#5a2aff] text-white shadow-[0_8px_22px_rgba(90,42,255,.28)]">
-        <Sparkle className="size-4" aria-hidden="true" />
-      </span>
-      {!compact && <span className="text-[1.35rem]">tabbio</span>}
+      <svg
+        aria-hidden="true"
+        className="h-8 w-[27px] shrink-0 overflow-visible"
+        viewBox="24 32 24.04 28"
+        fill="none"
+      >
+        <path
+          d="M29.0576 32.0242C32.2481 31.9716 35.5976 32.021 38.8027 32.0213C38.7806 33.0716 38.8009 34.1957 38.8008 35.2508L38.7998 41.5233L45.5635 41.5262L45.5596 46.9774L38.8018 46.9754L38.7998 54.5067L48.0361 54.5096L48.0342 58.2781L48.0322 59.9979L41.8818 59.9998C39.2273 59.9971 37.0641 59.6624 35.0742 57.6922C33.1093 55.7465 33.3081 53.8741 33.3096 51.3055L33.3135 46.9744L24.001 46.9754L24 37.0584C25.6887 35.4356 27.3552 33.612 29.0576 32.0242ZM29.7158 37.8211L26.0098 37.8182V41.5242L29.6221 41.5252L33.3105 41.5272L33.3135 33.952L29.7197 33.951L29.7158 37.8211Z"
+          fill={light ? "#ffffff" : "#512EFF"}
+        />
+      </svg>
+      {!compact && <span className="text-[1.45rem]">tabbio</span>}
     </span>
   );
 }

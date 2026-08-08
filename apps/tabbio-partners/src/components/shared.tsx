@@ -5,16 +5,16 @@ import { Card } from "@refref/ui/components/card";
 export function DemoNotice({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`flex items-start gap-2 rounded-xl border border-[#d9cffd] bg-[#f5f1ff] px-3 py-2 text-sm text-[#3e1b9d] ${className}`}
+      className={`flex items-start gap-2 rounded-lg border border-[#eceef0] bg-[#fafafa] px-3 py-2 text-xs text-[#6b7280] ${className}`}
       role="status"
     >
       <span
         className="mt-1 size-2 shrink-0 rounded-full bg-[#5a2aff]"
         aria-hidden="true"
       />
-      <span>
-        <strong>Demo data</strong> · Local simulation only. Nothing here is
-        connected, submitted, tracked, or paid.
+      <span className="min-w-0 break-words">
+        <strong className="text-[#512eff]">Demo data</strong> · Local simulation
+        only. Nothing here is connected, submitted, tracked, or paid.
       </span>
     </div>
   );
@@ -32,17 +32,13 @@ export function PageHeader({
   actions?: React.ReactNode;
 }) {
   return (
-    <header className="mb-7 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
+    <header className="mb-8 flex flex-col justify-between gap-5 border-b border-[#eceef0] pb-6 lg:flex-row lg:items-center">
       <div className="max-w-2xl">
-        {eyebrow && (
-          <p className="mb-2 text-xs font-bold uppercase tracking-[.16em] text-[#5a2aff]">
-            {eyebrow}
-          </p>
-        )}
-        <h1 className="text-[clamp(2rem,4vw,2.55rem)] font-semibold leading-[1.12] tracking-[-.035em]">
+        {eyebrow && <p className="sr-only">{eyebrow}</p>}
+        <h1 className="text-[clamp(2rem,4vw,2.35rem)] font-medium leading-[1.12] tracking-[-.03em]">
           {title}
         </h1>
-        <p className="mt-2 max-w-xl text-[15px] leading-6 text-[#6b7280]">
+        <p className="mt-2 max-w-xl text-[15px] leading-6 text-[#788195]">
           {description}
         </p>
       </div>
@@ -68,20 +64,26 @@ export function MetricCard({
 }) {
   return (
     <Card
-      className={`gap-3 rounded-2xl p-5 shadow-none ${accent ? "border-transparent bg-[#f2eeff]" : "border-[#e5e7eb]"}`}
+      className={`min-h-36 gap-3 rounded-2xl p-6 shadow-none ${accent ? "brand-gradient border-transparent text-white" : "border-[#e5e7eb] bg-[#fafafa]"}`}
     >
       <div className="flex items-center justify-between gap-3">
-        <p className="text-sm font-medium text-[#6b7280]">{label}</p>
-        <span
-          className={`grid size-9 place-items-center rounded-xl ${accent ? "bg-white text-[#5a2aff]" : "bg-[#f3f4f6] text-[#4a4a4d]"}`}
+        <p
+          className={`text-sm font-medium ${accent ? "text-white/85" : "text-[#788195]"}`}
         >
+          {label}
+        </p>
+        <span className="sr-only">
           <Icon className="size-4" aria-hidden="true" />
         </span>
       </div>
-      <p className="tabular text-[clamp(1.7rem,3vw,2.3rem)] font-semibold tracking-[-.04em]">
+      <p className="tabular text-[clamp(2rem,3vw,2.7rem)] font-medium tracking-[-.035em]">
         {value}
       </p>
-      <p className="text-xs leading-5 text-[#6b7280]">{note}</p>
+      <p
+        className={`text-xs leading-5 ${accent ? "text-white/75" : "text-[#8a93a3]"}`}
+      >
+        {note}
+      </p>
     </Card>
   );
 }

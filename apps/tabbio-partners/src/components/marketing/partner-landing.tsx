@@ -14,18 +14,15 @@ import {
   BriefcaseBusiness,
   Check,
   ChevronRight,
-  CircleDollarSign,
   FileCheck2,
   FileText,
   Fingerprint,
   Globe2,
-  Layers3,
   Link2,
   LockKeyhole,
   Menu,
   MessageSquareText,
   Plus,
-  ScanLine,
   ShieldCheck,
   Sparkles,
   UsersRound,
@@ -66,29 +63,6 @@ function formatEstimatorUsd(value: number) {
   }).format(value);
 }
 
-const facts = [
-  {
-    label: "30% recurring",
-    detail: "of eligible collected revenue under the proposed plan",
-    icon: CircleDollarSign,
-  },
-  {
-    label: "Monthly payouts",
-    detail: "after eligibility, review, threshold, and provider checks",
-    icon: WalletCards,
-  },
-  {
-    label: "$50 threshold",
-    detail: "proposed minimum before a payout can be scheduled",
-    icon: ScanLine,
-  },
-  {
-    label: "3 useful paths",
-    detail: "client CVs, educational content, and agency handoffs",
-    icon: Layers3,
-  },
-] as const;
-
 const joiningSteps = [
   {
     title: "Choose how you help",
@@ -103,10 +77,16 @@ const joiningSteps = [
     icon: ShieldCheck,
   },
   {
-    title: "Share useful work and track it",
-    copy: "Create a CV claim link, educational draft, or tracked recommendation, then inspect eligible activity in Partner.",
-    note: "Nothing is published or paid automatically in this demo.",
+    title: "Share your work",
+    copy: "Share your QR, a client CV claim link, or useful educational content.",
+    note: "Every route stays visible in Partner.",
     icon: Link2,
+  },
+  {
+    title: "Track every payment",
+    copy: "See pending, payable, paid, and reversed commission in one clear ledger.",
+    note: "The local prototype uses labelled example data.",
+    icon: WalletCards,
   },
 ] as const;
 
@@ -209,10 +189,10 @@ function EstimatorControl({
     onChange(normalizeEstimatorInput(nextValue, min, max));
 
   return (
-    <div className="border-t border-white/10 py-4 first:border-t-0 first:pt-0">
+    <div className="py-2.5 first:pt-0">
       <div className="flex items-center justify-between gap-4">
         <label
-          className="text-sm font-semibold text-white"
+          className="text-xs font-medium text-[#6b7280]"
           htmlFor={`${id}-number`}
         >
           {label}
@@ -226,7 +206,7 @@ function EstimatorControl({
           step={step}
           value={value}
           aria-describedby={`${id}-hint`}
-          className="h-12 w-20 border-white/20 bg-white/10 text-center text-base font-semibold tabular-nums text-white shadow-none focus-visible:border-[#c7b8ff] focus-visible:ring-[#9d82ff]/40"
+          className="h-9 w-16 rounded-lg border-[#e5e7eb] bg-[#f3f4f6] text-center text-sm font-semibold tabular-nums text-[#2b2b2b] shadow-none focus-visible:border-[#512eff] focus-visible:ring-[#512eff]/20"
           onChange={(event) => applyValue(event.currentTarget.valueAsNumber)}
         />
       </div>
@@ -239,11 +219,11 @@ function EstimatorControl({
         value={value}
         aria-label={`${label} slider`}
         aria-describedby={`${id}-hint`}
-        className="mt-3 h-12 w-full cursor-pointer accent-[#9d82ff]"
+        className="mt-1 h-6 w-full cursor-pointer accent-[#512eff]"
         onChange={(event) => applyValue(event.currentTarget.valueAsNumber)}
       />
       <div
-        className="flex items-start justify-between gap-4 text-xs text-[#cfc5ed]"
+        className="flex items-start justify-between gap-4 text-[10px] text-[#8a93a3]"
         id={`${id}-hint`}
       >
         <span>{hint}</span>
@@ -258,12 +238,12 @@ function EstimatorControl({
 function ActionPair({ compact = false }: { compact?: boolean }) {
   return (
     <div
-      className={`flex flex-wrap items-center gap-3 ${compact ? "" : "mt-8"}`}
+      className={`flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center ${compact ? "" : "mt-8"}`}
     >
       <Button
         asChild
         size="lg"
-        className="focus-ring h-12 rounded-full bg-[#6d3bff] px-6 text-white shadow-[0_12px_30px_rgba(80,38,209,.28)] hover:bg-[#7950ff]"
+        className="focus-ring h-11 w-full rounded-full bg-[#5a2aff] px-6 text-white shadow-none hover:bg-[#512eff] sm:w-auto"
       >
         <Link href="/partner/onboarding">
           Become a partner
@@ -274,7 +254,7 @@ function ActionPair({ compact = false }: { compact?: boolean }) {
         asChild
         size="lg"
         variant="outline"
-        className="focus-ring h-12 rounded-full border-white/25 bg-white/8 px-6 text-white shadow-none hover:bg-white/14 hover:text-white"
+        className="focus-ring h-11 w-full rounded-full border-white/45 bg-white/10 px-6 text-white shadow-none hover:bg-white/20 hover:text-white sm:w-auto"
       >
         <Link href="/partner">See the local Partner area</Link>
       </Button>
@@ -313,7 +293,7 @@ function MarketingHeader() {
   }, [mobileOpen]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#070313]/90 text-white backdrop-blur-xl">
+    <header className="absolute inset-x-0 top-0 z-50 text-white">
       <div className="page-wrap flex min-h-[72px] items-center justify-between gap-2 sm:gap-4">
         <Link
           className="focus-ring rounded-xl"
@@ -426,7 +406,10 @@ function MarketingHeader() {
             asChild
             className="focus-ring h-12 rounded-full bg-white px-4 text-[#25114f] hover:bg-[#f2edff]"
           >
-            <Link href="/partner/onboarding">Become a partner</Link>
+            <Link href="/partner/onboarding">
+              <span className="sm:hidden">Join</span>
+              <span className="hidden sm:inline">Become a partner</span>
+            </Link>
           </Button>
         </div>
       </div>
@@ -463,15 +446,6 @@ function EarningsEstimator({
     }
     return total;
   }, [monthlyReferrals, paidMonths, programMonths]);
-  const cohorts = useMemo(
-    () =>
-      Array.from({ length: programMonths }, (_, index) => {
-        const month = index + 1;
-        const activeMonths = Math.min(paidMonths, programMonths - index);
-        return { month, activeMonths };
-      }),
-    [paidMonths, programMonths],
-  );
   const [announcement, setAnnouncement] = useState("");
 
   useEffect(() => {
@@ -486,29 +460,14 @@ function EarningsEstimator({
   return (
     <section
       aria-labelledby="estimator-title"
-      className="relative overflow-hidden rounded-2xl border border-white/14 bg-[#12082e] shadow-[0_30px_90px_rgba(0,0,0,.34)]"
+      className="relative min-w-0 overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white text-[#2b2b2b] shadow-[0_24px_70px_rgba(36,20,80,.14)]"
     >
-      <div className="border-b border-white/10 bg-white/[.055] px-5 py-4 sm:px-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <p className="text-xs font-semibold text-[#c8b7ff]">
-              LOCAL COHORT ESTIMATOR
-            </p>
-            <h2
-              id="estimator-title"
-              className="mt-1 text-xl font-semibold tracking-[-.02em] text-white"
-            >
-              See how the stack builds
-            </h2>
-          </div>
-          <Badge className="border border-[#a78cff]/30 bg-[#6d3bff]/20 px-3 py-1 text-[#ddd3ff] shadow-none">
-            Illustrative estimate
-          </Badge>
-        </div>
-      </div>
-
-      <div className="grid gap-0 xl:grid-cols-[.9fr_1.1fr]">
+      <div className="grid gap-0 sm:grid-cols-[1fr_1.05fr]">
         <div className="p-5 sm:p-6">
+          <div className="mb-2 rounded-lg bg-[#f3f4f6] px-3 py-2.5">
+            <p className="text-[10px] text-[#8a93a3]">Included plan</p>
+            <p className="mt-0.5 text-xs font-semibold">Plus, $14.99 monthly</p>
+          </div>
           <EstimatorControl
             id="monthly-referrals"
             label="New paying referrals each month"
@@ -538,132 +497,93 @@ function EarningsEstimator({
           />
         </div>
 
-        <div className="flex min-h-full flex-col bg-[#f7f4ff] p-5 text-[#26184d] sm:p-6">
-          <div className="flex items-end justify-between gap-5">
-            <div>
-              <p className="text-sm font-semibold text-[#654d93]">
-                Estimated commission
-              </p>
-              <p className="mt-1 text-[clamp(2.35rem,6vw,4rem)] font-semibold leading-none tracking-[-.04em] tabular-nums">
-                {formatEstimatorUsd(result.total)}
-              </p>
-            </div>
-            <div className="pb-1 text-right">
-              <p className="text-xs text-[#715e97]">Final monthly run rate</p>
-              <p className="mt-1 text-xl font-semibold tabular-nums">
-                {formatEstimatorUsd(result.finalRunRate)}
-              </p>
-            </div>
+        <div className="brand-gradient flex min-h-[250px] flex-col justify-center p-6 text-white sm:p-8">
+          <p className="text-xs font-medium text-white/80">
+            Estimated total commission
+          </p>
+          <p className="mt-3 text-[clamp(2.5rem,5vw,4.4rem)] font-medium leading-none tracking-[-.035em] tabular-nums">
+            {formatEstimatorUsd(result.total)}
+          </p>
+          <div className="mt-8 border-t border-white/30 pt-4">
+            <p className="text-xs text-white/75">Final monthly run rate</p>
+            <p className="mt-1 text-xl font-semibold tabular-nums">
+              {formatEstimatorUsd(result.finalRunRate)}
+            </p>
           </div>
-
-          <div
-            className="mt-7"
-            role="img"
-            aria-label={`${programMonths} monthly referral cohorts shown as a commission stack`}
-          >
-            <div
-              className="flex h-32 items-end gap-1 overflow-hidden rounded-xl bg-[#ebe5fb] px-3 pt-3"
-              aria-hidden="true"
-            >
-              {cohorts.map((cohort) => (
-                <span
-                  key={cohort.month}
-                  className="min-w-1 flex-1 rounded-t-[3px] bg-[#6d3bff] transition-[height,background-color] duration-200 ease-out even:bg-[#986fff]"
-                  style={{
-                    height: `${Math.max(8, (cohort.activeMonths / Math.max(paidMonths, 1)) * 100)}%`,
-                  }}
-                />
-              ))}
-            </div>
-            <div className="mt-2 flex justify-between text-[11px] font-medium text-[#715e97]">
-              <span>First cohort</span>
-              <span>Month {programMonths}</span>
-            </div>
-          </div>
-
-          <dl className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-xl bg-[#dcd3f3] text-sm">
-            <div className="bg-white/80 p-3">
-              <dt className="text-xs text-[#715e97]">Customer-months</dt>
-              <dd className="mt-1 font-semibold tabular-nums">
-                {customerMonths}
-              </dd>
-            </div>
-            <div className="bg-white/80 p-3">
-              <dt className="text-xs text-[#715e97]">
-                Commission per paid month
-              </dt>
-              <dd className="mt-1 font-semibold tabular-nums">
-                {formatEstimatorUsd(planPrice * commissionRate)}
-              </dd>
-            </div>
-          </dl>
-          <p className="mt-4 text-xs leading-5 text-[#66577f]">
-            Assumes a {formatUsd(planPrice)} monthly plan, 30% commission, even
-            referrals, and no discounts, credits, tax exclusions, refunds,
-            reversals, holds, or churn beyond the paid-month input. This is an
-            estimate, not guaranteed income.
+          <p className="mt-3 text-xs leading-5 text-white/80">
+            {monthlyReferrals} referrals ×{" "}
+            {formatEstimatorUsd(planPrice * commissionRate)} per paid month
+            across {customerMonths} customer-months.
           </p>
           <p className="visually-hidden" aria-live="polite" aria-atomic="true">
             {announcement}
           </p>
         </div>
       </div>
+      <p className="border-t border-[#e5e7eb] px-5 py-3 text-[10px] leading-4 text-[#6b7280] sm:px-6">
+        Estimate only. Assumes a {formatUsd(planPrice)} monthly plan, 30%
+        commission, even referrals, and no discounts, refunds, holds, or
+        unplanned churn.
+      </p>
     </section>
   );
 }
 
 function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-[#05020d] text-white">
+    <footer className="border-t border-[#eceef0] bg-[#f9fbfa] text-[#4a4a4d]">
       <div className="page-wrap grid gap-10 py-12 md:grid-cols-[1fr_auto] md:items-start">
         <div className="max-w-xl">
-          <BrandMark light />
-          <p className="mt-4 text-sm leading-6 text-[#bcb3cc]">
+          <BrandMark />
+          <p className="mt-4 text-sm leading-6 text-[#6b7280]">
             Tabbio Partner is shown here as a local frontend demonstration.
             Nothing on this page creates an account, records attribution,
             completes a check, publishes content, or schedules a payout.
           </p>
         </div>
         <nav
-          className="grid grid-cols-2 gap-x-8 gap-y-3 text-sm text-[#d5cde0] sm:grid-cols-3"
+          className="grid grid-cols-2 gap-x-8 gap-y-3 text-sm text-[#4a4a4d] sm:grid-cols-3"
           aria-label="Legal and support"
         >
           <Link
-            className="focus-ring rounded hover:text-white"
+            className="focus-ring rounded hover:text-[#512eff]"
             href="/partners/terms"
           >
             Program terms
           </Link>
           <Link
-            className="focus-ring rounded hover:text-white"
+            className="focus-ring rounded hover:text-[#512eff]"
             href="/partners/terms#privacy"
           >
             Privacy
           </Link>
           <Link
-            className="focus-ring rounded hover:text-white"
+            className="focus-ring rounded hover:text-[#512eff]"
             href="/partners/terms#disclosure"
           >
             Disclosure guide
           </Link>
           <Link
-            className="focus-ring rounded hover:text-white"
+            className="focus-ring rounded hover:text-[#512eff]"
             href="/partners/terms#accessibility"
           >
             Accessibility
           </Link>
           <Link
-            className="focus-ring rounded hover:text-white"
+            className="focus-ring rounded hover:text-[#512eff]"
             href="/partners/terms#support"
           >
             Contact
           </Link>
-          <Link className="focus-ring rounded hover:text-white" href="/partner">
+          <Link
+            className="focus-ring rounded hover:text-[#512eff]"
+            href="/partner"
+          >
             Partner area
           </Link>
         </nav>
       </div>
-      <div className="page-wrap flex flex-col gap-2 border-t border-white/10 py-5 text-xs text-[#91879f] sm:flex-row sm:items-center sm:justify-between">
+      <div className="page-wrap flex flex-col gap-2 border-t border-[#eceef0] py-5 text-xs text-[#8a93a3] sm:flex-row sm:items-center sm:justify-between">
         <p>© 2026 Tabbio. Local prototype.</p>
         <p>Proposed program details require Legal and Finance approval.</p>
       </div>
@@ -685,31 +605,33 @@ export function PartnerLanding() {
   const activePayments = monthlyReferrals * Math.min(paidMonths, programMonths);
 
   return (
-    <div className="min-h-screen overflow-x-clip bg-[#070313] text-white">
+    <div className="min-h-screen overflow-x-clip bg-white text-[#2b2b2b]">
       <MarketingHeader />
       <main id="main-content">
-        <section className="hero-atmosphere relative overflow-hidden border-b border-white/10">
+        <section className="hero-atmosphere relative overflow-hidden text-white">
           <div
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(7,3,19,.05),#070313_96%)]"
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(65,65,160,.04),rgba(245,245,247,.16)_78%,rgba(255,255,255,.3))]"
             aria-hidden="true"
           />
-          <div className="page-wrap relative grid min-h-[calc(100svh-72px)] items-center gap-14 py-16 lg:grid-cols-[.88fr_1.12fr] lg:py-20">
-            <div className="max-w-2xl">
-              <Badge className="border border-white/15 bg-white/8 px-3 py-1 text-[#ddd5ef] shadow-none">
+          <div className="page-wrap relative grid min-h-[850px] items-center gap-16 pb-24 pt-36 lg:grid-cols-[.82fr_1.18fr] lg:pb-28 lg:pt-40">
+            <div className="min-w-0 max-w-2xl">
+              <Badge className="border border-white/30 bg-white/15 px-3 py-1 text-white shadow-none">
                 <Sparkles aria-hidden="true" /> Local partner-program demo
               </Badge>
-              <h1 className="mt-7 max-w-[10ch] text-[clamp(3.4rem,8vw,6rem)] font-semibold leading-[.96] tracking-[-.04em]">
-                Your work keeps paying.
+              <h1 className="mt-7 max-w-[10ch] text-[clamp(3.4rem,7vw,5.2rem)] font-medium leading-[.98] tracking-[-.035em]">
+                <span className="font-light text-white/90">Your work</span>
+                <br />
+                keeps paying.
               </h1>
-              <p className="mt-7 max-w-[62ch] text-lg leading-8 text-[#d0c7df]">
+              <p className="mt-7 max-w-[48ch] text-base leading-7 text-white/85">
                 Create useful Tabbio work, share a clear next step, and earn a
                 proposed 30% recurring commission when an attributed customer
                 makes an eligible payment.
               </p>
               <ActionPair />
-              <div className="mt-8 flex max-w-xl items-start gap-3 border-t border-white/12 pt-5 text-sm leading-6 text-[#aaa0ba]">
+              <div className="mt-7 flex max-w-xl items-start gap-3 border-t border-white/25 pt-5 text-xs leading-5 text-white/70">
                 <ShieldCheck
-                  className="mt-1 size-4 shrink-0 text-[#bba8ff]"
+                  className="mt-0.5 size-4 shrink-0 text-white"
                   aria-hidden="true"
                 />
                 <p>
@@ -732,39 +654,30 @@ export function PartnerLanding() {
         </section>
 
         <section
-          className="border-b border-white/10 bg-[#0b0617] py-10"
+          className="bg-white py-24 text-[#2b2b2b] sm:py-28"
           aria-labelledby="facts-title"
         >
           <div className="page-wrap">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-              <h2 id="facts-title" className="text-lg font-semibold">
-                The proposed plan, at a glance
-              </h2>
-              <p className="text-sm text-[#aaa0ba]">
-                Commercial terms are not production-approved.
-              </p>
-            </div>
-            <div className="mt-6 grid gap-px overflow-hidden rounded-2xl bg-white/12 sm:grid-cols-2 xl:grid-cols-4">
-              {facts.map(({ label, detail, icon: Icon }) => (
-                <div key={label} className="min-h-40 bg-[#120a25] p-5">
-                  <Icon className="size-5 text-[#b8a5ff]" aria-hidden="true" />
-                  <p className="mt-7 text-xl font-semibold tracking-[-.02em]">
-                    {label}
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-[#bcb2cc]">
-                    {detail}
-                  </p>
-                </div>
-              ))}
+            <h2
+              id="facts-title"
+              className="mx-auto max-w-sm text-center text-[clamp(2rem,4vw,3rem)] font-medium leading-[1.05] tracking-[-.035em]"
+            >
+              See how the stack <span className="text-[#5a2aff]">grows.</span>
+            </h2>
+            <div className="mx-auto mt-12 max-w-4xl">
+              <EarningsEstimator
+                monthlyReferrals={monthlyReferrals}
+                paidMonths={paidMonths}
+                programMonths={programMonths}
+                setMonthlyReferrals={setMonthlyReferrals}
+                setPaidMonths={setPaidMonths}
+                setProgramMonths={setProgramMonths}
+              />
             </div>
           </div>
         </section>
 
-        <section
-          id="model"
-          className="scroll-mt-24 bg-[#f7f4ff] py-24 text-[#26184d] sm:py-32"
-          aria-labelledby="model-title"
-        >
+        <section id="model" className="hidden" aria-labelledby="model-title">
           <div className="page-wrap grid gap-14 lg:grid-cols-[.78fr_1.22fr] lg:items-start">
             <div className="max-w-lg lg:sticky lg:top-28">
               <p className="text-sm font-semibold text-[#6d3bff]">
@@ -846,53 +759,47 @@ export function PartnerLanding() {
 
         <section
           id="how-it-works"
-          className="scroll-mt-24 bg-[#09041a] py-24 sm:py-32"
+          className="scroll-mt-24 bg-[#f5f6f8] py-24 text-[#2b2b2b] sm:py-28"
           aria-labelledby="how-title"
         >
           <div className="page-wrap">
-            <div className="max-w-3xl">
-              <p className="text-sm font-semibold text-[#b9a4ff]">
-                HOW JOINING WORKS
-              </p>
+            <div className="max-w-xl">
               <h2
                 id="how-title"
-                className="mt-4 text-[clamp(2.5rem,5vw,4.5rem)] font-semibold leading-[1.04] tracking-[-.04em]"
+                className="text-[clamp(2rem,4vw,3.4rem)] font-medium leading-[1.04] tracking-[-.035em]"
               >
-                Three steps, with every real state visible.
+                Your First Link,
+                <br />
+                <span className="text-[#5a2aff]">In One Session.</span>
               </h2>
-              <p className="mt-6 max-w-2xl text-base leading-7 text-[#bcb2cc]">
-                Application approval, promotion eligibility, active membership,
-                and payout readiness are different checks. Tabbio should never
-                collapse them into one vague green tick.
-              </p>
             </div>
 
-            <ol className="mt-14 grid gap-5 lg:grid-cols-3">
+            <ol className="mt-14 grid gap-0 border-t border-[#e5e7eb] sm:grid-cols-2 lg:grid-cols-4">
               {joiningSteps.map(({ title, copy, note, icon: Icon }, index) => (
                 <li
                   key={title}
-                  className="relative min-h-[340px] overflow-hidden rounded-2xl border border-white/12 bg-[#12092a] p-6 sm:p-8"
+                  className="relative min-h-[250px] border-b border-[#e5e7eb] px-5 py-8 sm:border-r lg:border-b-0 last:border-r-0"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="grid size-12 place-items-center rounded-xl bg-[#6d3bff] text-white">
-                      <Icon className="size-5" aria-hidden="true" />
+                    <span className="grid size-10 place-items-center rounded-full border border-[#e5e7eb] bg-white text-[#512eff]">
+                      <Icon className="size-4" aria-hidden="true" />
                     </span>
                     <span
-                      className="text-5xl font-semibold tracking-[-.04em] text-white/40"
+                      className="text-xs font-medium text-[#8a93a3]"
                       aria-hidden="true"
                     >
-                      0{index + 1}
+                      {index + 1}
                     </span>
                   </div>
-                  <h3 className="mt-16 text-2xl font-semibold tracking-[-.025em]">
+                  <h3 className="mt-10 text-base font-semibold tracking-[-.015em]">
                     {title}
                   </h3>
-                  <p className="mt-3 text-sm leading-6 text-[#c4bacf]">
+                  <p className="mt-3 text-sm leading-6 text-[#6b7280]">
                     {copy}
                   </p>
-                  <p className="mt-6 flex items-start gap-2 border-t border-white/10 pt-4 text-xs leading-5 text-[#9f93ad]">
+                  <p className="mt-6 flex items-start gap-2 text-xs leading-5 text-[#8a93a3]">
                     <Check
-                      className="mt-0.5 size-4 shrink-0 text-[#b8a5ff]"
+                      className="mt-0.5 size-4 shrink-0 text-[#512eff]"
                       aria-hidden="true"
                     />
                     {note}
@@ -904,21 +811,21 @@ export function PartnerLanding() {
         </section>
 
         <section
-          className="bg-[#ded2ff] py-24 text-[#241347] sm:py-32"
+          className="bg-[#f5f6f8] py-24 text-[#2b2b2b] sm:py-28"
           aria-labelledby="claim-title"
         >
           <div className="page-wrap grid gap-14 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
             <div className="max-w-xl">
-              <p className="text-sm font-semibold text-[#5b31d0]">
-                CV CLAIM PROOF
-              </p>
+              <p className="sr-only">CV claim proof</p>
               <h2
                 id="claim-title"
-                className="mt-4 text-[clamp(2.5rem,5vw,4.6rem)] font-semibold leading-[1.03] tracking-[-.04em]"
+                className="mt-4 text-[clamp(2rem,4vw,3.4rem)] font-medium leading-[1.03] tracking-[-.035em]"
               >
-                The referral can begin with real client work.
+                Build It. Send It. See
+                <br />
+                When It&apos;s Claimed.
               </h2>
-              <p className="mt-6 text-base leading-7 text-[#5c5070]">
+              <p className="mt-6 text-base leading-7 text-[#6b7280]">
                 A career professional creates a useful CV, sends a protected
                 claim link, and lets the client decide whether to accept it in
                 Tabbio. Private CV details never belong in the referral URL.
@@ -926,7 +833,7 @@ export function PartnerLanding() {
               <Button
                 asChild
                 variant="outline"
-                className="focus-ring mt-8 h-12 rounded-full border-[#5a36b8]/25 bg-white/45 px-6 text-[#3a1e7f] shadow-none hover:bg-white hover:text-[#3a1e7f]"
+                className="focus-ring mt-8 h-11 rounded-full border-[#5a2aff] bg-[#5a2aff] px-6 text-white shadow-none hover:bg-[#512eff] hover:text-white"
               >
                 <Link href="/partner">
                   Open the local CV workflow <ChevronRight aria-hidden="true" />
@@ -934,15 +841,15 @@ export function PartnerLanding() {
               </Button>
             </div>
 
-            <Card className="gap-0 overflow-hidden rounded-2xl border-0 bg-[#0b0518] py-0 text-white shadow-[0_30px_80px_rgba(40,18,90,.24)]">
-              <div className="flex items-center justify-between border-b border-white/10 px-5 py-4 sm:px-7">
+            <Card className="gap-0 overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white py-0 text-[#2b2b2b] shadow-none">
+              <div className="flex items-center justify-between border-b border-[#e5e7eb] px-5 py-4 sm:px-7">
                 <div className="flex items-center gap-3">
                   <span className="grid size-10 place-items-center rounded-xl bg-[#6d3bff]">
                     <FileText className="size-5" aria-hidden="true" />
                   </span>
                   <div>
                     <p className="font-semibold">Example client CV</p>
-                    <p className="text-xs text-[#a99eb7]">
+                    <p className="text-xs text-[#8a93a3]">
                       Synthetic demonstration
                     </p>
                   </div>
@@ -952,7 +859,7 @@ export function PartnerLanding() {
                 </Badge>
               </div>
               <div className="p-5 sm:p-7">
-                <div className="rounded-xl bg-white p-5 text-[#2b2340]">
+                <div className="rounded-xl bg-[#f5f6f8] p-5 text-[#2b2b2b]">
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p className="text-lg font-semibold">
@@ -1010,7 +917,7 @@ export function PartnerLanding() {
                       </div>
                       <div className="pb-6">
                         <p className="text-sm font-semibold">{title}</p>
-                        <p className="mt-1 text-xs leading-5 text-[#a99eb7]">
+                        <p className="mt-1 text-xs leading-5 text-[#6b7280]">
                           {copy}
                         </p>
                       </div>
@@ -1024,78 +931,65 @@ export function PartnerLanding() {
 
         <section
           id="ways-to-earn"
-          className="scroll-mt-24 bg-[#f8f7fb] py-24 text-[#26184d] sm:py-32"
+          className="scroll-mt-24 bg-white py-24 text-[#2b2b2b] sm:py-28"
           aria-labelledby="paths-title"
         >
           <div className="page-wrap">
-            <div className="max-w-3xl">
-              <p className="text-sm font-semibold text-[#6d3bff]">
-                THREE EARNING PATHS
-              </p>
+            <div className="mx-auto max-w-3xl text-center">
               <h2
                 id="paths-title"
-                className="mt-4 text-[clamp(2.5rem,5vw,4.5rem)] font-semibold leading-[1.04] tracking-[-.04em]"
+                className="text-[clamp(2rem,4vw,3.4rem)] font-medium leading-[1.04] tracking-[-.035em]"
               >
-                Start with the work people already trust you to do.
+                Use The Work You
+                <br />
+                <span className="text-[#5a2aff]">Already Do</span>
               </h2>
             </div>
 
             <div className="mt-14 grid gap-5 lg:grid-cols-3">
-              {earningPaths.map(
-                ({ title, copy, action, icon: Icon }, index) => (
-                  <article
-                    key={title}
-                    className={`flex min-h-[360px] flex-col rounded-2xl p-7 ${index === 1 ? "bg-[#6d3bff] text-white" : "bg-[#ece7f7] text-[#26184d]"}`}
-                  >
-                    <Icon
-                      className={`size-7 ${index === 1 ? "text-white" : "text-[#6d3bff]"}`}
-                      aria-hidden="true"
-                    />
-                    <div className="mt-auto pt-20">
-                      <p
-                        className={`text-xs font-semibold ${index === 1 ? "text-white" : "text-[#745ca4]"}`}
-                      >
-                        {action}
-                      </p>
-                      <h3 className="mt-3 text-2xl font-semibold tracking-[-.025em]">
-                        {title}
-                      </h3>
-                      <p
-                        className={`mt-3 text-sm leading-6 ${index === 1 ? "text-white" : "text-[#655977]"}`}
-                      >
-                        {copy}
-                      </p>
-                    </div>
-                  </article>
-                ),
-              )}
+              {earningPaths.map(({ title, copy, action, icon: Icon }) => (
+                <article
+                  key={title}
+                  className="flex min-h-[310px] flex-col rounded-2xl border border-[#eceef0] bg-white p-7 text-[#2b2b2b]"
+                >
+                  <Icon className="size-6 text-[#5a2aff]" aria-hidden="true" />
+                  <div className="mt-auto pt-20">
+                    <p className="text-xs font-semibold text-[#6b7280]">
+                      {action}
+                    </p>
+                    <h3 className="mt-3 text-2xl font-semibold tracking-[-.025em]">
+                      {title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-6 text-[#6b7280]">
+                      {copy}
+                    </p>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
         </section>
 
         <section
-          className="bg-[#0b0617] py-24 sm:py-32"
+          className="bg-white py-24 text-[#2b2b2b] sm:py-28"
           aria-labelledby="toolkit-title"
         >
           <div className="page-wrap grid gap-14 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
             <div className="max-w-xl">
-              <p className="text-sm font-semibold text-[#b9a4ff]">
-                THE PARTNER TOOLKIT
-              </p>
               <h2
                 id="toolkit-title"
-                className="mt-4 text-[clamp(2.5rem,5vw,4.5rem)] font-semibold leading-[1.04] tracking-[-.04em]"
+                className="text-[clamp(2rem,4vw,3.4rem)] font-medium leading-[1.04] tracking-[-.035em]"
               >
-                Practical help, without autopilot.
+                No Blank Page.
               </h2>
-              <p className="mt-6 text-base leading-7 text-[#bcb2cc]">
+              <p className="mt-6 text-base leading-7 text-[#6b7280]">
                 Build and organize useful material inside Partner. Copy or
                 export it when you are ready. Tabbio does not auto-publish posts
                 or make legal claims on your behalf.
               </p>
               <Button
                 asChild
-                className="focus-ring mt-8 h-12 rounded-full bg-white px-6 text-[#281551] hover:bg-[#eee8ff]"
+                className="focus-ring mt-8 h-11 rounded-full bg-[#5a2aff] px-6 text-white hover:bg-[#512eff]"
               >
                 <Link href="/partner">
                   Explore the local toolkit <ArrowUpRight aria-hidden="true" />
@@ -1103,7 +997,7 @@ export function PartnerLanding() {
               </Button>
             </div>
 
-            <div className="overflow-hidden rounded-2xl border border-white/12 bg-[#130a28]">
+            <div className="overflow-hidden border-y border-[#e5e7eb] bg-white">
               {[
                 {
                   title: "Tracked links and QR",
@@ -1132,18 +1026,18 @@ export function PartnerLanding() {
               ].map(({ title, copy, icon: Icon, state }) => (
                 <div
                   key={title}
-                  className="grid gap-4 border-b border-white/10 p-5 last:border-b-0 sm:grid-cols-[48px_1fr_auto] sm:items-center sm:p-6"
+                  className="grid gap-4 border-b border-[#e5e7eb] p-5 last:border-b-0 sm:grid-cols-[48px_1fr_auto] sm:items-center sm:p-6"
                 >
-                  <span className="grid size-12 place-items-center rounded-xl bg-white/8 text-[#b9a4ff]">
+                  <span className="grid size-12 place-items-center rounded-full border border-[#e5e7eb] bg-white text-[#5a2aff]">
                     <Icon className="size-5" aria-hidden="true" />
                   </span>
                   <div>
                     <h3 className="font-semibold">{title}</h3>
-                    <p className="mt-1 text-sm leading-6 text-[#afa4bd]">
+                    <p className="mt-1 text-sm leading-6 text-[#6b7280]">
                       {copy}
                     </p>
                   </div>
-                  <span className="w-fit rounded-full bg-white/8 px-3 py-1 text-xs font-medium text-[#d4c9df]">
+                  <span className="w-fit rounded-full bg-[#eff2f5] px-3 py-1 text-xs font-medium text-[#4a4a4d]">
                     {state}
                   </span>
                 </div>
@@ -1154,27 +1048,26 @@ export function PartnerLanding() {
 
         <section
           id="faq"
-          className="scroll-mt-24 bg-[#f7f4ff] py-24 text-[#26184d] sm:py-32"
+          className="scroll-mt-24 bg-white py-24 text-[#2b2b2b] sm:py-28"
           aria-labelledby="faq-title"
         >
           <div className="page-wrap grid gap-12 lg:grid-cols-[.66fr_1.34fr]">
             <div className="max-w-md">
-              <p className="text-sm font-semibold text-[#6d3bff]">
-                PROGRAM QUESTIONS
-              </p>
               <h2
                 id="faq-title"
-                className="mt-4 text-[clamp(2.5rem,5vw,4.4rem)] font-semibold leading-[1.04] tracking-[-.04em]"
+                className="text-[clamp(2rem,4vw,3.4rem)] font-medium leading-[1.04] tracking-[-.035em]"
               >
-                Read the rule, not the fine-print fog.
+                Frequently Asked
+                <br />
+                <span className="text-[#5a2aff]">Questions</span>
               </h2>
-              <p className="mt-6 text-base leading-7 text-[#665a7a]">
+              <p className="mt-6 text-base leading-7 text-[#6b7280]">
                 Multiple answers can stay open while you compare them. These
                 summaries describe the proposed local demo, not final legal
                 terms.
               </p>
               <Link
-                className="focus-ring mt-7 inline-flex min-h-11 items-center gap-2 rounded-lg text-sm font-semibold text-[#5b31d0] hover:underline"
+                className="focus-ring mt-7 inline-flex min-h-11 items-center gap-2 rounded-lg text-sm font-semibold text-[#512eff] hover:underline"
                 href="/partners/terms"
               >
                 Read local program terms{" "}
@@ -1182,16 +1075,16 @@ export function PartnerLanding() {
               </Link>
             </div>
 
-            <div className="divide-y divide-[#dcd5e9] border-y border-[#dcd5e9]">
+            <div className="space-y-2">
               {faqItems.map(({ question, answer }) => (
                 <details key={question} className="group">
-                  <summary className="focus-ring flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 rounded-lg py-5 text-left text-lg font-semibold [&::-webkit-details-marker]:hidden">
+                  <summary className="focus-ring flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 rounded-lg bg-[#f5f6f8] px-5 py-4 text-left text-sm font-medium [&::-webkit-details-marker]:hidden">
                     <span>{question}</span>
-                    <span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#e8e1f8] text-[#5b31d0] transition-transform duration-200 group-open:rotate-45">
+                    <span className="grid size-9 shrink-0 place-items-center rounded-full bg-white text-[#512eff] transition-transform duration-200 group-open:rotate-45">
                       <Plus className="size-5" aria-hidden="true" />
                     </span>
                   </summary>
-                  <div className="max-w-3xl pb-6 pr-12 text-sm leading-7 text-[#665a7a]">
+                  <div className="max-w-3xl px-5 pb-6 pr-12 text-sm leading-7 text-[#6b7280]">
                     <p>{answer}</p>
                   </div>
                 </details>
@@ -1201,30 +1094,36 @@ export function PartnerLanding() {
         </section>
 
         <section
-          className="relative overflow-hidden bg-[#210c4a] py-24 sm:py-32"
+          className="relative overflow-hidden bg-white py-24 text-[#2b2b2b] sm:py-28"
           aria-labelledby="final-title"
         >
           <div
-            className="pointer-events-none absolute -right-24 -top-40 size-[520px] rounded-full bg-[#8e5dff]/25 blur-[100px]"
+            className="pointer-events-none absolute left-1/2 top-1/2 h-64 w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#8e5dff]/10 blur-[100px]"
             aria-hidden="true"
           />
-          <div className="page-wrap relative grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
-            <div className="max-w-3xl">
-              <p className="text-sm font-semibold text-[#cebfff]">
-                YOUR NEXT USEFUL STEP
-              </p>
+          <div className="page-wrap relative text-center">
+            <div className="mx-auto max-w-3xl">
               <h2
                 id="final-title"
-                className="mt-4 text-[clamp(2.7rem,6vw,5.3rem)] font-semibold leading-[1] tracking-[-.04em]"
+                className="text-[clamp(2.4rem,5vw,4.6rem)] font-medium leading-[1] tracking-[-.035em]"
               >
-                Bring the work. Tabbio makes the trail clear.
+                Your first link is
+                <br />
+                <span className="text-[#5a2aff]">ten minutes</span> away
               </h2>
-              <p className="mt-6 max-w-2xl text-base leading-7 text-[#c9bddb]">
+              <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-[#6b7280]">
                 Explore the application flow or inspect the local Partner
                 workspace. No data leaves this frontend demo.
               </p>
             </div>
-            <ActionPair compact />
+            <div className="mt-8 flex justify-center">
+              <Button
+                asChild
+                className="focus-ring h-11 rounded-full bg-[#5a2aff] px-7 text-white hover:bg-[#512eff]"
+              >
+                <Link href="/partner/onboarding">Become a partner</Link>
+              </Button>
+            </div>
           </div>
         </section>
       </main>

@@ -5,7 +5,9 @@
     "primary": "#5A2AFF",
     "primaryStrong": "#512EFF",
     "supportingViolet": "#6033FF",
-    "hero": "#030D28",
+    "heroStart": "#5F9FF4",
+    "heroCenter": "#7968EE",
+    "heroEnd": "#E5E5E7",
     "accentPink": "#FE97E9",
     "textStrong": "#2B2B2B",
     "canvas": "#F9FBFA"

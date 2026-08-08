@@ -191,8 +191,8 @@ export default function CreatePage() {
     <div className="app-page">
       <PageHeader
         eyebrow="Local content tool"
-        title="Create a useful draft"
-        description="Build a fixed local template, edit every word, then save, copy, or download it. Nothing publishes automatically."
+        title="Content Builder"
+        description="Create a script, post, or article"
       />
 
       {scenario === "error" && (
@@ -206,7 +206,9 @@ export default function CreatePage() {
         </Alert>
       )}
 
-      <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] items-start gap-5 lg:grid-cols-[minmax(0,.84fr)_minmax(0,1.16fr)]">
+      <div
+        className={`grid min-w-0 grid-cols-[minmax(0,1fr)] items-start gap-5 ${draft ? "lg:grid-cols-[minmax(0,.84fr)_minmax(0,1.16fr)]" : ""}`}
+      >
         <Card className="min-w-0 rounded-2xl border-[#e5e7eb] p-5 shadow-none sm:p-6">
           <div>
             <h2 className="text-xl font-semibold">Draft setup</h2>
@@ -367,7 +369,9 @@ export default function CreatePage() {
           )}
         </Card>
 
-        <Card className="min-h-[540px] min-w-0 rounded-2xl border-[#e5e7eb] p-5 shadow-none sm:p-6">
+        <Card
+          className={`${draft ? "" : "hidden"} min-h-[540px] min-w-0 rounded-2xl border-[#e5e7eb] p-5 shadow-none sm:p-6`}
+        >
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
               <h2 className="text-xl font-semibold">Draft editor</h2>

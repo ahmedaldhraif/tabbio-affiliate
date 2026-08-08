@@ -12,10 +12,8 @@ import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   ArrowRight,
-  CalendarDays,
   CheckCircle2,
   MousePointerClick,
-  ReceiptText,
   RefreshCw,
   UserRoundCheck,
   UsersRound,
@@ -274,134 +272,61 @@ function OverviewContent() {
     <div className="app-page">
       <PageHeader
         eyebrow="Partner overview"
-        title={`Good morning, ${settings.publicName}`}
-        description="A labelled example for the last 30 days, ending August 9, 2026. Figures are local fixtures, not live performance."
-        actions={
-          <Button
-            asChild
-            variant="outline"
-            className="h-11 rounded-xl bg-white"
-          >
-            <Link href="/partner/earnings">
-              <ReceiptText aria-hidden="true" />
-              Reconcile earnings
-            </Link>
-          </Button>
-        }
+        title="Overview"
+        description="Your partner account at a glance"
       />
 
-      <div className="grid gap-4 xl:grid-cols-[1.45fr_.8fr]">
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <section
-          className="relative isolate min-h-72 overflow-hidden rounded-3xl bg-[radial-gradient(circle_at_92%_10%,#fe97e9_0%,transparent_34%),linear-gradient(125deg,#3f19bd_0%,#5a2aff_72%)] p-6 text-white sm:p-8"
+          className="brand-gradient relative isolate min-h-36 overflow-hidden rounded-2xl p-6 text-white"
           aria-labelledby="payable-title"
         >
-          <div className="relative z-10 max-w-xl">
-            <div className="flex flex-wrap items-center gap-2">
-              <p className="text-sm font-semibold text-white">
-                Example payable balance
-              </p>
-              <span className="rounded-full bg-white/16 px-2.5 py-1 text-xs font-semibold text-white">
-                USD
-              </span>
-            </div>
+          <div className="relative z-10">
+            <p className="text-sm font-medium text-white/85">Next payout</p>
             <h2
               id="payable-title"
-              className="mt-4 text-[clamp(3rem,8vw,5.25rem)] font-semibold leading-none tracking-[-.04em] tabular-nums"
+              className="mt-5 text-[clamp(2.3rem,4vw,3rem)] font-medium leading-none tracking-[-.035em] tabular-nums"
             >
               {formatUsd(balances.payable)}
             </h2>
-            <p className="mt-4 max-w-lg text-sm leading-6 text-[#f1ebff] sm:text-base">
-              Released commission that can enter a future monthly batch. A
-              payout still requires cutoff checks, finance approval, and
-              provider confirmation.
-            </p>
-            <div className="mt-6 flex flex-col gap-3 rounded-2xl bg-[#2f118f]/65 p-4 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-start gap-3">
-                <CalendarDays
-                  className="mt-0.5 size-5 shrink-0"
-                  aria-hidden="true"
-                />
-                <div>
-                  <p className="text-sm font-semibold">
-                    Next example payout window
-                  </p>
-                  <p className="mt-0.5 text-xs leading-5 text-[#e6ddff]">
-                    Monthly cadence · Minimum threshold exceeded
-                  </p>
-                </div>
-              </div>
-              <Button
-                asChild
-                className="h-11 rounded-xl bg-white text-[#3f1db6] hover:bg-[#f5f2ff]"
-              >
-                <Link href="/partner/earnings">View balance details</Link>
-              </Button>
-            </div>
           </div>
         </section>
-
-        <aside
-          className="flex flex-col justify-between rounded-2xl border border-[#e5e7eb] bg-[#fbfbfc] p-6"
-          aria-labelledby="next-task-title"
-        >
-          <div>
-            <div className="flex items-center gap-2 text-[#4b23c6]">
-              <CheckCircle2 className="size-5" aria-hidden="true" />
-              <p className="text-sm font-semibold">Next useful task</p>
-            </div>
-            <h2
-              id="next-task-title"
-              className="mt-5 text-2xl font-semibold tracking-[-.025em]"
-            >
-              Finish Yousef&apos;s draft CV
-            </h2>
-            <p className="mt-3 text-sm leading-6 text-[#6b7280]">
-              A finished client CV creates something useful before you share a
-              claim link. The draft remains private until you choose to send it.
+        {metrics.map(({ label, value, note }) => (
+          <section
+            key={label}
+            className="min-h-36 rounded-2xl border border-[#e5e7eb] bg-[#fafafa] p-6"
+          >
+            <p className="text-sm font-medium text-[#788195]">
+              {label.replace("Valid ", "").replace("Attributed ", "")}
             </p>
-          </div>
-          <div className="mt-8">
-            <div className="mb-4 flex items-center justify-between text-xs text-[#6b7280]">
-              <span>Draft last edited Aug 4</span>
-              <span className="font-semibold text-[#4b23c6]">Local demo</span>
-            </div>
-            <Button asChild className="h-11 w-full rounded-xl">
-              <Link href="/partner/clients">
-                Open client CVs
-                <ArrowRight aria-hidden="true" />
-              </Link>
-            </Button>
-          </div>
-        </aside>
+            <p className="mt-5 text-[clamp(2.3rem,4vw,3rem)] font-medium leading-none tracking-[-.035em] tabular-nums">
+              {value}
+            </p>
+            <p className="sr-only">{note}</p>
+          </section>
+        ))}
       </div>
 
       <section
-        className="mt-4 overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white"
-        aria-labelledby="acquisition-title"
+        className="mt-8 flex flex-col gap-5 rounded-2xl border border-[#e5e7eb] bg-white p-6 sm:flex-row sm:items-center sm:justify-between"
+        aria-labelledby="next-task-title"
       >
-        <div className="flex flex-col gap-1 border-b border-[#eceef0] px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-          <h2 id="acquisition-title" className="font-semibold">
-            Example acquisition path
-          </h2>
-          <p className="text-xs text-[#6b7280]">Same scope · Last 30 days</p>
+        <div className="flex items-start gap-4">
+          <span className="mt-0.5 grid size-11 shrink-0 place-items-center rounded-full border border-[#e5e7eb] text-[#512eff]">
+            <CheckCircle2 className="size-5" aria-hidden="true" />
+          </span>
+          <div>
+            <h2 id="next-task-title" className="text-xl font-medium">
+              Next task
+            </h2>
+            <p className="mt-1 text-sm text-[#6b7280]">Send a CV claim link</p>
+          </div>
         </div>
-        <dl className="grid sm:grid-cols-3">
-          {metrics.map(({ label, value, note, icon: Icon }, index) => (
-            <div
-              key={label}
-              className={`p-5 sm:p-6 ${index > 0 ? "border-t border-[#eceef0] sm:border-l sm:border-t-0" : ""}`}
-            >
-              <dt className="flex items-center gap-2 text-sm font-medium text-[#62666f]">
-                <Icon className="size-4 text-[#5a2aff]" aria-hidden="true" />
-                {label}
-              </dt>
-              <dd className="mt-3 text-3xl font-semibold tracking-[-.03em] tabular-nums">
-                {value}
-              </dd>
-              <dd className="mt-2 text-xs leading-5 text-[#6b7280]">{note}</dd>
-            </div>
-          ))}
-        </dl>
+        <Button asChild variant="outline" className="size-12 rounded-full p-0">
+          <Link href="/partner/clients" aria-label="Open client CVs">
+            <ArrowRight aria-hidden="true" />
+          </Link>
+        </Button>
       </section>
 
       <div className="mt-4 grid gap-4 xl:grid-cols-[1.35fr_.85fr]">

@@ -369,8 +369,8 @@ function ClientsContent() {
     <div className="app-page">
       <PageHeader
         eyebrow="Client CVs"
-        title="Clients"
-        description="Create useful CV work, then follow the handoff without exposing private client content. Every row below is example data."
+        title="Client CVs"
+        description="Create and manage every client CV"
         actions={
           <CreateClientDialog
             open={createOpen}

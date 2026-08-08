@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="520" height="128" viewBox="0 0 520 128" role="img" aria-labelledby="title desc">
-  <title id="title">Tabbio prototype lockup</title>
-  <desc id="desc">The Tabbio prototype mark followed by the word tabbio.</desc>
-  <rect width="128" height="128" rx="36" fill="#5A2AFF"/>
-  <path fill="#fff" d="M64 22c2.7 21.8 12.2 31.3 34 34-21.8 2.7-31.3 12.2-34 34-2.7-21.8-12.2-31.3-34-34 21.8-2.7 31.3-12.2 34-34Z"/>
-  <circle cx="96" cy="31" r="7" fill="#FE97E9"/>
-  <text x="158" y="88" fill="#2B2B2B" font-family="Inter, Arial, sans-serif" font-size="76" font-weight="700" letter-spacing="-4">tabbio</text>
+  <title id="title">Tabbio lockup</title>
+  <desc id="desc">The original violet geometric Tabbio mark with the Tabbio name.</desc>
+  <g transform="translate(-82 -122) scale(4)">
+    <path d="M29.0576 32.0242C32.2481 31.9716 35.5976 32.021 38.8027 32.0213C38.7806 33.0716 38.8009 34.1957 38.8008 35.2508L38.7998 41.5233L45.5635 41.5262L45.5596 46.9774L38.8018 46.9754L38.7998 54.5067L48.0361 54.5096L48.0342 58.2781L48.0322 59.9979L41.8818 59.9998C39.2273 59.9971 37.0641 59.6624 35.0742 57.6922C33.1093 55.7465 33.3081 53.8741 33.3096 51.3055L33.3135 46.9744L24.001 46.9754L24 37.0584C25.6887 35.4356 27.3552 33.612 29.0576 32.0242ZM29.7158 37.8211L26.0098 37.8182V41.5242L29.6221 41.5252L33.3105 41.5272L33.3135 33.952L29.7197 33.951L29.7158 37.8211Z" fill="#512EFF"/>
+  </g>
+  <text x="126" y="88" fill="#374151" font-family="Inter, Arial, sans-serif" font-size="72" font-weight="600" letter-spacing="-4">tabbio</text>
 </svg>

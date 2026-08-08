@@ -176,8 +176,8 @@ export default function LinksPage() {
     <div className="app-page">
       <PageHeader
         eyebrow="Local referral tools"
-        title="Links and QR codes"
-        description="Create browser-only tracked links, keep every QR tied to its visible target, and review one coherent demo dataset."
+        title="Partner Links"
+        description="Copy your main link or use a tracked link for each channel"
         actions={
           <Button
             className="min-h-11 rounded-xl"

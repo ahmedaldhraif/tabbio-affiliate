@@ -371,7 +371,7 @@ function EarningsContent() {
       <PageHeader
         eyebrow="Earnings"
         title="Earnings"
-        description="The balance buckets and complete payout-history fixture reconcile in USD. The five ledger entries below are only a recent sample and do not reconcile to lifetime or payout totals. No provider is connected."
+        description="See every commission and adjustment"
         actions={
           <>
             <Button
@@ -393,11 +393,31 @@ function EarningsContent() {
         }
       />
 
-      <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-4 xl:grid-cols-[1fr_1.15fr]">
-        <section
-          className="relative isolate min-w-0 overflow-hidden rounded-3xl bg-[radial-gradient(circle_at_92%_10%,#fe97e9_0%,transparent_34%),linear-gradient(125deg,#3f19bd_0%,#5a2aff_72%)] p-6 text-white sm:p-8"
-          aria-labelledby="earnings-payable-title"
-        >
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        {[
+          ["Lifetime earned", balances.lifetime, true],
+          ["Pending", balances.pending, false],
+          ["Payable", balances.payable, false],
+          ["Paid", balances.paid, false],
+        ].map(([label, value, accent]) => (
+          <section
+            key={String(label)}
+            className={`${accent ? "brand-gradient border-transparent text-white" : "border-[#e5e7eb] bg-[#fafafa]"} min-h-36 rounded-2xl border p-6`}
+          >
+            <p
+              className={`text-sm font-medium ${accent ? "text-white/85" : "text-[#788195]"}`}
+            >
+              {String(label)}
+            </p>
+            <p className="mt-5 text-[clamp(2.15rem,3.5vw,2.8rem)] font-medium leading-none tracking-[-.035em] tabular-nums">
+              {formatUsd(Number(value))}
+            </p>
+          </section>
+        ))}
+      </div>
+
+      <div className="mt-6 grid min-w-0 grid-cols-[minmax(0,1fr)] gap-4">
+        <section className="hidden" aria-labelledby="earnings-payable-title">
           <div className="relative z-10 flex h-full min-h-64 flex-col justify-between">
             <div>
               <div className="flex flex-wrap items-center gap-2">
