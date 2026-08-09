@@ -18,7 +18,7 @@ This checklist converts the current frontend-only scope into a verifiable releas
 - [x] FAQ supports keyboard interaction and multiple expanded answers.
 - [x] Public calls to action open the local onboarding or partner demo; no dead primary action remains.
 - [x] Terms and safe referral-preview routes render locally.
-- [x] The estimator appears once; the second proof surface is a visual cohort-stack chart rather than duplicated controls.
+- [x] The designer's compact second estimator is preserved as calculation proof and shares state with the hero estimator.
 - [x] Visible landing copy is short, plain-language, and paired with a visual or direct action.
 
 ## Landing SEO and discoverability
@@ -89,7 +89,7 @@ This checklist converts the current frontend-only scope into a verifiable releas
 - Persistence: corrupt payload, blocked storage, reset-race, and shared onboarding identity regressions passed.
 - Interaction details: controlled mobile menu, exact 840px shell breakpoint, destination-aware referral preview, fractional estimator normalization, stale-draft invalidation, and 44px shared controls passed.
 - Downloads: partner kit ZIP and manifest, QR image, recent-ledger sample CSV, and balance summary were opened or content-checked locally. Asset byte counts and SHA-256 values match the current bundled files.
-- Designer-source implementation: the original geometric Tabbio mark path, blue-violet textured field, split calculator, section order, compact typography, neutral surfaces, CV claim visual, and oversized footer wordmark are implemented from the supplied SVG composition. The later user instruction removes the repeated calculator and shortens copy.
+- Designer-source implementation: the original geometric Tabbio mark path, blue-violet textured field, split calculator, compact calculation proof, section order, compact typography, neutral surfaces, CV claim visual, app-store badges, social marks, and oversized footer wordmark are implemented from the supplied SVG composition. Copy remains concise.
 - Local lab only: landing and overview recorded approximately 48ms FCP/LCP and zero CLS. These are not field-performance or production-hosting claims.
 
 ## Deferred production evidence

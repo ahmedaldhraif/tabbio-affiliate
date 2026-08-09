@@ -7,13 +7,16 @@ import {
   ChevronRight,
   FileText,
   Globe2,
+  Instagram,
   Menu,
   MessageSquareText,
+  Music2,
   Plus,
   ShieldCheck,
   UsersRound,
   WandSparkles,
   X,
+  Youtube,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -28,44 +31,47 @@ const PLAN_PRICE = 14.99;
 const COMMISSION_RATE = 0.3;
 
 const navItems = [
-  ["How it works", "#how-it-works"],
-  ["Ways to earn", "#ways-to-earn"],
-  ["Questions", "#faq"],
+  ["Home", "https://www.tabbio.com/en"],
+  ["Features", "https://www.tabbio.com/en/features"],
+  ["Pricing", "https://www.tabbio.com/en/pricing"],
+  ["For Employers", "https://www.tabbio.com/en/employers"],
+  ["For Developers", "https://docs.tabbio.com/en"],
+  ["Tools", "https://www.tabbio.com/en/tools"],
 ] as const;
 
 const steps = [
-  ["Choose your lane", "Tell us how you help."],
-  ["Finish the checks", "Complete the steps shown."],
-  ["Share your work", "Send one tracked link."],
-  ["Track payments", "See every commission."],
+  ["Choose your lane", "Tell us how you work."],
+  ["Finish account checks", "Review and finish the checks."],
+  ["Share your work", "Send a QR or claim link."],
+  ["Track every payment", "See pending, payable, and paid."],
 ] as const;
 
 const earningPaths = [
   {
     icon: FileText,
-    eyebrow: "CV professionals",
-    title: "Make every CV useful twice.",
-    copy: "Build it for your client. Share it through Tabbio.",
+    eyebrow: "First win · One client subscribes",
+    title: "AI made every CV sound the same. You’re the fix.",
+    copy: "Send the client the CV you built in Tabbio.",
   },
   {
     icon: MessageSquareText,
-    eyebrow: "Creators",
-    title: "Teach once. Keep earning.",
-    copy: "Share honest career advice with your partner link.",
+    eyebrow: "First win · One viewer subscribes",
+    title: "Brand deals pay once. Tabbio pays every month.",
+    copy: "Publish a useful guide with your tracked link.",
   },
   {
     icon: BriefcaseBusiness,
-    eyebrow: "Agencies",
-    title: "Give every candidate one link.",
-    copy: "A cleaner handoff for candidates and clients.",
+    eyebrow: "First win · One candidate subscribes",
+    title: "Earn when a candidate chooses Tabbio.",
+    copy: "Send the candidate a clear CV claim link.",
   },
 ] as const;
 
 const toolkit = [
-  [FileText, "Proven formats", "Start with a useful structure."],
-  [MessageSquareText, "Ready words", "Copy, edit, and share."],
-  [ShieldCheck, "Brand kit", "Use the right assets."],
-  [WandSparkles, "Tabbio assistant", "Get help when you need it."],
+  [FileText, "Proven formats", "Hooks, order, and proof rhythm."],
+  [MessageSquareText, "Ready words", "Captions, messages, and disclosures."],
+  [ShieldCheck, "Brand kit", "Marks, screens, fonts, and rules."],
+  [WandSparkles, "Tabbio assistant", "Help with CVs, content, and links."],
 ] as const;
 
 function money(value: number) {
@@ -129,6 +135,8 @@ function EstimatorSlider({
 }
 
 function Estimator({
+  idPrefix,
+  compact = false,
   referrals,
   paidMonths,
   programMonths,
@@ -136,6 +144,8 @@ function Estimator({
   setPaidMonths,
   setProgramMonths,
 }: {
+  idPrefix: string;
+  compact?: boolean;
   referrals: number;
   paidMonths: number;
   programMonths: number;
@@ -162,7 +172,10 @@ function Estimator({
   }, [result.total]);
 
   return (
-    <section className="tabbio-estimator" aria-labelledby="estimate-title">
+    <section
+      className={`tabbio-estimator${compact ? " tabbio-estimator--compact" : ""}`}
+      aria-labelledby={`${idPrefix}-estimate-title`}
+    >
       <div className="tabbio-estimator__controls">
         <div className="tabbio-plan">
           <span>Individual plan</span>
@@ -170,7 +183,7 @@ function Estimator({
           <ChevronRight aria-hidden="true" />
         </div>
         <EstimatorSlider
-          id="referrals"
+          id={`${idPrefix}-referrals`}
           label="New paying referrals each month"
           value={referrals}
           min={1}
@@ -178,7 +191,7 @@ function Estimator({
           onChange={setReferrals}
         />
         <EstimatorSlider
-          id="paid-months"
+          id={`${idPrefix}-paid-months`}
           label="Average months each customer pays"
           value={paidMonths}
           min={1}
@@ -186,7 +199,7 @@ function Estimator({
           onChange={setPaidMonths}
         />
         <EstimatorSlider
-          id="program-months"
+          id={`${idPrefix}-program-months`}
           label="Time in the program"
           value={programMonths}
           min={1}
@@ -196,7 +209,7 @@ function Estimator({
         />
       </div>
       <div className="tabbio-estimator__result">
-        <p id="estimate-title">Estimated total commission</p>
+        <p id={`${idPrefix}-estimate-title`}>Estimated total commission</p>
         <strong>{money(result.total)}</strong>
       </div>
       <div className="tabbio-estimator__notes">
@@ -277,60 +290,44 @@ function Header() {
   );
 }
 
-function StackVisual({ referrals }: { referrals: number }) {
-  const months = [1, 3, 6, 9, 12, 15, 18];
-
-  return (
-    <div
-      className="tabbio-stack"
-      aria-label="Example of referrals stacking over time"
-    >
-      <div className="tabbio-stack__legend">
-        <span>
-          <i /> New customers
-        </span>
-        <strong>{referrals} each month</strong>
-      </div>
-      <div className="tabbio-stack__chart">
-        {months.map((month, index) => (
-          <div className="tabbio-stack__month" key={month}>
-            <div
-              className="tabbio-stack__bar"
-              style={{ height: `${20 + index * 11}%` }}
-            >
-              {Array.from({ length: index + 1 }).map((_, block) => (
-                <span key={block} />
-              ))}
-            </div>
-            <small>{month}</small>
-          </div>
-        ))}
-      </div>
-      <p>Month</p>
-    </div>
-  );
-}
-
 function Footer() {
   return (
     <footer className="tabbio-public-footer">
       <div className="tabbio-landing-wrap tabbio-footer-links">
         <div>
           <strong>Product</strong>
-          <a href="#how-it-works">How it works</a>
-          <a href="#ways-to-earn">Ways to earn</a>
-          <Link href="/partner">Partner area</Link>
+          <a href="https://www.tabbio.com/en/features">Features</a>
+          <a href="https://www.tabbio.com/en/pricing">Pricing</a>
+          <a href="https://www.tabbio.com/en/employers">For Employers</a>
         </div>
         <div>
           <strong>Company</strong>
-          <a href="#faq">Questions</a>
-          <Link href="/partners/terms#support">Contact</Link>
+          <a href="https://www.tabbio.com/en/about">About</a>
+          <a href="https://www.tabbio.com/blog">Blog</a>
+          <a href="https://www.tabbio.com/en/contact">Contact</a>
         </div>
         <div>
           <strong>Legal</strong>
           <Link href="/partners/terms">Program terms</Link>
           <Link href="/partners/terms#privacy">Privacy</Link>
           <Link href="/partners/terms#disclosure">Disclosure</Link>
+        </div>
+        <div className="tabbio-footer-downloads">
+          <div>
+            <a href="https://www.tabbio.com/en/download">
+              <small>GET IT ON</small>
+              <strong>Google Play</strong>
+            </a>
+            <a href="https://www.tabbio.com/en/download">
+              <small>Download on the</small>
+              <strong>App Store</strong>
+            </a>
+          </div>
+          <span aria-hidden="true">
+            <Youtube />
+            <Instagram />
+            <Music2 />
+          </span>
         </div>
       </div>
       <div className="tabbio-footer-wordmark" aria-hidden="true">
@@ -359,13 +356,9 @@ export function PartnerLanding() {
                 <span>Your work</span>
                 keeps paying.
               </h1>
-              <p>
-                Join the Tabbio partner program and earn 30% recurring
-                commission on eligible referrals.
-              </p>
               <div className="tabbio-hero__actions">
                 <Button asChild className="tabbio-primary-button">
-                  <Link href="/partner/onboarding">Become a Partner</Link>
+                  <Link href="/partner/onboarding">Become A Partner</Link>
                 </Button>
                 <Link className="tabbio-hero-link" href="/partner">
                   See the Partner Area <ArrowUpRight aria-hidden="true" />
@@ -376,14 +369,15 @@ export function PartnerLanding() {
                 aria-label="Program highlights"
               >
                 <li>
-                  <Check aria-hidden="true" /> 30% recurring
+                  <Check aria-hidden="true" /> 30% recurring commission
                 </li>
                 <li>
-                  <Check aria-hidden="true" /> Clear monthly tracking
+                  <Check aria-hidden="true" /> Monthly payouts
                 </li>
               </ul>
             </div>
             <Estimator
+              idPrefix="hero"
               referrals={referrals}
               paidMonths={paidMonths}
               programMonths={programMonths}
@@ -397,12 +391,21 @@ export function PartnerLanding() {
         <section className="tabbio-stack-section" aria-labelledby="stack-title">
           <div className="tabbio-landing-wrap">
             <h2 id="stack-title">
-              See how the <span>stack grows.</span>
+              See How The <span>Stack Grows.</span>
             </h2>
-            <StackVisual referrals={referrals} />
+            <Estimator
+              idPrefix="proof"
+              compact
+              referrals={referrals}
+              paidMonths={paidMonths}
+              programMonths={programMonths}
+              setReferrals={setReferrals}
+              setPaidMonths={setPaidMonths}
+              setProgramMonths={setProgramMonths}
+            />
             <p className="tabbio-small-note">
-              Each new group can add to later months. Estimates are not
-              guaranteed.
+              Estimate only. Real earnings depend on eligible referrals and paid
+              subscriptions.
             </p>
           </div>
         </section>
@@ -414,7 +417,7 @@ export function PartnerLanding() {
         >
           <div className="tabbio-landing-wrap">
             <h2 id="steps-title">
-              Your first link, <span>in one session.</span>
+              Your First Link, <span>In One Session.</span>
             </h2>
             <ol>
               {steps.map(([title, copy], index) => (
@@ -432,7 +435,7 @@ export function PartnerLanding() {
           <div className="tabbio-landing-wrap tabbio-claim__grid">
             <div>
               <h2 id="claim-title">
-                Build it. Send it. See when it’s claimed.
+                Build It. Send It. See When It’s Claimed.
               </h2>
               <p>
                 Create the CV. Your client checks it, claims it, and keeps it
@@ -478,7 +481,7 @@ export function PartnerLanding() {
         >
           <div className="tabbio-landing-wrap">
             <h2 id="paths-title">
-              Use the work you <span>already do</span>
+              Use The Work You <span>Already Do</span>
             </h2>
             <div className="tabbio-path-grid">
               {earningPaths.map(({ icon: Icon, eyebrow, title, copy }) => (
@@ -486,11 +489,6 @@ export function PartnerLanding() {
                   <span className="tabbio-line-icon">
                     <Icon aria-hidden="true" />
                   </span>
-                  <div className="tabbio-path-visual" aria-hidden="true">
-                    <i />
-                    <i />
-                    <i />
-                  </div>
                   <small>{eyebrow}</small>
                   <h3>{title}</h3>
                   <p>{copy}</p>
@@ -503,7 +501,7 @@ export function PartnerLanding() {
 
         <section className="tabbio-toolkit" aria-labelledby="toolkit-title">
           <div className="tabbio-landing-wrap">
-            <h2 id="toolkit-title">No blank page.</h2>
+            <h2 id="toolkit-title">No Blank Page.</h2>
             <div>
               {toolkit.map(([Icon, title, copy]) => (
                 <article key={title}>
@@ -522,7 +520,7 @@ export function PartnerLanding() {
           <div className="tabbio-landing-wrap">
             <div className="tabbio-faq__heading">
               <h2 id="faq-title">
-                Frequently asked <span>questions</span>
+                Frequently Asked <span>Questions</span>
               </h2>
               <p>Quick answers. Clear terms.</p>
             </div>
@@ -547,9 +545,9 @@ export function PartnerLanding() {
             <h2 id="final-cta-title">
               Your first link is <span>ten minutes</span> away
             </h2>
-            <p>Join, finish the checks, and share your link.</p>
+            <p>Join, finish the checks, and share your link in one session.</p>
             <Button asChild className="tabbio-primary-button">
-              <Link href="/partner/onboarding">Become a Partner</Link>
+              <Link href="/partner/onboarding">Become A Partner</Link>
             </Button>
           </div>
         </section>

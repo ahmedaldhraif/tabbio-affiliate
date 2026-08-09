@@ -5,9 +5,9 @@ export const publicFaq = [
       "CV writers, career coaches, creators, recruiters, and agencies can apply.",
   },
   {
-    question: "What does 30% recurring mean?",
+    question: "What does 30% lifetime mean?",
     answer:
-      "You can earn 30% of eligible subscription payments from customers attributed to you.",
+      "You can earn 30% of eligible attributed subscription payments while the customer keeps paying.",
   },
   {
     question: "When do I get paid?",
@@ -15,18 +15,28 @@ export const publicFaq = [
       "Eligible commission is prepared monthly after the required checks and payout threshold are complete.",
   },
   {
-    question: "How is a referral tracked?",
+    question: "What counts as my referral, and what breaks attribution?",
     answer:
-      "Your partner link connects an eligible signup and payment to your partner account.",
+      "A valid partner or claim link connects an eligible signup to you. Invalid traffic, another accepted referral, or broken program rules can change attribution.",
   },
   {
-    question: "Do I need a permit?",
+    question: "Do I need a UAE Advertiser Permit?",
     answer:
-      "That depends on where and how you promote. The application shows which checks apply to you.",
+      "That depends on how you promote. The application shows which checks apply to your activity.",
   },
   {
-    question: "What happens if a payment is refunded?",
+    question: "What is a CV style?",
     answer:
-      "The related commission is reversed clearly in your earnings history.",
+      "A CV style controls the visual format your client sees while keeping their information the same.",
+  },
+  {
+    question: "What happens if I leave the program?",
+    answer:
+      "Your paid history stays visible. Future commission follows the program terms active when you leave.",
+  },
+  {
+    question: "What gets a partner removed?",
+    answer:
+      "Misleading promotion, abuse, or breaking the current program terms can lead to review or removal.",
   },
 ] as const;

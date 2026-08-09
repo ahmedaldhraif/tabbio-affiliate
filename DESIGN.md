@@ -283,8 +283,8 @@ Checklist Design does not replace WCAG, security, privacy, performance, financia
 The 2026-08-09 landing revision treats the supplied 1512px SVG composition as the visual authority while following the user's later instruction to remove repetition and reduce copy.
 
 - `/partners` is the only indexable landing route. `/` redirects to it so the same page is not published twice.
-- The hero contains the only interactive estimator. The repeated calculator becomes a simple cohort-stack chart.
+- The supplied composition repeats the estimator once as a compact calculation proof. Both instances share the same state so the repetition demonstrates the stack without conflicting totals.
 - Visible copy is limited to one offer sentence, four short steps, three earning paths, four toolkit items, six concise questions, and one final action.
-- Visual explanation takes priority: the estimator, stack chart, CV claim card, card diagrams, numbered steps, and oversized footer wordmark carry the story.
+- Visual explanation takes priority: the split estimator, compact calculation proof, CV claim card, generous card whitespace, numbered steps, and oversized footer wordmark carry the story.
 - SEO is implemented through the title, description, canonical URL, semantic headings, concise first paragraph, FAQ JSON-LD, robots, sitemap, and `llms.txt`. It must not add keyword filler or duplicate visible sections.
 - The public design uses the supplied geometric Tabbio mark, blue-violet grain field, neutral surfaces, compact Inter typography, and one violet-to-pink earning gradient.
