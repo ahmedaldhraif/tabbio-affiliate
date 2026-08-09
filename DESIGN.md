@@ -202,13 +202,15 @@ Material 3 does not currently define a data-table component. Use semantic HTML a
 ### Public `/partners`
 
 1. Header: existing Tabbio marketing navigation, language switch, sign-in, and `Become a partner`.
-2. First viewport: `Your work keeps paying`, short plain-language offer, primary action, secondary `See the Partner area` only if a real demo exists, and the live estimator.
-3. Calculation proof: show how active attributed customers and paid months build commission. Include assumptions and the non-guarantee note.
-4. Joining sequence: choose lane, complete program checks, share useful work, track eligible payments. External checks must show honest pending states.
-5. Product proof: demonstrate the CV claim flow, content/link flow, and candidate/client handoff with verified or labelled example content.
-6. Toolkit: formats, approved words, brand kit, and assistant. Do not imply auto-publishing.
+2. First viewport: `Your work keeps paying`, one plain-language sentence, one join action, one `See how it works` action, and the live estimator. The estimator appears once.
+3. Benefits: six large, quiet cards explain recurring commission, client CVs, links and QR, content resources, the earnings ledger, and partner support.
+4. Product proof: three oversized demonstrations show Build, Share, and Track with labelled sample data. Never fabricate partner work, testimonials, or earnings.
+5. Application: one embedded split surface pairs the Tabbio color field with a visible-label M3-style form. Use filter chips for multi-select questions, preserve the draft locally, focus the first error, and show a persistent success state.
+6. Review path: Apply, human review, then access to links, resources, and dashboard. Do not promise instant approval while review infrastructure is absent.
 7. FAQ: eligibility, commission definition, attribution, payout, permit, CV styles, leaving, suspension/removal, privacy, and support.
-8. Final CTA and footer: terms, privacy, program terms, disclosure guidance, accessibility, and contact.
+8. Footer: terms, privacy, program terms, disclosure guidance, accessibility, and contact.
+
+The conversion order above is informed by the Higgsfield creator partnership page, not its visual identity. Tabbio retains its supplied blue-violet system, geometric mark, product workflows, copy, and evidence standard.
 
 ### Authenticated Partner area
 

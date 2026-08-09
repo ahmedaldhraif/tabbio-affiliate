@@ -1,20 +1,35 @@
 "use client";
 
+/*
+ * THESIS: A direct, visual path from useful career work to recurring earnings.
+ * COMPOSITION: Calculator hero, six benefits, three product proofs, split form,
+ * three-step review path, FAQ, footer.
+ * DEPTH: Tabbio gradient establishes the promise; quiet neutral surfaces carry
+ * information; deep violet frames product proof.
+ * TYPOGRAPHY: Existing Tabbio display hierarchy with short, literal copy.
+ * SPACING: Large section rhythm, compact controls, 48px minimum actions.
+ * Higgsfield informs conversion order only; Tabbio owns the colors, product
+ * language, proof, and M3 interaction behavior.
+ */
+
 import {
   ArrowUpRight,
+  BarChart3,
   BriefcaseBusiness,
   Check,
   ChevronRight,
+  CircleDollarSign,
+  ClipboardCheck,
   FileText,
   Globe2,
   Instagram,
+  Link2,
   Menu,
   MessageSquareText,
   Music2,
   Plus,
+  QrCode,
   ShieldCheck,
-  UsersRound,
-  WandSparkles,
   X,
   Youtube,
 } from "lucide-react";
@@ -24,6 +39,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@refref/ui/components/button";
 
 import { BrandMark } from "@/components/brand-mark";
+import { PartnerApplicationForm } from "@/components/marketing/partner-application-form";
 import { calculateEstimator, normalizeEstimatorInput } from "@/data/demo-data";
 import { publicFaq } from "@/data/marketing";
 
@@ -39,39 +55,43 @@ const navItems = [
   ["Tools", "https://www.tabbio.com/en/tools"],
 ] as const;
 
-const steps = [
-  ["Choose your lane", "Tell us how you work."],
-  ["Finish account checks", "Review and finish the checks."],
-  ["Share your work", "Send a QR or claim link."],
-  ["Track every payment", "See pending, payable, and paid."],
-] as const;
-
-const earningPaths = [
+const benefits = [
+  {
+    icon: CircleDollarSign,
+    title: "30% recurring",
+    copy: "Earn while an eligible referral keeps paying.",
+  },
   {
     icon: FileText,
-    eyebrow: "First win · One client subscribes",
-    title: "AI made every CV sound the same. You’re the fix.",
-    copy: "Send the client the CV you built in Tabbio.",
+    title: "Client-ready CVs",
+    copy: "Build useful work your clients can claim.",
+  },
+  {
+    icon: Link2,
+    title: "Links and QR codes",
+    copy: "Give every channel a trackable path.",
   },
   {
     icon: MessageSquareText,
-    eyebrow: "First win · One viewer subscribes",
-    title: "Brand deals pay once. Tabbio pays every month.",
-    copy: "Publish a useful guide with your tracked link.",
+    title: "Content toolkit",
+    copy: "Start from clear formats and disclosure copy.",
   },
   {
-    icon: BriefcaseBusiness,
-    eyebrow: "First win · One candidate subscribes",
-    title: "Earn when a candidate chooses Tabbio.",
-    copy: "Send the candidate a clear CV claim link.",
+    icon: BarChart3,
+    title: "Visible earnings",
+    copy: "See pending, payable, and paid amounts.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Partner support",
+    copy: "Use approved assets, guidance, and program rules.",
   },
 ] as const;
 
-const toolkit = [
-  [FileText, "Proven formats", "Hooks, order, and proof rhythm."],
-  [MessageSquareText, "Ready words", "Captions, messages, and disclosures."],
-  [ShieldCheck, "Brand kit", "Marks, screens, fonts, and rules."],
-  [WandSparkles, "Tabbio assistant", "Help with CVs, content, and links."],
+const nextSteps = [
+  ["Apply", "Tell us how you help people with careers."],
+  ["We review", "A real person checks fit and your work."],
+  ["Start sharing", "Get your link, resources, and dashboard."],
 ] as const;
 
 function money(value: number) {
@@ -269,7 +289,7 @@ function Header() {
             <span className="visually-hidden">Open navigation</span>
             {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
           </button>
-          <Link className="tabbio-header-cta" href="/partner/onboarding">
+          <Link className="tabbio-header-cta" href="#form">
             Join
           </Link>
         </div>
@@ -356,12 +376,16 @@ export function PartnerLanding() {
                 <span>Your work</span>
                 keeps paying.
               </h1>
+              <p>
+                Build useful career work, share one clear link, and earn 30% on
+                eligible subscriptions.
+              </p>
               <div className="tabbio-hero__actions">
                 <Button asChild className="tabbio-primary-button">
-                  <Link href="/partner/onboarding">Become A Partner</Link>
+                  <Link href="#form">Become A Partner</Link>
                 </Button>
-                <Link className="tabbio-hero-link" href="/partner">
-                  See the Partner Area <ArrowUpRight aria-hidden="true" />
+                <Link className="tabbio-hero-link" href="#partner-work">
+                  See how it works <ArrowUpRight aria-hidden="true" />
                 </Link>
               </div>
               <ul
@@ -388,131 +412,189 @@ export function PartnerLanding() {
           </div>
         </section>
 
-        <section className="tabbio-stack-section" aria-labelledby="stack-title">
+        <section className="program-benefits" aria-labelledby="benefits-title">
           <div className="tabbio-landing-wrap">
-            <h2 id="stack-title">
-              See How The <span>Stack Grows.</span>
+            <p className="program-eyebrow">What you get</p>
+            <h2 id="benefits-title">Everything in one partner program.</h2>
+            <div className="program-benefit-grid">
+              {benefits.map(({ icon: Icon, title, copy }) => (
+                <article key={title}>
+                  <span>
+                    <Icon aria-hidden="true" />
+                  </span>
+                  <div>
+                    <h3>{title}</h3>
+                    <p>{copy}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="partner-work"
+          className="program-showcase"
+          aria-labelledby="showcase-title"
+        >
+          <div className="tabbio-landing-wrap">
+            <p className="program-eyebrow">Made for real partner work</p>
+            <h2 id="showcase-title">
+              From useful work to <span>tracked earnings.</span>
             </h2>
-            <Estimator
-              idPrefix="proof"
-              compact
-              referrals={referrals}
-              paidMonths={paidMonths}
-              programMonths={programMonths}
-              setReferrals={setReferrals}
-              setPaidMonths={setPaidMonths}
-              setProgramMonths={setProgramMonths}
-            />
-            <p className="tabbio-small-note">
-              Estimate only. Real earnings depend on eligible referrals and paid
-              subscriptions.
+            <div className="program-showcase-grid">
+              <article className="program-showcase-card program-showcase-card--cv">
+                <div className="program-showcase-card__copy">
+                  <small>01 · Build</small>
+                  <h3>Create a CV your client can claim.</h3>
+                </div>
+                <div
+                  className="program-cv-preview"
+                  aria-label="Sample CV preview"
+                >
+                  <div>
+                    <span>SK</span>
+                    <p>
+                      <strong>Sara Khan</strong>
+                      <small>Product Designer</small>
+                    </p>
+                    <em>Ready to claim</em>
+                  </div>
+                  <section>
+                    <small>Selected experience</small>
+                    <strong>Senior Product Designer</strong>
+                    <i />
+                    <i />
+                    <i />
+                  </section>
+                </div>
+              </article>
+
+              <article className="program-showcase-card program-showcase-card--share">
+                <div className="program-showcase-card__copy">
+                  <small>02 · Share</small>
+                  <h3>Turn one idea into a clear path.</h3>
+                </div>
+                <div
+                  className="program-share-preview"
+                  aria-label="Sample tracked share"
+                >
+                  <div className="program-share-preview__post">
+                    <span>3 fixes for a CV that gets ignored</span>
+                    <strong>Make the first six seconds count.</strong>
+                    <small>Partner link · Paid disclosure included</small>
+                  </div>
+                  <div className="program-share-preview__link">
+                    <QrCode aria-hidden="true" />
+                    <p>
+                      <small>Tracked link</small>
+                      <strong>tabbio.com/s/sara</strong>
+                    </p>
+                    <Check aria-hidden="true" />
+                  </div>
+                </div>
+              </article>
+
+              <article className="program-showcase-card program-showcase-card--track">
+                <div className="program-showcase-card__copy">
+                  <small>03 · Track</small>
+                  <h3>See what is pending, payable, and paid.</h3>
+                </div>
+                <div
+                  className="program-ledger-preview"
+                  aria-label="Sample earnings ledger"
+                >
+                  <div>
+                    <small>This month</small>
+                    <strong>$382.24</strong>
+                    <span>+18% from last month</span>
+                  </div>
+                  <ul>
+                    <li>
+                      <span>Pending</span>
+                      <strong>$91.38</strong>
+                    </li>
+                    <li>
+                      <span>Payable</span>
+                      <strong>$126.47</strong>
+                    </li>
+                    <li>
+                      <span>Paid</span>
+                      <strong>$164.39</strong>
+                    </li>
+                  </ul>
+                </div>
+              </article>
+            </div>
+            <p className="program-preview-note">
+              Product previews use sample data. No fabricated partner results.
             </p>
           </div>
         </section>
 
         <section
-          id="how-it-works"
-          className="tabbio-steps"
-          aria-labelledby="steps-title"
+          id="form"
+          className="program-form"
+          aria-labelledby="form-title"
         >
+          <div className="tabbio-landing-wrap program-form-shell">
+            <div className="program-form-intro">
+              <div>
+                <p className="program-eyebrow">Become a partner</p>
+                <h2 id="form-title">
+                  Tell us how you help people move forward.
+                </h2>
+                <p>Short, straightforward questions.</p>
+              </div>
+              <ul>
+                <li>
+                  <CircleDollarSign aria-hidden="true" />
+                  <span>
+                    <strong>30% recurring</strong>
+                    On eligible paid subscriptions
+                  </span>
+                </li>
+                <li>
+                  <ClipboardCheck aria-hidden="true" />
+                  <span>
+                    <strong>Human review</strong>
+                    No instant or automated approval promise
+                  </span>
+                </li>
+                <li>
+                  <BriefcaseBusiness aria-hidden="true" />
+                  <span>
+                    <strong>Your work matters</strong>
+                    Starting small does not disqualify you
+                  </span>
+                </li>
+              </ul>
+              <p className="program-form-intro__note">
+                Local frontend preview · Nothing is transmitted yet
+              </p>
+            </div>
+            <div className="program-form-panel">
+              <PartnerApplicationForm />
+            </div>
+          </div>
+        </section>
+
+        <section className="program-next" aria-labelledby="next-title">
           <div className="tabbio-landing-wrap">
-            <h2 id="steps-title">
-              Your First Link, <span>In One Session.</span>
-            </h2>
+            <p className="program-eyebrow">What happens next</p>
+            <h2 id="next-title">Three clear steps.</h2>
             <ol>
-              {steps.map(([title, copy], index) => (
+              {nextSteps.map(([title, copy], index) => (
                 <li key={title}>
-                  <span>{index + 1}</span>
-                  <h3>{title}</h3>
-                  <p>{copy}</p>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <div>
+                    <h3>{title}</h3>
+                    <p>{copy}</p>
+                  </div>
+                  <ArrowUpRight aria-hidden="true" />
                 </li>
               ))}
             </ol>
-          </div>
-        </section>
-
-        <section className="tabbio-claim" aria-labelledby="claim-title">
-          <div className="tabbio-landing-wrap tabbio-claim__grid">
-            <div>
-              <h2 id="claim-title">
-                Build It. Send It. See When It’s Claimed.
-              </h2>
-              <p>
-                Create the CV. Your client checks it, claims it, and keeps it
-                live.
-              </p>
-              <Link href="/partner/clients">
-                Open CV Builder <ChevronRight aria-hidden="true" />
-              </Link>
-            </div>
-            <div
-              className="tabbio-cv-visual"
-              aria-label="Example client CV claim"
-            >
-              <div className="tabbio-cv-visual__top">
-                <span>
-                  <UsersRound aria-hidden="true" />
-                </span>
-                <div>
-                  <strong>Client 01</strong>
-                  <small>CV finishing up</small>
-                </div>
-                <em>Claimed</em>
-              </div>
-              <div className="tabbio-cv-visual__paper">
-                <small>Client CV</small>
-                <strong>Selected experience</strong>
-                <p>Clean, clear, ready to share.</p>
-                <div>
-                  <span />
-                  <span />
-                  <span />
-                </div>
-                <a>Crafted by Sara Khan</a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="ways-to-earn"
-          className="tabbio-paths"
-          aria-labelledby="paths-title"
-        >
-          <div className="tabbio-landing-wrap">
-            <h2 id="paths-title">
-              Use The Work You <span>Already Do</span>
-            </h2>
-            <div className="tabbio-path-grid">
-              {earningPaths.map(({ icon: Icon, eyebrow, title, copy }) => (
-                <article key={title}>
-                  <span className="tabbio-line-icon">
-                    <Icon aria-hidden="true" />
-                  </span>
-                  <small>{eyebrow}</small>
-                  <h3>{title}</h3>
-                  <p>{copy}</p>
-                  <ArrowUpRight aria-hidden="true" />
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="tabbio-toolkit" aria-labelledby="toolkit-title">
-          <div className="tabbio-landing-wrap">
-            <h2 id="toolkit-title">No Blank Page.</h2>
-            <div>
-              {toolkit.map(([Icon, title, copy]) => (
-                <article key={title}>
-                  <span className="tabbio-line-icon">
-                    <Icon aria-hidden="true" />
-                  </span>
-                  <h3>{title}</h3>
-                  <p>{copy}</p>
-                </article>
-              ))}
-            </div>
           </div>
         </section>
 
@@ -537,18 +619,6 @@ export function PartnerLanding() {
                 </details>
               ))}
             </div>
-          </div>
-        </section>
-
-        <section className="tabbio-final-cta" aria-labelledby="final-cta-title">
-          <div className="tabbio-landing-wrap">
-            <h2 id="final-cta-title">
-              Your first link is <span>ten minutes</span> away
-            </h2>
-            <p>Join, finish the checks, and share your link in one session.</p>
-            <Button asChild className="tabbio-primary-button">
-              <Link href="/partner/onboarding">Become A Partner</Link>
-            </Button>
           </div>
         </section>
       </main>

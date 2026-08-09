@@ -611,6 +611,9 @@ Consumers are idempotent by `event_id` and source identity. Schema evolution is 
 - Calculator uses live plan data, paired numeric inputs, keyboard-accessible sliders, locale currency, and `Estimated commission` language.
 - `Under ten minutes` or `one session` is removed unless measured and scoped to tasks under Tabbio's control. External permit/provider review is never included in a speed promise.
 - Show three useful-work paths: client CV work, creator/education content, and agency/candidate handoff.
+- Keep the public application on the landing page. Ask for identity, lane, channels, practical reach, work description, optional profile/work links, country, and current terms confirmation.
+- Preserve a recoverable application draft, validate with corrective messages, focus the first invalid control, and never imply transmission or human review while the frontend has no application API.
+- Product previews use clearly labelled sample data. Do not fabricate partner work, creator counts, testimonials, or results.
 - FAQ answers attribution, payout, refund/reversal, advertiser permit, leaving/removal, privacy, agreement, support, and CV style.
 - Program terms, privacy, disclosure guidance, accessibility, and contact are linked.
 
