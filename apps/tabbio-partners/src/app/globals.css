@@ -150,6 +150,1133 @@ a {
   border: 0;
 }
 
+/* Public partner page: rebuilt from the supplied 1512px Tabbio composition. */
+.tabbio-public-page {
+  overflow: clip;
+  color: #38383b;
+  background: #fff;
+}
+.tabbio-landing-wrap {
+  width: min(calc(100% - 48px), 1260px);
+  margin-inline: auto;
+}
+.tabbio-marketing-header {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 20;
+  color: #fff;
+}
+.tabbio-marketing-header__inner {
+  position: relative;
+  display: flex;
+  min-height: 84px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.tabbio-marketing-header__inner > a {
+  display: inline-flex;
+  border-radius: 8px;
+}
+.tabbio-marketing-header nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tabbio-marketing-header nav a,
+.tabbio-sign-in {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 0 14px;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 13px;
+  font-weight: 500;
+}
+.tabbio-marketing-header nav a:hover,
+.tabbio-sign-in:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+.tabbio-marketing-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.tabbio-language {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 6px;
+  padding-inline: 12px;
+  font-size: 12px;
+}
+.tabbio-language svg {
+  width: 15px;
+}
+.tabbio-header-cta {
+  display: inline-flex;
+  min-width: 74px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  margin-inline-start: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+}
+.tabbio-menu-button,
+.tabbio-mobile-nav {
+  display: none;
+}
+.tabbio-hero {
+  position: relative;
+  min-height: 980px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 73% 26%, rgba(79, 37, 255, 0.9), transparent 34%),
+    radial-gradient(circle at 6% 8%, rgba(72, 177, 255, 0.84), transparent 35%),
+    linear-gradient(145deg, #78b8ef 0%, #7067ee 43%, #a188e9 70%, #e2e2e5 100%);
+}
+.tabbio-hero::before,
+.tabbio-hero::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+}
+.tabbio-hero::before {
+  opacity: 0.3;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+}
+.tabbio-hero::after {
+  background: linear-gradient(
+    180deg,
+    transparent 58%,
+    rgba(240, 240, 242, 0.58)
+  );
+}
+.tabbio-hero__grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  min-height: 980px;
+  grid-template-columns: minmax(320px, 0.76fr) minmax(590px, 1.24fr);
+  align-items: center;
+  gap: 82px;
+  padding-block: 140px 110px;
+}
+.tabbio-hero__copy {
+  padding-block-start: 12px;
+}
+.tabbio-hero h1 {
+  max-width: 9ch;
+  margin: 0;
+  font-size: clamp(58px, 5.2vw, 82px);
+  font-weight: 650;
+  letter-spacing: -0.055em;
+  line-height: 0.97;
+}
+.tabbio-hero h1 span {
+  display: block;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.78);
+}
+.tabbio-hero__copy > p {
+  max-width: 410px;
+  margin: 24px 0 0;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 16px;
+  line-height: 1.55;
+}
+.tabbio-hero__actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 30px;
+}
+.tabbio-primary-button {
+  min-height: 48px !important;
+  border-radius: 999px !important;
+  background: #6438f5 !important;
+  padding-inline: 24px !important;
+  color: #fff !important;
+  box-shadow: none !important;
+  font-weight: 600 !important;
+}
+.tabbio-primary-button:hover {
+  background: #512eff !important;
+}
+.tabbio-hero .tabbio-primary-button {
+  background: #683df2 !important;
+}
+.tabbio-hero-link {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+}
+.tabbio-hero-link svg {
+  width: 16px;
+}
+.tabbio-hero__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 28px;
+  margin: 24px 0 0;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  list-style: none;
+}
+.tabbio-hero__facts li {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.tabbio-hero__facts svg {
+  width: 14px;
+}
+.tabbio-estimator {
+  display: grid;
+  overflow: hidden;
+  grid-template-columns: 1fr 1.03fr;
+  border-radius: 24px;
+  color: #4a4e5a;
+  background: #fff;
+  box-shadow: 0 28px 80px rgba(47, 36, 96, 0.16);
+}
+.tabbio-estimator__controls {
+  min-height: 430px;
+  padding: 58px 44px 42px;
+}
+.tabbio-plan {
+  position: relative;
+  display: flex;
+  min-height: 70px;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 28px;
+  padding: 12px 44px 12px 18px;
+  border-radius: 16px;
+  background: #f4f4f4;
+}
+.tabbio-plan span {
+  color: #90939a;
+  font-size: 12px;
+}
+.tabbio-plan strong {
+  margin-top: 3px;
+  color: #3f424b;
+  font-size: 14px;
+  font-weight: 500;
+}
+.tabbio-plan svg {
+  position: absolute;
+  top: 50%;
+  right: 17px;
+  width: 17px;
+  translate: 0 -50%;
+  rotate: 90deg;
+}
+.tabbio-slider {
+  margin-top: 24px;
+}
+.tabbio-slider__label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #92959d;
+  font-size: 12px;
+}
+.tabbio-slider__label > div {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.tabbio-slider__label input {
+  width: 32px;
+  border: 0;
+  outline: 0;
+  color: #737780;
+  background: transparent;
+  text-align: right;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  appearance: textfield;
+}
+.tabbio-slider__label input::-webkit-inner-spin-button {
+  appearance: none;
+}
+.tabbio-slider input[type="range"] {
+  width: 100%;
+  height: 20px;
+  margin: 5px 0 0;
+  cursor: pointer;
+  accent-color: #6c48ef;
+}
+.tabbio-estimator__result {
+  display: flex;
+  min-height: 430px;
+  flex-direction: column;
+  justify-content: center;
+  padding: 44px;
+  color: #fff;
+  background: linear-gradient(116deg, #7453f4 0%, #835df2 52%, #e27ad9 100%);
+}
+.tabbio-estimator__result p {
+  margin: 0 0 26px;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 14px;
+}
+.tabbio-estimator__result strong {
+  font-size: clamp(48px, 4.1vw, 72px);
+  font-weight: 300;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.tabbio-estimator__notes {
+  grid-column: 1 / -1;
+  padding: 16px 44px;
+}
+.tabbio-estimator__notes p {
+  margin: 0;
+  padding: 11px 0;
+  border-bottom: 1px solid #e5e7eb;
+  color: #536072;
+  font-size: 12px;
+}
+.tabbio-estimator__notes p:last-child {
+  border: 0;
+}
+.tabbio-stack-section {
+  min-height: 690px;
+  padding-block: 110px 90px;
+  background: #fff;
+}
+.tabbio-stack-section h2,
+.tabbio-paths > div > h2,
+.tabbio-toolkit h2 {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(34px, 3.1vw, 48px);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.03;
+}
+.tabbio-stack-section h2 span,
+.tabbio-paths h2 span,
+.tabbio-steps h2 span,
+.tabbio-faq h2 span,
+.tabbio-final-cta h2 span {
+  color: #5a2aff;
+}
+.tabbio-stack {
+  max-width: 1040px;
+  margin: 60px auto 0;
+  padding: 30px 34px 22px;
+  border: 1px solid #ececf0;
+  border-radius: 20px;
+  background: #fafafa;
+}
+.tabbio-stack__legend {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #71757f;
+  font-size: 12px;
+}
+.tabbio-stack__legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.tabbio-stack__legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #6c43ef;
+}
+.tabbio-stack__legend strong {
+  color: #5b5f69;
+  font-weight: 600;
+}
+.tabbio-stack__chart {
+  display: grid;
+  height: 245px;
+  grid-template-columns: repeat(7, 1fr);
+  align-items: end;
+  gap: 26px;
+  margin-top: 22px;
+  border-bottom: 1px solid #dfe0e4;
+  background: repeating-linear-gradient(
+    to top,
+    transparent 0 60px,
+    #ececf0 61px
+  );
+}
+.tabbio-stack__month {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: center;
+}
+.tabbio-stack__bar {
+  display: flex;
+  min-height: 22px;
+  flex-direction: column-reverse;
+  gap: 2px;
+}
+.tabbio-stack__bar span {
+  flex: 1;
+  min-height: 5px;
+  border-radius: 4px 4px 1px 1px;
+  background: linear-gradient(90deg, #6841ef, #c16cdc);
+}
+.tabbio-stack__month small {
+  height: 26px;
+  padding-top: 7px;
+  color: #8c9098;
+  font-size: 10px;
+}
+.tabbio-stack > p {
+  margin: 8px 0 0;
+  color: #999ca4;
+  text-align: center;
+  font-size: 10px;
+}
+.tabbio-small-note {
+  margin: 18px auto 0;
+  color: #9699a1;
+  text-align: center;
+  font-size: 11px;
+}
+.tabbio-steps {
+  min-height: 700px;
+  padding-block: 125px;
+  background: #f6f7f9;
+}
+.tabbio-steps h2 {
+  max-width: 460px;
+  margin: 0;
+  font-size: clamp(38px, 4vw, 58px);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 0.98;
+}
+.tabbio-steps h2 span {
+  display: block;
+}
+.tabbio-steps ol {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 82px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.tabbio-steps li {
+  min-height: 190px;
+  padding: 0 30px;
+  border-left: 1px solid #e1e3e8;
+}
+.tabbio-steps li:first-child {
+  padding-left: 0;
+  border: 0;
+}
+.tabbio-steps li > span {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 50%;
+  color: #686c75;
+  background: #fff;
+  font-size: 12px;
+}
+.tabbio-steps h3 {
+  margin: 46px 0 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+.tabbio-steps li p {
+  margin: 8px 0 0;
+  color: #858993;
+  font-size: 13px;
+}
+.tabbio-claim {
+  min-height: 610px;
+  padding-block: 92px;
+  background: #f6f7f9;
+}
+.tabbio-claim__grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  align-items: center;
+  gap: 110px;
+}
+.tabbio-claim h2 {
+  max-width: 590px;
+  margin: 0;
+  color: #5b5b5f;
+  font-size: clamp(40px, 4.3vw, 64px);
+  font-weight: 600;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+.tabbio-claim__grid > div:first-child > p {
+  max-width: 540px;
+  margin: 20px 0 0;
+  color: #8a8e97;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.tabbio-claim__grid > div:first-child > a {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  gap: 8px;
+  margin-top: 28px;
+  padding: 0 22px;
+  border-radius: 999px;
+  color: #fff;
+  background: #663bf0;
+  font-size: 13px;
+  font-weight: 600;
+}
+.tabbio-claim__grid > div:first-child > a svg {
+  width: 16px;
+}
+.tabbio-cv-visual {
+  overflow: hidden;
+  padding: 18px;
+  border: 1px solid #f0f0f2;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 20px 65px rgba(42, 43, 62, 0.06);
+}
+.tabbio-cv-visual__top {
+  display: grid;
+  grid-template-columns: 34px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #ececf0;
+}
+.tabbio-cv-visual__top > span {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 50%;
+  color: #6138ef;
+  background: #eee9ff;
+}
+.tabbio-cv-visual__top svg {
+  width: 15px;
+}
+.tabbio-cv-visual__top strong,
+.tabbio-cv-visual__top small {
+  display: block;
+}
+.tabbio-cv-visual__top strong {
+  font-size: 12px;
+}
+.tabbio-cv-visual__top small {
+  margin-top: 2px;
+  color: #989ba3;
+  font-size: 9px;
+}
+.tabbio-cv-visual__top em {
+  border-radius: 99px;
+  padding: 5px 9px;
+  color: #278055;
+  background: #e8f7ef;
+  font-size: 9px;
+  font-style: normal;
+}
+.tabbio-cv-visual__paper {
+  margin: 18px 2px 2px;
+  padding: 28px;
+  border: 1px solid #eeeef1;
+  border-radius: 8px;
+}
+.tabbio-cv-visual__paper > small,
+.tabbio-cv-visual__paper > strong {
+  display: block;
+}
+.tabbio-cv-visual__paper > small {
+  color: #7852ed;
+  font-size: 9px;
+}
+.tabbio-cv-visual__paper > strong {
+  margin-top: 12px;
+  font-size: 20px;
+}
+.tabbio-cv-visual__paper > p {
+  color: #8d9099;
+  font-size: 11px;
+}
+.tabbio-cv-visual__paper > div {
+  display: grid;
+  gap: 7px;
+  margin-block: 24px;
+}
+.tabbio-cv-visual__paper > div span {
+  height: 7px;
+  border-radius: 5px;
+  background: #f0eff4;
+}
+.tabbio-cv-visual__paper > div span:nth-child(2) {
+  width: 80%;
+}
+.tabbio-cv-visual__paper > div span:nth-child(3) {
+  width: 58%;
+}
+.tabbio-cv-visual__paper a {
+  color: #6f48ed;
+  font-size: 10px;
+}
+.tabbio-paths {
+  min-height: 760px;
+  padding-block: 125px;
+  background: #fff;
+}
+.tabbio-path-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 64px;
+}
+.tabbio-path-grid article {
+  position: relative;
+  min-height: 385px;
+  padding: 28px;
+  border: 1px solid #ececf0;
+  border-radius: 16px;
+}
+.tabbio-line-icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid #e8e4f7;
+  border-radius: 50%;
+  color: #6238ef;
+}
+.tabbio-line-icon svg {
+  width: 16px;
+}
+.tabbio-path-visual {
+  display: flex;
+  height: 100px;
+  align-items: end;
+  gap: 7px;
+  padding: 22px 8px 12px;
+}
+.tabbio-path-visual i {
+  width: 33%;
+  height: 42%;
+  border-radius: 7px 7px 2px 2px;
+  background: #eeeaff;
+}
+.tabbio-path-visual i:nth-child(2) {
+  height: 72%;
+  background: #ded5ff;
+}
+.tabbio-path-visual i:nth-child(3) {
+  height: 95%;
+  background: linear-gradient(#9878f6, #673ef0);
+}
+.tabbio-path-grid small {
+  display: block;
+  color: #92959e;
+  font-size: 10px;
+}
+.tabbio-path-grid h3 {
+  max-width: 310px;
+  margin: 10px 0 0;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+.tabbio-path-grid p {
+  max-width: 300px;
+  margin: 10px 0 0;
+  color: #858993;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.tabbio-path-grid article > svg {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  width: 17px;
+  color: #6a43ef;
+}
+.tabbio-toolkit {
+  min-height: 590px;
+  padding-block: 105px;
+  background: #fff;
+}
+.tabbio-toolkit > div > div {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 68px;
+}
+.tabbio-toolkit article {
+  min-height: 180px;
+  padding: 0 30px;
+  border-left: 1px solid #ececf0;
+}
+.tabbio-toolkit article:first-child {
+  padding-left: 0;
+  border: 0;
+}
+.tabbio-toolkit h3 {
+  margin: 42px 0 0;
+  font-size: 15px;
+}
+.tabbio-toolkit p {
+  max-width: 190px;
+  margin: 9px 0 0;
+  color: #8d9099;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.tabbio-faq {
+  min-height: 900px;
+  padding-block: 135px;
+  background: #fff;
+}
+.tabbio-faq__heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 42px;
+}
+.tabbio-faq h2 {
+  max-width: 520px;
+  margin: 0;
+  font-size: clamp(42px, 4.2vw, 62px);
+  font-weight: 500;
+  letter-spacing: -0.052em;
+  line-height: 0.98;
+}
+.tabbio-faq h2 span {
+  display: block;
+}
+.tabbio-faq__heading > p {
+  margin: 0 0 4px;
+  color: #9497a0;
+  font-size: 12px;
+}
+.tabbio-faq__list {
+  display: grid;
+  gap: 9px;
+}
+.tabbio-faq details {
+  border-radius: 8px;
+  background: #f6f7f7;
+}
+.tabbio-faq summary {
+  display: flex;
+  min-height: 68px;
+  cursor: pointer;
+  list-style: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 12px 18px 12px 22px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.tabbio-faq summary::-webkit-details-marker {
+  display: none;
+}
+.tabbio-faq summary span {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  transition: rotate 180ms ease;
+}
+.tabbio-faq summary svg {
+  width: 15px;
+  color: #5f36ee;
+}
+.tabbio-faq details[open] summary span {
+  rotate: 45deg;
+}
+.tabbio-faq details > p {
+  max-width: 720px;
+  margin: 0;
+  padding: 0 60px 22px 22px;
+  color: #7f838c;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.tabbio-final-cta {
+  min-height: 570px;
+  display: grid;
+  place-items: center;
+  padding-block: 100px;
+  text-align: center;
+  background: #fff;
+}
+.tabbio-final-cta h2 {
+  max-width: 660px;
+  margin: 0 auto;
+  font-size: clamp(48px, 5vw, 72px);
+  font-weight: 600;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+.tabbio-final-cta p {
+  margin: 22px 0 28px;
+  color: #8c9098;
+  font-size: 13px;
+}
+.tabbio-public-footer {
+  position: relative;
+  min-height: 620px;
+  overflow: hidden;
+  padding-top: 70px;
+  background: #f7f9f8;
+}
+.tabbio-footer-links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(120px, 1fr)) 2fr;
+  gap: 50px;
+  position: relative;
+  z-index: 2;
+}
+.tabbio-footer-links > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.tabbio-footer-links strong {
+  margin-bottom: 4px;
+  color: #777b84;
+  font-size: 11px;
+}
+.tabbio-footer-links a {
+  color: #999ca4;
+  font-size: 10px;
+}
+.tabbio-footer-links a:hover {
+  color: #5a2aff;
+}
+.tabbio-footer-links .tabbio-social {
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.tabbio-social a {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid #e1e4e5;
+  border-radius: 8px;
+  color: #6e727a;
+  background: #fff;
+}
+.tabbio-social svg {
+  width: 15px;
+}
+.tabbio-footer-wordmark {
+  position: absolute;
+  left: 50%;
+  bottom: -0.22em;
+  color: #e2e4e4;
+  font-size: min(31vw, 470px);
+  font-weight: 700;
+  letter-spacing: -0.09em;
+  line-height: 0.85;
+  translate: -52% 0;
+  white-space: nowrap;
+}
+.tabbio-footer-note {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  z-index: 2;
+  margin: 0;
+  color: #a7aaaf;
+  font-size: 9px;
+  translate: -50% 0;
+}
+
+@media (max-width: 1050px) {
+  .tabbio-marketing-header nav,
+  .tabbio-language,
+  .tabbio-sign-in {
+    display: none;
+  }
+  .tabbio-menu-button {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .tabbio-menu-button svg {
+    width: 19px;
+  }
+  .tabbio-marketing-header .tabbio-mobile-nav {
+    position: absolute;
+    top: 72px;
+    right: 0;
+    display: grid;
+    width: min(320px, calc(100vw - 48px));
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 16px;
+    background: #2e1b60;
+    box-shadow: 0 22px 60px rgba(34, 19, 70, 0.28);
+  }
+  .tabbio-marketing-header .tabbio-mobile-nav a {
+    color: #fff;
+  }
+  .tabbio-hero__grid {
+    grid-template-columns: 1fr;
+    gap: 54px;
+    padding-top: 145px;
+  }
+  .tabbio-hero__copy {
+    max-width: 680px;
+  }
+  .tabbio-estimator {
+    max-width: 800px;
+  }
+  .tabbio-claim__grid {
+    gap: 50px;
+  }
+}
+
+@media (max-width: 720px) {
+  .tabbio-landing-wrap {
+    width: min(calc(100% - 32px), 1260px);
+  }
+  .tabbio-marketing-header__inner {
+    min-height: 72px;
+  }
+  .tabbio-header-cta {
+    min-width: 64px;
+  }
+  .tabbio-hero,
+  .tabbio-hero__grid {
+    min-height: 0;
+  }
+  .tabbio-hero__grid {
+    display: block;
+    padding-block: 125px 90px;
+  }
+  .tabbio-hero h1 {
+    font-size: clamp(52px, 16vw, 68px);
+  }
+  .tabbio-hero__copy > p {
+    font-size: 15px;
+  }
+  .tabbio-hero__actions {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .tabbio-primary-button {
+    width: 100%;
+  }
+  .tabbio-hero-link {
+    width: 100%;
+    justify-content: center;
+  }
+  .tabbio-hero__facts {
+    display: grid;
+    gap: 8px;
+  }
+  .tabbio-estimator {
+    display: block;
+    margin-top: 52px;
+    border-radius: 18px;
+  }
+  .tabbio-estimator__controls {
+    min-height: 0;
+    padding: 28px 22px 26px;
+  }
+  .tabbio-plan {
+    min-height: 62px;
+    margin-bottom: 22px;
+  }
+  .tabbio-estimator__result {
+    min-height: 220px;
+    padding: 34px 24px;
+  }
+  .tabbio-estimator__result p {
+    margin-bottom: 18px;
+  }
+  .tabbio-estimator__result strong {
+    font-size: clamp(42px, 13vw, 58px);
+  }
+  .tabbio-estimator__notes {
+    padding: 8px 22px;
+  }
+  .tabbio-estimator__notes p {
+    font-size: 10px;
+    line-height: 1.45;
+  }
+  .tabbio-stack-section,
+  .tabbio-steps,
+  .tabbio-claim,
+  .tabbio-paths,
+  .tabbio-toolkit,
+  .tabbio-faq,
+  .tabbio-final-cta {
+    min-height: 0;
+    padding-block: 84px;
+  }
+  .tabbio-stack-section h2,
+  .tabbio-paths > div > h2,
+  .tabbio-toolkit h2 {
+    font-size: 36px;
+  }
+  .tabbio-stack {
+    margin-top: 42px;
+    padding: 24px 16px 18px;
+  }
+  .tabbio-stack__chart {
+    height: 190px;
+    gap: 8px;
+  }
+  .tabbio-stack__legend strong {
+    font-size: 10px;
+  }
+  .tabbio-steps h2,
+  .tabbio-claim h2,
+  .tabbio-faq h2,
+  .tabbio-final-cta h2 {
+    font-size: 42px;
+  }
+  .tabbio-steps ol {
+    grid-template-columns: 1fr 1fr;
+    gap: 38px 0;
+    margin-top: 56px;
+  }
+  .tabbio-steps li,
+  .tabbio-steps li:first-child {
+    min-height: 155px;
+    padding: 0 18px;
+    border: 0;
+    border-left: 1px solid #e1e3e8;
+  }
+  .tabbio-steps li:nth-child(odd) {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .tabbio-steps h3 {
+    margin-top: 30px;
+  }
+  .tabbio-claim__grid {
+    grid-template-columns: 1fr;
+    gap: 52px;
+  }
+  .tabbio-claim__grid > div:first-child > a {
+    width: 100%;
+    justify-content: center;
+  }
+  .tabbio-cv-visual__paper {
+    padding: 22px;
+  }
+  .tabbio-path-grid {
+    grid-template-columns: 1fr;
+    margin-top: 44px;
+  }
+  .tabbio-path-grid article {
+    min-height: 330px;
+  }
+  .tabbio-path-visual {
+    height: 76px;
+  }
+  .tabbio-toolkit > div > div {
+    grid-template-columns: 1fr 1fr;
+    gap: 44px 0;
+    margin-top: 52px;
+  }
+  .tabbio-toolkit article,
+  .tabbio-toolkit article:first-child {
+    min-height: 165px;
+    padding: 0 16px;
+    border: 0;
+    border-left: 1px solid #ececf0;
+  }
+  .tabbio-toolkit article:nth-child(odd) {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .tabbio-toolkit h3 {
+    margin-top: 28px;
+  }
+  .tabbio-faq__heading {
+    display: block;
+    margin-bottom: 32px;
+  }
+  .tabbio-faq__heading > p {
+    margin-top: 18px;
+  }
+  .tabbio-faq summary {
+    min-height: 62px;
+    font-size: 13px;
+  }
+  .tabbio-final-cta .tabbio-primary-button {
+    max-width: 280px;
+  }
+  .tabbio-public-footer {
+    min-height: 570px;
+    padding-top: 58px;
+  }
+  .tabbio-footer-links {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 24px;
+  }
+  .tabbio-footer-links .tabbio-social {
+    justify-content: flex-start;
+  }
+  .tabbio-footer-wordmark {
+    bottom: 30px;
+    font-size: 34vw;
+  }
+  .tabbio-footer-note {
+    bottom: 12px;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tabbio-faq summary span {
+    transition: none;
+  }
+}
+
 @media (max-width: 839px) {
   .app-page {
     padding: 24px 20px 112px;

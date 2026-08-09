@@ -12,12 +12,25 @@ This checklist converts the current frontend-only scope into a verifiable releas
 
 ## Public experience
 
-- [x] Header, hero, offer, estimate disclaimer, facts, joining steps, CV proof, earning paths, toolkit, FAQ, final CTA, and footer are present.
+- [x] Header, hero, concise offer, estimate disclaimer, joining steps, CV proof, earning paths, toolkit, FAQ, final CTA, and oversized wordmark footer are present.
 - [x] Estimator uses paired range and number controls with programmatically associated labels.
 - [x] Default estimator result is USD 2,698.20 and final-month run rate is USD 215.86.
 - [x] FAQ supports keyboard interaction and multiple expanded answers.
 - [x] Public calls to action open the local onboarding or partner demo; no dead primary action remains.
 - [x] Terms and safe referral-preview routes render locally.
+- [x] The estimator appears once; the second proof surface is a visual cohort-stack chart rather than duplicated controls.
+- [x] Visible landing copy is short, plain-language, and paired with a visual or direct action.
+
+## Landing SEO and discoverability
+
+- [x] `/partners` is the single canonical landing route and `/` redirects to it.
+- [x] Title, description, H1, and first paragraph state the partner-program intent without keyword stuffing.
+- [x] Semantic landmarks and sequential headings expose the same story shown visually.
+- [x] FAQ JSON-LD matches the six visible questions and answers.
+- [x] Organization, WebSite, and WebPage JSON-LD identify the page and Tabbio entity.
+- [x] `robots.txt` allows public partner content and excludes the future private partner area and referral previews.
+- [x] `sitemap.xml` includes only the public partner landing and program terms.
+- [x] `llms.txt` gives agents a concise, factual program summary and public links.
 
 ## Partner shell
 
@@ -64,7 +77,7 @@ This checklist converts the current frontend-only scope into a verifiable releas
 - [x] Estimator, metric, and reconciliation unit tests succeed.
 - [x] Filtered production build succeeds.
 - [x] Browser smoke covers public landing, onboarding, every partner destination, referral preview, local mutations, refresh, Back/Forward, console, and broken assets.
-- [x] Final visual review compares the implementation with the supplied public and application exports.
+- [ ] Re-capture the revised public landing at 1512px and 390px after local browser automation is available; the current browser security policy blocked automated localhost capture.
 
 ## Local verification evidence
 
@@ -76,7 +89,7 @@ This checklist converts the current frontend-only scope into a verifiable releas
 - Persistence: corrupt payload, blocked storage, reset-race, and shared onboarding identity regressions passed.
 - Interaction details: controlled mobile menu, exact 840px shell breakpoint, destination-aware referral preview, fractional estimator normalization, stale-draft invalidation, and 44px shared controls passed.
 - Downloads: partner kit ZIP and manifest, QR image, recent-ledger sample CSV, and balance summary were opened or content-checked locally. Asset byte counts and SHA-256 values match the current bundled files.
-- Designer-source fidelity: the original geometric Tabbio mark path, blue-violet textured landing field, calculator split, landing section order, 240px partner rail, page titles, metric hierarchy, content builder, links, earnings, resources, and settings were compared against the supplied SVG exports at their native 1512px width.
+- Designer-source implementation: the original geometric Tabbio mark path, blue-violet textured field, split calculator, section order, compact typography, neutral surfaces, CV claim visual, and oversized footer wordmark are implemented from the supplied SVG composition. The later user instruction removes the repeated calculator and shortens copy.
 - Local lab only: landing and overview recorded approximately 48ms FCP/LCP and zero CLS. These are not field-performance or production-hosting claims.
 
 ## Deferred production evidence

@@ -10,8 +10,17 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const cairo = Cairo({ subsets: ["arabic", "latin"], variable: "--font-cairo" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.tabbio.com",
+  ),
   title: { default: "Tabbio Partners", template: "%s · Tabbio Partners" },
-  description: "A local frontend prototype of the Tabbio partner experience.",
+  description:
+    "Create useful career content, refer customers to Tabbio, and track eligible recurring commission in one simple partner area.",
+  applicationName: "Tabbio Partners",
+  authors: [{ name: "Tabbio" }],
+  creator: "Tabbio",
+  publisher: "Tabbio",
+  formatDetection: { email: false, address: false, telephone: false },
 };
 
 export default function RootLayout({
