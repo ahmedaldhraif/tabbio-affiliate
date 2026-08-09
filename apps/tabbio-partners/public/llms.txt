@@ -1,17 +1,27 @@
 # Tabbio Partner Program
 
-> Tabbio helps CV professionals, career creators, recruiters, and agencies turn useful career work into trackable referrals.
+> Tabbio helps UGC creators, career coaches, CV writers, recruiters, talent specialists, and agencies turn useful career work into trackable referrals.
 
 ## Key facts
 
-- Partner commission: 30% of eligible attributed subscription payments.
+- Tabbio is a UAE-based business. Applications may be open to eligible partners worldwide, subject to local law, program approval, and payout availability.
+- Partner commission: a proposed 30% of eligible net, settled, attributed subscription payments.
 - Main workflow: apply, complete required checks, share a partner link, track commission.
-- Partner tools: client CV handoff, tracked links, content drafts, resources, and earnings history.
+- Agency workflow: screen or shortlist a candidate, create a Tabbio CV, send a tracked or claim link, and earn if the eligible candidate subscribes.
+- Client fees and services remain between the partner and client. Tabbio subscription commission is separate.
+- Partner tools: candidate CV handoff, tracked links, content drafts, disclosure copy, resources, and earnings history.
+- UAE advertiser rules apply to advertising activity from within the UAE. Visitors have a separate official permit route. Partners outside the UAE follow their local rules.
 - Important: eligibility, attribution, refunds, checks, and payout rules follow the current program terms.
+- Prototype boundary: team-level agency tracking, real attribution, payouts, and compliance checks are not connected in this frontend build.
 
 ## Public pages
 
 - Partner program: https://www.tabbio.com/partners
+- Partner policy centre: https://www.tabbio.com/partners/policies
+- Partner agreement: https://www.tabbio.com/partners/policies/partner-agreement
+- Commission schedule: https://www.tabbio.com/partners/policies/commercial-schedule
+- Promotion and disclosure: https://www.tabbio.com/partners/policies/promotion-disclosure
+- Privacy and tracking: https://www.tabbio.com/partners/policies/privacy-tracking
 - Tabbio home: https://www.tabbio.com/
 - Tabbio privacy: https://www.tabbio.com/en/privacy-policy
 - Tabbio terms: https://www.tabbio.com/en/terms-of-service

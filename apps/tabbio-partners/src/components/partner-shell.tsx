@@ -26,7 +26,6 @@ import {
 import { toast } from "sonner";
 
 import { BrandMark } from "@/components/brand-mark";
-import { DemoNotice, ScenarioState } from "@/components/shared";
 import { useDemo } from "@/components/demo-provider";
 
 const routes = [
@@ -34,7 +33,7 @@ const routes = [
   {
     href: "/partner/clients",
     label: "CV Builder",
-    mobileLabel: "Clients",
+    mobileLabel: "CVs",
     icon: Users,
     exact: false,
   },
@@ -66,7 +65,9 @@ const routes = [
   },
 ] as const;
 const mobileMain = routes.filter((route) =>
-  ["Overview", "Content Builder", "Links", "Earnings"].includes(route.label),
+  ["Overview", "CV Builder", "Content Builder", "Earnings"].includes(
+    route.label,
+  ),
 );
 
 function StateController() {
@@ -164,16 +165,14 @@ export function PartnerShell({ children }: { children: React.ReactNode }) {
                   className="min-h-11 w-full justify-start rounded-xl text-[#6b7280]"
                   onClick={() => {
                     resetDemo();
-                    toast.success("Local demo reset");
+                    toast.success("Workspace reset");
                   }}
                 >
                   <RotateCcw />
-                  Reset demo
+                  Reset workspace
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>
-                Restore the deterministic fixtures
-              </TooltipContent>
+              <TooltipContent>Restore the starting workspace</TooltipContent>
             </Tooltip>
           </div>
         </aside>
@@ -182,12 +181,9 @@ export function PartnerShell({ children }: { children: React.ReactNode }) {
             <div className="flex items-center justify-between">
               <BrandMark />
               <span className="rounded-full bg-[#f1edff] px-3 py-1 text-xs font-semibold text-[#4b24c5]">
-                Demo mode
+                Partner
               </span>
             </div>
-          </div>
-          <div className="px-4 pt-4 min-[840px]:px-8 min-[840px]:pt-5">
-            <DemoNotice />
           </div>
           <main id="main-content">{children}</main>
         </div>
@@ -216,7 +212,6 @@ export function PartnerShell({ children }: { children: React.ReactNode }) {
           More
         </Link>
       </nav>
-      <ScenarioState />
     </TooltipProvider>
   );
 }

@@ -1,19 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import JSZip from "jszip";
+import Link from "next/link";
+import { useState } from "react";
 import {
+  ArrowRight,
+  BadgeCheck,
   Check,
   Clipboard,
   Download,
-  FileJson,
   FileText,
   Info,
-  LoaderCircle,
-  PackageOpen,
   Palette,
-  ShieldAlert,
+  ShieldCheck,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -24,77 +23,36 @@ import {
 } from "@refref/ui/components/alert";
 import { Button } from "@refref/ui/components/button";
 import { Card } from "@refref/ui/components/card";
-import { Skeleton } from "@refref/ui/components/skeleton";
 
-import { EmptyState, PageHeader, StatusBadge } from "@/components/shared";
-import {
-  copyText,
-  downloadBlob,
-  downloadText,
-  readScenarioState,
-} from "@/components/tools/browser-actions";
+import { PageHeader } from "@/components/shared";
+import { copyText } from "@/components/tools/browser-actions";
+import { programDocuments } from "@/data/program-policy";
 
-const VERSION = "Prototype 2026-08-09";
 const introCopy =
-  "Turn a PDF CV into one live link that stays easy to share and update.";
+  "Create, share, and grow with Tabbio. Use my partner link to get started.";
 const disclosureCopy =
   "I may earn a commission if you subscribe through this link.";
 
-const resources = [
+const badgeVariants = [
   {
-    name: "Tabbio mark",
-    filename: "tabbio-mark.svg",
-    href: "/brand/tabbio-mark.svg",
-    type: "SVG",
-    size: "842 B",
-    bytes: 842,
-    checksum:
-      "36505612789FECCB8F70C54540615CFEF5BCFEBC9F030301AF970F0B3F0DD6F2",
-    preview: true,
+    id: "stacked",
+    name: "Stacked badge",
+    use: "Profiles, media kits, proposals, and LinkedIn Featured",
+    width: 942,
+    height: 526,
+    preview:
+      "/brand/partner-badges/2026/tabbio-active-partner-2026-stacked-preview.webp",
+    base: "/brand/partner-badges/2026/tabbio-active-partner-2026-stacked",
   },
   {
-    name: "Tabbio lockup",
-    filename: "tabbio-lockup.svg",
-    href: "/brand/tabbio-lockup.svg",
-    type: "SVG",
-    size: "1,056 B",
-    bytes: 1056,
-    checksum:
-      "4DD87784F74AEE324FD9C26F409AABB286B21AA7C5ABCE4FE4625E3BB66B9C44",
-    preview: true,
-  },
-  {
-    name: "Brand tokens",
-    filename: "tabbio-brand-tokens.json",
-    href: "/brand/tabbio-brand-tokens.json",
-    type: "JSON",
-    size: "439 B",
-    bytes: 439,
-    checksum:
-      "4E41C7C5A9AD70E984A5062C2C4A3A1060021EB529186A9563B7A1BDF88DEBCB",
-    preview: false,
-  },
-  {
-    name: "Prototype partner copy",
-    filename: "approved-partner-copy.txt",
-    href: "/brand/approved-partner-copy.txt",
-    type: "TXT",
-    size: "354 B",
-    bytes: 354,
-    checksum:
-      "12719C600F1550C8EDAB4FA683CA5C4818CF8C2747FC1230EF548DCA17960307",
-    preview: false,
-  },
-  {
-    name: "Partner playbook",
-    filename: "partner-playbook.md",
-    href: "/brand/partner-playbook.md",
-    type: "Markdown",
-    size: "759 B",
-    bytes: 759,
-    checksum:
-      "C8ADDE1A1C9FAFC10F6CD7713C411118994AB191437D6AAED9874371DC5918F1",
-    preview: false,
+    id: "horizontal",
+    name: "Horizontal badge",
+    use: "Websites, email signatures, CVs, and presentation footers",
+    width: 1658,
+    height: 303,
+    preview:
+      "/brand/partner-badges/2026/tabbio-active-partner-2026-horizontal-preview.webp",
+    base: "/brand/partner-badges/2026/tabbio-active-partner-2026-horizontal",
   },
 ] as const;
 
@@ -115,43 +73,27 @@ const promotionRules = [
       "Follow the advertising, sponsorship, and disclosure rules for every country and platform where your content appears.",
   },
   {
-    title: "Keep referral URLs private-data free",
+    title: "Protect personal information",
     detail:
       "Never add a client name, email, CV detail, or other personal information to a tracked link or QR code.",
   },
   {
-    title: "Protect brand terms",
+    title: "Protect Tabbio brand terms",
     detail:
-      "Do not buy ads on protected Tabbio brand terms unless the approved production program terms explicitly allow it.",
+      "Do not buy ads on protected Tabbio brand terms unless the program terms explicitly allow it.",
   },
 ] as const;
 
-function ResourcesSkeleton() {
-  return (
-    <div className="app-page space-y-5" aria-label="Loading resources">
-      <Skeleton className="h-24 max-w-2xl rounded-2xl" />
-      <Skeleton className="h-72 rounded-2xl" />
-      <div className="grid gap-5 lg:grid-cols-2">
-        <Skeleton className="h-80 rounded-2xl" />
-        <Skeleton className="h-80 rounded-2xl" />
-      </div>
-    </div>
-  );
-}
-
 export default function ResourcesPage() {
-  const [scenario, setScenario] = useState("default");
   const [copied, setCopied] = useState("");
   const [error, setError] = useState("");
-  const [buildingKit, setBuildingKit] = useState(false);
-
-  useEffect(() => setScenario(readScenarioState()), []);
 
   const copyResource = async (value: string, key: string) => {
     try {
       await copyText(value);
       setCopied(key);
-      toast.success("Copy saved to your clipboard");
+      setError("");
+      toast.success("Copied to your clipboard");
       window.setTimeout(() => setCopied(""), 1800);
     } catch (copyError) {
       setError(
@@ -162,334 +104,312 @@ export default function ResourcesPage() {
     }
   };
 
-  const buildManifest = () => ({
-    name: "Tabbio partner prototype kit",
-    version: VERSION,
-    status:
-      "Local prototype. Legal and brand approval required before production use.",
-    files: resources.map(({ name, filename, href, type, bytes, checksum }) => ({
-      name,
-      filename,
-      url: href,
-      mediaType: type,
-      bytes,
-      sha256: checksum,
-    })),
-    copy: { introduction: introCopy, partnerDisclosure: disclosureCopy },
-    promotionRules,
-  });
-
-  const downloadManifest = () => {
-    const manifest = buildManifest();
-    downloadText(
-      "tabbio-partner-prototype-kit-manifest.json",
-      JSON.stringify(manifest, null, 2),
-      "application/json;charset=utf-8",
-    );
-    toast.success("Kit manifest downloaded");
-  };
-
-  const downloadFullKit = async () => {
-    setBuildingKit(true);
-    setError("");
-    try {
-      const zip = new JSZip();
-      await Promise.all(
-        resources.map(async (resource) => {
-          const response = await fetch(resource.href);
-          if (!response.ok)
-            throw new Error(`${resource.filename} could not be loaded.`);
-          zip.file(resource.filename, await response.arrayBuffer());
-        }),
-      );
-      zip.file("manifest.json", JSON.stringify(buildManifest(), null, 2));
-      const blob = await zip.generateAsync({ type: "blob" });
-      downloadBlob("tabbio-partner-kit-prototype.zip", blob);
-      toast.success("Full prototype kit downloaded");
-    } catch (kitError) {
-      setError(
-        kitError instanceof Error
-          ? kitError.message
-          : "The full kit could not be built. Download files individually instead.",
-      );
-    } finally {
-      setBuildingKit(false);
-    }
-  };
-
-  if (scenario === "loading") return <ResourcesSkeleton />;
-
   return (
     <div className="app-page">
       <PageHeader
-        eyebrow="Prototype library"
+        eyebrow="Partner toolkit"
         title="Resources"
-        description="Files and rules for promoting Tabbio"
-        actions={
-          <Button
-            className="min-h-11 rounded-xl"
-            onClick={downloadFullKit}
-            disabled={buildingKit}
-          >
-            {buildingKit ? (
-              <LoaderCircle className="animate-spin" />
-            ) : (
-              <PackageOpen />
-            )}
-            {buildingKit ? "Building local kit…" : "Download full kit"}
-          </Button>
-        }
+        description="Official assets, ready-to-use copy, and promotion guidance"
       />
 
-      <Alert className="mb-6 rounded-xl border-[#d9cffd] bg-[#f5f1ff] text-[#3e1b9d]">
-        <ShieldAlert aria-hidden="true" />
-        <AlertTitle>Local prototype files</AlertTitle>
-        <AlertDescription className="text-[#5737a6]">
-          These files are downloadable and versioned for this prototype. They
-          are not an officially approved production brand kit, legal disclosure,
-          or promotion policy.
-        </AlertDescription>
-      </Alert>
-
-      {(error || scenario === "error") && (
+      {error && (
         <Alert variant="destructive" className="mb-6 rounded-xl">
           <Info aria-hidden="true" />
-          <AlertTitle>
-            {scenario === "error"
-              ? "Resource sync is not connected"
-              : "Copy action failed"}
-          </AlertTitle>
-          <AlertDescription>
-            {scenario === "error"
-              ? "The local files below can still download. No remote resource library or approval workflow is configured."
-              : error}
-          </AlertDescription>
+          <AlertTitle>Copy action failed</AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
 
-      {scenario === "empty" ? (
-        <EmptyState
-          title="No production kit is connected"
-          description="This state represents a workspace before approved resources are published. The local prototype kit remains available for testing."
-          action={
-            <Button
-              variant="outline"
-              className="min-h-11 rounded-xl"
-              onClick={downloadFullKit}
-              disabled={buildingKit}
-            >
-              <PackageOpen />
-              {buildingKit ? "Building kit…" : "Download prototype kit"}
-            </Button>
-          }
-        />
-      ) : (
-        <>
-          <section aria-labelledby="resource-files-title">
-            <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
-              <div>
-                <h2 id="resource-files-title" className="text-xl font-semibold">
-                  Local files
-                </h2>
-                <p className="mt-1 text-sm text-[#6b7280]">
-                  Version, file size, and SHA-256 are fixed to the bundled
-                  prototype assets.
-                </p>
-              </div>
-              <StatusBadge status={VERSION} />
+      <section className="mb-10" aria-labelledby="brand-kit-title">
+        <Card className="grid min-w-0 gap-0 overflow-hidden rounded-2xl border-[#ded6ed] p-0 shadow-none lg:grid-cols-[minmax(280px,.8fr)_minmax(0,1.2fr)]">
+          <div className="grid min-h-64 place-items-center bg-[#f3efff] p-8 sm:p-12">
+            <Image
+              src="/brand/tabbio-main-logo-violet.svg"
+              alt="Tabbio logo in Tabbio violet"
+              width={795}
+              height={192}
+              priority
+              unoptimized
+              className="h-auto w-full max-w-[420px]"
+            />
+          </div>
+          <div className="flex flex-col justify-center p-6 sm:p-9">
+            <div className="mb-5 grid size-11 place-items-center rounded-xl bg-[#eee9ff] text-[#4b23c6]">
+              <Palette className="size-5" aria-hidden="true" />
             </div>
-            <Card className="min-w-0 gap-0 overflow-hidden rounded-2xl border-[#e5e7eb] py-0 shadow-none">
-              {resources.map((resource, index) => (
-                <article
-                  key={resource.filename}
-                  className={`grid items-center gap-4 p-4 sm:grid-cols-[72px_minmax(0,1fr)_auto] sm:p-5 ${index ? "border-t border-[#eceef0]" : ""}`}
+            <h2
+              id="brand-kit-title"
+              className="text-2xl font-semibold tracking-[-.025em]"
+            >
+              Official Tabbio branding
+            </h2>
+            <p className="mt-2 max-w-xl text-sm leading-6 text-[#6b6473]">
+              English and Arabic logos, favicon, and submark in black, white,
+              and Tabbio violet. Includes SVG, PNG, JPG, EPS, and PDF files.
+            </p>
+            <div className="mt-6">
+              <Button asChild className="min-h-11 rounded-xl">
+                <a
+                  href="/brand/tabbio-branding.zip"
+                  download="Tabbio Branding.zip"
                 >
-                  <div className="grid h-16 w-[72px] place-items-center overflow-hidden rounded-xl bg-[#f3f4f6] p-2">
-                    {resource.preview ? (
-                      <Image
-                        src={resource.href}
-                        alt=""
-                        width={
-                          resource.filename === "tabbio-mark.svg" ? 128 : 520
-                        }
-                        height={128}
-                        unoptimized
-                        className="h-auto max-h-12 w-auto max-w-full"
-                      />
-                    ) : resource.type === "JSON" ? (
-                      <FileJson
-                        className="size-6 text-[#5a2aff]"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <FileText
-                        className="size-6 text-[#5a2aff]"
-                        aria-hidden="true"
-                      />
-                    )}
-                  </div>
-                  <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="font-semibold">{resource.name}</h3>
-                      <span className="rounded-full bg-[#f3f4f6] px-2 py-1 text-[11px] font-semibold text-[#5e6470]">
-                        Prototype
-                      </span>
-                    </div>
-                    <p className="mt-1 text-sm text-[#6b7280]">
-                      {resource.type} · {resource.size} · {VERSION}
-                    </p>
-                    <p
-                      className="mt-1 truncate font-mono text-[11px] text-[#6b7280]"
-                      title={`SHA-256 ${resource.checksum}`}
-                    >
-                      SHA-256 {resource.checksum.slice(0, 16)}…
-                    </p>
-                  </div>
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="min-h-11 justify-self-start rounded-xl sm:justify-self-end"
-                  >
-                    <a href={resource.href} download={resource.filename}>
-                      <Download />
-                      Download
+                  <Download /> Download branding
+                </a>
+              </Button>
+            </div>
+          </div>
+        </Card>
+      </section>
+
+      <section className="mb-10" aria-labelledby="partner-badge-title">
+        <div className="mb-5 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+          <div>
+            <h2
+              id="partner-badge-title"
+              className="text-2xl font-semibold tracking-[-.025em]"
+            >
+              Your Active Partner badge
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-[#6b6473]">
+              Shows that you&apos;re an active Tabbio Partner. Choose the format
+              that fits where you&apos;re sharing it.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Button asChild className="min-h-11 rounded-xl">
+              <a
+                href="/brand/tabbio-active-partner-2026-badge-kit.zip"
+                download="tabbio-active-partner-2026-badge-kit.zip"
+              >
+                <Download /> Download both
+              </a>
+            </Button>
+            <Button asChild variant="outline" className="min-h-11 rounded-xl">
+              <a
+                href="/brand/partner-badge-guidelines.md"
+                download="tabbio-active-partner-2026-guidelines.md"
+              >
+                <FileText /> How to use it
+              </a>
+            </Button>
+          </div>
+        </div>
+
+        <div className="grid gap-5 xl:grid-cols-2">
+          {badgeVariants.map((badge, index) => (
+            <Card
+              key={badge.id}
+              className="min-w-0 gap-0 overflow-hidden rounded-2xl border-[#ded6ed] p-0 shadow-none"
+            >
+              <div className="grid min-h-[250px] place-items-center bg-[#f4f2f7] p-6 sm:p-8">
+                <Image
+                  src={badge.preview}
+                  alt={`Tabbio Active Partner 2026 ${badge.id} badge`}
+                  width={badge.width}
+                  height={badge.height}
+                  loading={index === 0 ? "eager" : "lazy"}
+                  unoptimized
+                  className={`h-auto w-full ${badge.id === "stacked" ? "max-w-[360px]" : "max-w-[620px]"}`}
+                />
+              </div>
+              <div className="p-5 sm:p-6">
+                <h3 className="text-lg font-semibold">{badge.name}</h3>
+                <p className="mt-1 text-sm leading-6 text-[#6b6473]">
+                  {badge.use}
+                </p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <Button asChild size="sm" className="rounded-lg">
+                    <a href={`${badge.base}.svg`} download>
+                      <Download /> SVG
                     </a>
                   </Button>
-                </article>
-              ))}
-            </Card>
-          </section>
-
-          <div className="mt-8 grid min-w-0 grid-cols-[minmax(0,1fr)] items-start gap-6 xl:grid-cols-[minmax(0,.9fr)_minmax(0,1.1fr)]">
-            <section className="min-w-0" aria-labelledby="copy-library-title">
-              <div className="mb-4">
-                <h2 id="copy-library-title" className="text-xl font-semibold">
-                  Copy library
-                </h2>
-                <p className="mt-1 text-sm text-[#6b7280]">
-                  Prototype wording for layout and workflow testing.
-                </p>
-              </div>
-              <div className="space-y-3">
-                {[
-                  {
-                    key: "intro",
-                    label: "Short introduction",
-                    value: introCopy,
-                  },
-                  {
-                    key: "disclosure",
-                    label: "Partner disclosure",
-                    value: disclosureCopy,
-                  },
-                ].map((item) => (
-                  <Card
-                    key={item.key}
-                    className="gap-4 rounded-2xl border-[#e5e7eb] p-5 shadow-none"
+                  <Button
+                    asChild
+                    size="sm"
+                    variant="outline"
+                    className="rounded-lg"
                   >
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <h3 className="font-semibold">{item.label}</h3>
-                        <p className="mt-1 text-xs text-[#8a6415]">
-                          Prototype only. Approval required.
-                        </p>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        className="min-h-11 rounded-xl"
-                        onClick={() => copyResource(item.value, item.key)}
-                      >
-                        {copied === item.key ? <Check /> : <Clipboard />}
-                        {copied === item.key ? "Copied" : "Copy"}
-                      </Button>
-                    </div>
-                    <blockquote className="rounded-xl bg-[#f6f6f7] p-4 text-sm leading-6 text-[#4a4a4d]">
-                      {item.value}
-                    </blockquote>
-                  </Card>
-                ))}
-              </div>
-            </section>
-
-            <section aria-labelledby="promotion-rules-title">
-              <div className="mb-4">
-                <h2
-                  id="promotion-rules-title"
-                  className="text-xl font-semibold"
-                >
-                  Promotion rules
-                </h2>
-                <p className="mt-1 text-sm text-[#6b7280]">
-                  Each rule solves a different risk. Confirm production terms
-                  and local law before publishing.
-                </p>
-              </div>
-              <Card className="min-w-0 gap-0 overflow-hidden rounded-2xl border-[#e5e7eb] py-0 shadow-none">
-                {promotionRules.map((rule, index) => (
-                  <div
-                    key={rule.title}
-                    className={`grid grid-cols-[36px_minmax(0,1fr)] gap-3 p-4 sm:p-5 ${index ? "border-t border-[#eceef0]" : ""}`}
+                    <a href={`${badge.base}.png`} download>
+                      <Download /> PNG
+                    </a>
+                  </Button>
+                  <Button
+                    asChild
+                    size="sm"
+                    variant="ghost"
+                    className="rounded-lg"
                   >
-                    <span className="grid size-8 place-items-center rounded-full bg-[#eee9ff] text-[#4b23c6]">
-                      <Check className="size-4" aria-hidden="true" />
-                    </span>
-                    <div>
-                      <h3 className="font-semibold">{rule.title}</h3>
-                      <p className="mt-1 text-sm leading-6 text-[#6b7280]">
-                        {rule.detail}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </Card>
-            </section>
-          </div>
-
-          <section
-            className="mt-8 rounded-2xl bg-[#241153] p-5 text-white sm:p-7"
-            aria-labelledby="manifest-title"
-          >
-            <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
-              <div className="max-w-2xl">
-                <div className="mb-3 grid size-11 place-items-center rounded-xl bg-white/10">
-                  <Palette className="size-5" aria-hidden="true" />
+                    <a href={`${badge.base}@2x.png`} download>
+                      PNG @2x
+                    </a>
+                  </Button>
                 </div>
-                <h2 id="manifest-title" className="text-xl font-semibold">
-                  Need the complete local kit?
-                </h2>
-                <p className="mt-2 text-sm leading-6 text-[#ddd5f5]">
-                  The ZIP contains all five bundled files plus a JSON manifest
-                  with local paths, byte sizes, checksums, copy snippets, and
-                  promotion rules.
-                </p>
               </div>
-              <div className="flex shrink-0 flex-wrap gap-2">
-                <Button
-                  variant="ghost"
-                  className="min-h-11 rounded-xl text-white hover:bg-white/10 hover:text-white"
-                  onClick={downloadManifest}
-                >
-                  <FileJson />
-                  Manifest only
-                </Button>
-                <Button
-                  variant="secondary"
-                  className="min-h-11 rounded-xl bg-white text-[#241153] hover:bg-[#f4f1ff]"
-                  onClick={downloadFullKit}
-                  disabled={buildingKit}
-                >
-                  {buildingKit ? (
-                    <LoaderCircle className="animate-spin" />
-                  ) : (
-                    <Download />
-                  )}
-                  {buildingKit ? "Building kit…" : "Download ZIP"}
-                </Button>
+            </Card>
+          ))}
+        </div>
+        <p className="mt-4 text-xs leading-5 text-[#7b7282]">
+          Use the badge only while your partner status is active. It confirms
+          program membership, not professional certification or endorsement.
+        </p>
+      </section>
+
+      <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] items-start gap-8 xl:grid-cols-[minmax(0,.9fr)_minmax(0,1.1fr)]">
+        <section className="min-w-0" aria-labelledby="copy-library-title">
+          <div className="mb-4">
+            <h2 id="copy-library-title" className="text-xl font-semibold">
+              Copy and share
+            </h2>
+            <p className="mt-1 text-sm text-[#6b7280]">
+              Start here, then make the wording sound like you.
+            </p>
+          </div>
+          <div className="space-y-3">
+            {[
+              {
+                key: "intro",
+                label: "Short introduction",
+                value: introCopy,
+              },
+              {
+                key: "disclosure",
+                label: "Partner disclosure",
+                value: disclosureCopy,
+              },
+            ].map((item) => (
+              <Card
+                key={item.key}
+                className="gap-4 rounded-2xl border-[#e5e7eb] p-5 shadow-none"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="font-semibold">{item.label}</h3>
+                  <Button
+                    variant="ghost"
+                    className="min-h-11 rounded-xl"
+                    onClick={() => copyResource(item.value, item.key)}
+                  >
+                    {copied === item.key ? <Check /> : <Clipboard />}
+                    {copied === item.key ? "Copied" : "Copy"}
+                  </Button>
+                </div>
+                <blockquote className="rounded-xl bg-[#f6f6f7] p-4 text-sm leading-6 text-[#4a4a4d]">
+                  {item.value}
+                </blockquote>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        <section aria-labelledby="promotion-rules-title">
+          <div className="mb-4">
+            <h2 id="promotion-rules-title" className="text-xl font-semibold">
+              Promote responsibly
+            </h2>
+            <p className="mt-1 text-sm text-[#6b7280]">
+              Five rules to check before you publish.
+            </p>
+          </div>
+          <Card className="min-w-0 gap-0 overflow-hidden rounded-2xl border-[#e5e7eb] py-0 shadow-none">
+            {promotionRules.map((rule, index) => (
+              <div
+                key={rule.title}
+                className={`grid grid-cols-[36px_minmax(0,1fr)] gap-3 p-4 sm:p-5 ${index ? "border-t border-[#eceef0]" : ""}`}
+              >
+                <span className="grid size-8 place-items-center rounded-full bg-[#eee9ff] text-[#4b23c6]">
+                  <Check className="size-4" aria-hidden="true" />
+                </span>
+                <div>
+                  <h3 className="font-semibold">{rule.title}</h3>
+                  <p className="mt-1 text-sm leading-6 text-[#6b7280]">
+                    {rule.detail}
+                  </p>
+                </div>
               </div>
-            </div>
-          </section>
-        </>
-      )}
+            ))}
+          </Card>
+        </section>
+      </div>
+
+      <section
+        className="mt-8 grid gap-5 rounded-2xl bg-[#241153] p-5 text-white sm:p-7 md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
+        aria-labelledby="partner-guide-title"
+      >
+        <div className="flex min-w-0 items-start gap-4">
+          <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-white/10">
+            <BadgeCheck className="size-5" aria-hidden="true" />
+          </div>
+          <div>
+            <h2 id="partner-guide-title" className="text-xl font-semibold">
+              Partner guide
+            </h2>
+            <p className="mt-1 max-w-2xl text-sm leading-6 text-[#ddd5f5]">
+              Practical guidance for content, links, disclosures, and using the
+              Tabbio brand clearly.
+            </p>
+          </div>
+        </div>
+        <Button
+          asChild
+          variant="secondary"
+          className="min-h-11 rounded-xl bg-white text-[#241153] hover:bg-[#f4f1ff]"
+        >
+          <a
+            href="/brand/partner-playbook.md"
+            download="tabbio-partner-guide.md"
+          >
+            <ShieldCheck /> Download guide
+          </a>
+        </Button>
+      </section>
+
+      <section className="mt-10" aria-labelledby="program-documents-title">
+        <div className="grid gap-5 border-t border-[#ddd6e7] pt-7 lg:grid-cols-[280px_minmax(0,1fr)] lg:gap-12">
+          <div>
+            <h2
+              id="program-documents-title"
+              className="text-2xl font-semibold tracking-[-.025em]"
+            >
+              Program documents
+            </h2>
+            <p className="mt-2 text-sm leading-6 text-[#6b6473]">
+              The rules behind commission, promotion, agencies, privacy,
+              compliance, and your partner credential. Tabbio is UAE-based;
+              eligible partners may operate worldwide.
+            </p>
+            <Button
+              asChild
+              variant="outline"
+              className="mt-5 min-h-11 rounded-xl"
+            >
+              <Link href="/partners/policies">
+                Open policy centre <ArrowRight aria-hidden="true" />
+              </Link>
+            </Button>
+          </div>
+          <div className="min-w-0 border-t border-[#e5e0ea]">
+            {programDocuments.map((document) => (
+              <Link
+                key={document.slug}
+                href={`/partners/policies/${document.slug}`}
+                className="focus-ring group grid min-h-20 grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-[#e5e0ea] py-4"
+              >
+                <span className="min-w-0">
+                  <span className="block font-semibold">
+                    {document.shortTitle}
+                  </span>
+                  <span className="mt-1 block text-xs leading-5 text-[#6b6473]">
+                    {document.summary}
+                  </span>
+                </span>
+                <ArrowRight
+                  className="size-5 text-[#5a2aff] transition-transform group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

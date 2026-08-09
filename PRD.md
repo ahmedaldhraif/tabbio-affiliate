@@ -11,6 +11,12 @@
 | Design authority  | `DESIGN.md`                                                   |
 | Builder authority | `CLAUDE.md`                                                   |
 
+Companion delivery documents:
+
+- `docs/TABBIO_PARTNER_POLICY_PACK.md` defines the UAE-based policy and agreement structure exposed by the frontend.
+- `docs/REFREF_PRODUCTION_GAP_REGISTER.md` records what the pinned RefRef baseline does not supply.
+- `docs/PARTNER_FRONTEND_BACKEND_HANDOFF.md` defines the contract for later backend connection without weakening the current prototype boundary.
+
 ## 1. Decision summary
 
 ### Approved delivery slice: local frontend prototype
@@ -83,6 +89,7 @@ Instrument these from launch, but set numeric targets only after a baseline exis
 ### Version 1 includes
 
 - Public partner landing page and earnings estimator.
+- Agency-owned team tracking links that roll up to one approved agency partner, with role, audit, and access controls before production activation.
 - Existing-account sign-in plus new-account handoff to canonical Tabbio auth.
 - Partner application, lane, agreement, jurisdiction checks, payout onboarding, review, approval, rejection, suspension, re-verification, leaving, and termination states.
 - Partner Overview, Clients/CV Builder, Content Builder, Links, Earnings, Resources, Settings, notifications, and support entry.
@@ -96,9 +103,9 @@ Instrument these from launch, but set numeric targets only after a baseline exis
 
 ### Explicit non-goals for Version 1
 
-- Multi-level marketing or commissions on sub-affiliates.
+- Multi-level marketing, partner-on-partner commission, or downstream referral chains. Agency team links may label the staff source, but commission accrues to the approved agency account.
 - Public partner leaderboards or competitive gamification.
-- Multi-user partner teams, invitations, seats, or shared agency workspaces. An agency enrolls one designated user account and must not share credentials; team support requires a later complete permissions and audit design.
+- Uncontrolled credential sharing or team payouts managed by Tabbio. Agency seats and team links require a complete permissions and audit design; the agency manages any internal staff compensation.
 - Tiered commission rates, coupon-code attribution, reseller invoicing, or white-label programs unless separately approved.
 - Automatic posting to social networks or automatic public publishing of generated content.
 - Automatic legal approval, permit approval, commission override, fraud guilt, or payout activation.
@@ -162,7 +169,7 @@ This is the build default unless Finance approves a replacement before Phase 2:
 - Once a customer attribution is locked, ordinary later clicks do not move it. An authorized correction creates a new effective attribution record and an audit event.
 - `Lifetime` means each future eligible settled payment while the attribution and program terms remain valid. It is not a guarantee of income or a promise about a person's lifetime.
 
-The design's `$14.99 -> $4.50` example is valid only if the entire USD 14.99 is eligible. The displayed `5% -> $0.22` holdback implies half-even rounding from USD 0.225. The final policy and examples must be generated from the same tested calculation library.
+The public example uses the current USD 29.99 month-to-month Pro price, which rounds a 30% share to USD 9.00 before other approved adjustments. The final eligible-revenue, tax, refund, fee, holdback, and rounding policy must be generated from the same tested calculation library.
 
 ### Required money states
 
@@ -608,10 +615,14 @@ Consumers are idempotent by `event_id` and source identity. Schema evolution is 
 ### Public partner page
 
 - Offer, eligibility, 30% recurring definition, payout cadence/threshold, and estimator assumptions are visible and consistent with active program configuration.
-- Calculator uses live plan data, paired numeric inputs, keyboard-accessible sliders, locale currency, and `Estimated commission` language.
+- Calculator uses live plan data, one progressive slider from 1 to 1,000,000 with a paired whole-customer input, locale currency, overflow-safe compact display, and `Estimated commission` language. Low values receive finer stops than high values.
 - `Under ten minutes` or `one session` is removed unless measured and scoped to tasks under Tabbio's control. External permit/provider review is never included in a speed promise.
-- Show three useful-work paths: client CV work, creator/education content, and agency/candidate handoff.
-- FAQ answers attribution, payout, refund/reversal, advertiser permit, leaving/removal, privacy, agreement, support, and CV style.
+- Show three useful-work paths before generic program benefits: career coaches and CV writers, UGC creators, and recruiters or agencies. Each path explains the useful work, the tracked handoff, and how an eligible subscription can create recurring commission.
+- Keep a short public application on the landing page. Ask for identity, one primary lane, a work description, an optional profile or best-work link, and current terms confirmation. Capture additional lanes, channels, audience or client reach, territory, compliance, and payout details during onboarding after account handoff.
+- Preserve a recoverable application draft, validate with corrective messages, focus the first invalid control, and never imply transmission or human review while the frontend has no application API.
+- Product previews use clearly labelled sample data. Do not fabricate partner work, creator counts, testimonials, or results.
+- The local application success state provides an explicit `Open demo Partner area` action. In production it routes to a limited applicant state until review is complete.
+- FAQ answers worldwide eligibility, UAE advertising activity, agency and team tracking, client-fee separation, eligible plans, partner tools, commission, attribution, payout, and prohibited promotion. Answers stay concise and the matching JSON-LD is generated from the same source.
 - Program terms, privacy, disclosure guidance, accessibility, and contact are linked.
 
 ### Application, membership, compliance, and payout setup
@@ -633,6 +644,9 @@ Consumers are idempotent by `event_id` and source identity. Schema evolution is 
 ### Clients/CV Builder
 
 - Add the missing Create CV action.
+- Use two literal tabs: `Client CVs` for client records and handoffs, and `CV Skills` for reusable CV-shaping instructions that can be applied to future clients.
+- Client records support search and status filtering. CV layout is record metadata, not a top-level filter.
+- CV Skills lets a partner search and filter Tabbio defaults, community methods, and their own saved skills using a compact Material 3 list. The later creation flow must support private drafts, versioning, reuse, attribution, moderation, and explicit publishing; none is implied by the frontend-only library.
 - Status vocabulary is defined: Draft, Sent, Viewed, Claim pending, Claimed, Expired, Archived, or canonical Tabbio equivalents.
 - Status never depends on a green/amber dot.
 - Claim handoff protects client data and clearly transfers only approved ownership/access.
@@ -662,6 +676,8 @@ Consumers are idempotent by `event_id` and source identity. Schema evolution is 
 - Replace duplicated disclosure copy with legally approved partner disclosure.
 - Give each promotion rule its own explanation. Correct `Keep surfaces quiet`.
 - Download actions point to versioned real files and expose type, size, version/date, and checksum where useful.
+- Issue the unchanged current-year Tabbio Partner credential only after program approval. Assign the universal, Creator, Career, or Agency edition from the approved partner profile. Provide horizontal, compact, and square social SVG/PNG files with full-color, black, and white colorways where appropriate. Never encourage avatar, handle, app-icon, co-logo, certification, employment, or endorsement use.
+- A production digital credential links to a public status page and becomes unavailable when participation is inactive, suspended, expired, or terminated. Annual files must be replaced when a new active-year kit is issued. Credential withdrawal does not erase paid history or independently decide payout treatment.
 - Settings adds real notification controls and public-page preview.
 - Advertiser permit, agreement, and payout provider show separate, honest states and expiry/review information.
 - Use one coherent example identity in demo fixtures.
@@ -735,7 +751,7 @@ Primary references are in Section 25.
 
 ### UAE advertiser permit
 
-The design's advertiser-permit check must be conditional, not a universal hard-coded checkbox. Current [UAE Media Council guidance](https://uaemc.gov.ae/en/%D8%AA%D8%B5%D8%B1%D9%8A%D8%AD-%D9%85%D8%B9%D9%84%D9%86/) says individuals advertising on social media may require a permit, identifies exemptions, and distinguishes residents/citizens from visiting advertisers. Legal must define the decision tree, evidence, expiry, registered accounts, and support language. Tabbio verifies only the evidence and process it is authorized to verify.
+The advertiser-permit check must be conditional, not a universal worldwide checkbox. Current [UAE Media Council guidance](https://uaemc.gov.ae/en/%D8%AA%D8%B5%D8%B1%D9%8A%D8%AD-%D9%85%D8%B9%D9%84%D9%86/) applies to advertising activity from within the UAE, identifies exemptions, distinguishes citizens and residents from visiting advertisers, and gives visitors a separate agency-based route. Partners operating outside the UAE follow their applicable local rules. Legal must define the production decision tree, evidence, expiry, registered accounts, and support language. Tabbio verifies only the evidence and process it is authorized to verify.
 
 ### Stripe Connect
 
@@ -954,7 +970,7 @@ These are the only material blockers to implementation. The recommended defaults
 | Payout setup gating                              | Product + Finance + Legal     | Does not gate Partner access or earning; blocks payout scheduling/submission only                                                | Onboarding and Phase 5 |
 | Payout cutoff/day/threshold/FX/fees              | Finance                       | Monthly, USD 50 base threshold, provider-reconciled FX/fees                                                                      | Phase 5                |
 | Payout provider                                  | Finance + Legal + Engineering | Stripe Connect only after written UAE feasibility; provider adapter and manual fallback                                          | Phase 5                |
-| Partner lane labels and eligibility              | Product                       | Writers/coaches, creators, agencies; workflows are capabilities, not hard silos                                                  | Phase 3                |
+| Partner lane labels and eligibility              | Product                       | UGC creators, career coaches, CV writers, recruiters/talent specialists, agencies; workflows are capabilities, not hard silos    | Phase 3                |
 | Advertiser-permit decision tree                  | Legal/Compliance              | Conditional by jurisdiction/activity; expiry and registered-account evidence                                                     | Phase 3                |
 | Arabic launch scope                              | Product + Legal               | RTL-ready at launch; production Arabic after professional translation/review                                                     | GA                     |
 | Existing partner/prototype migration             | Product + Engineering         | No migration until a source dataset and identity mapping are supplied                                                            | Pilot                  |

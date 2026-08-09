@@ -48,8 +48,8 @@ export const fixedNow = "2026-08-09T09:30:00+04:00";
 
 export const partner = {
   name: "Mohamed B.",
-  audience: "Career coaches and CV writers",
-  lane: "Career services",
+  audience: "Career changers and job seekers",
+  lane: "Career coach",
   slug: "mohamed-b",
   currency: "USD",
   timezone: "Asia/Dubai",

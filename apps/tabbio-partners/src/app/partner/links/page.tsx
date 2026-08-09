@@ -379,6 +379,8 @@ export default function LinksPage() {
                 <SelectContent>
                   {[
                     "LinkedIn",
+                    "Instagram",
+                    "TikTok",
                     "Client CV",
                     "YouTube",
                     "Newsletter",

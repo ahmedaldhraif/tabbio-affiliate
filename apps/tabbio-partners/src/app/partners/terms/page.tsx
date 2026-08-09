@@ -1,13 +1,5 @@
-import type { Metadata } from "next";
-
-import { ProgramTerms } from "@/components/marketing/program-terms";
-
-export const metadata: Metadata = {
-  title: "Proposed program terms",
-  description:
-    "Plain-language terms and unresolved production boundaries for the local Tabbio Partner prototype.",
-};
+import { redirect } from "next/navigation";
 
 export default function PartnerTermsPage() {
-  return <ProgramTerms />;
+  redirect("/partners/policies/partner-agreement");
 }
