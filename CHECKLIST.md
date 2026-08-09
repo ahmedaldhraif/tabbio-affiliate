@@ -12,15 +12,16 @@ This checklist converts the current frontend-only scope into a verifiable releas
 
 ## Public experience
 
-- [x] Header, calculator hero, six benefits, three oversized workflow proofs, embedded application, review path, FAQ, and oversized wordmark footer are present.
+- [x] Header, calculator hero, three audience paths, compact program facts, actual Partner app preview, embedded application, review path, FAQ, and oversized wordmark footer are present.
 - [x] Estimator uses paired range and number controls with programmatically associated labels.
 - [x] Default estimator result is USD 2,698.20 and final-month run rate is USD 215.86.
 - [x] FAQ supports keyboard interaction and multiple expanded answers.
-- [x] Public calls to action move directly to the embedded application or visual workflow; no dead primary action remains.
+- [x] Public calls to action move directly to the application or demo Partner app; the local success state also provides a clear app entrance.
 - [x] Terms and safe referral-preview routes render locally.
 - [x] The estimator appears once in the hero, removing the previous duplicate calculation section.
 - [x] Visible landing copy is short, plain-language, and paired with a visual or direct action.
-- [x] The application uses visible labels, M3-style filled fields and filter chips, 48px targets, inline errors, first-error focus, and a persistent success state.
+- [x] The application uses visible labels, M3-style filled fields and radio surfaces, 48px targets, inline errors, first-error focus, lane-aware prompts, and a persistent success state.
+- [x] UGC creators, career coaches, CV writers, recruiters or talent specialists, and agencies are explicit primary-lane choices.
 - [x] Application drafts persist locally and the page clearly says they are not transmitted without a backend.
 - [x] Product demonstrations identify sample data and do not invent partner testimonials, creator counts, or results.
 
@@ -85,7 +86,7 @@ This checklist converts the current frontend-only scope into a verifiable releas
 ## Local verification evidence
 
 - Production export: 20 static pages.
-- Unit tests: 10 of 10 passing, including application validation and stale-draft sanitation.
+- Unit tests: 11 of 11 passing, including UGC creator and career coach applications, optional-link validation, and legacy-draft migration.
 - Responsive matrix: 110 route-width checks across 11 routes and 10 widths, with zero page-level overflow and an H1 on every route.
 - Text zoom: 8 key routes at 200% root text size, with zero page-level overflow. The 320px checks cover the WCAG 400% reflow viewport equivalent.
 - Automated accessibility: 10 key routes at 390px with zero axe violations. Gradient contrast remained a manual-review item and passed visual review.

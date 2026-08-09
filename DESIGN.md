@@ -202,10 +202,10 @@ Material 3 does not currently define a data-table component. Use semantic HTML a
 ### Public `/partners`
 
 1. Header: existing Tabbio marketing navigation, language switch, sign-in, and `Become a partner`.
-2. First viewport: `Your work keeps paying`, one plain-language sentence, one join action, one `See how it works` action, and the live estimator. The estimator appears once.
-3. Benefits: six large, quiet cards explain recurring commission, client CVs, links and QR, content resources, the earnings ledger, and partner support.
-4. Product proof: three oversized demonstrations show Build, Share, and Track with labelled sample data. Never fabricate partner work, testimonials, or earnings.
-5. Application: one embedded split surface pairs the Tabbio color field with a visible-label M3-style form. Use filter chips for multi-select questions, preserve the draft locally, focus the first error, and show a persistent success state.
+2. First viewport: `Your work keeps paying`, one plain-language sentence, one join action, one `Preview Partner App` action, and the live estimator. The estimator appears once.
+3. Audience paths: three visually committed surfaces name career coaches and CV writers, UGC creators, and recruiters or agencies before listing shared program facts. Each surface shows useful work, the tracked handoff, and the eligible subscription outcome.
+4. Product proof: one large preview uses the actual Partner app structure, navigation, metrics, task choices, and ledger language with labelled deterministic sample data. Never fabricate partner work, testimonials, or earnings.
+5. Application: one embedded split surface pairs the Tabbio color field with a visible-label M3-style form. Ask for one primary lane, adapt the work prompt to that lane, preserve the draft locally, focus the first error, and show a persistent success state with an explicit demo-app entrance.
 6. Review path: Apply, human review, then access to links, resources, and dashboard. Do not promise instant approval while review infrastructure is absent.
 7. FAQ: eligibility, commission definition, attribution, payout, permit, CV styles, leaving, suspension/removal, privacy, and support.
 8. Footer: terms, privacy, program terms, disclosure guidance, accessibility, and contact.

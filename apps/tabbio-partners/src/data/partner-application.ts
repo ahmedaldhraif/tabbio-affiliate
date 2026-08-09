@@ -1,55 +1,44 @@
 export const partnerLanes = [
-  "CV writer",
+  "UGC creator",
   "Career coach",
-  "Content creator",
-  "Recruiter",
+  "CV writer",
+  "Recruiter or talent specialist",
   "Agency",
   "Other",
 ] as const;
 
-export const partnerChannels = [
-  "LinkedIn",
-  "Instagram",
-  "TikTok",
-  "YouTube",
-  "Newsletter",
-  "Website",
-  "Offline",
-  "Other",
-] as const;
-
-export const partnerReachOptions = [
-  "Just starting",
-  "1–10 clients",
-  "11–50 clients",
-  "51–200 clients",
-  "200+ clients",
-] as const;
+export type PartnerLane = (typeof partnerLanes)[number];
 
 export type PartnerApplicationDraft = {
   firstName: string;
   email: string;
+  lane: string;
   profileUrl: string;
-  workUrl: string;
-  country: string;
   about: string;
-  lanes: string[];
-  channels: string[];
-  reach: string;
   agreed: boolean;
 };
 
 export const emptyPartnerApplication: PartnerApplicationDraft = {
   firstName: "",
   email: "",
+  lane: "",
   profileUrl: "",
-  workUrl: "",
-  country: "",
   about: "",
-  lanes: [],
-  channels: [],
-  reach: "",
   agreed: false,
+};
+
+export const lanePrompts: Record<PartnerLane, string> = {
+  "UGC creator":
+    "Tell us what you create, who watches it, and how you would show Tabbio in use.",
+  "Career coach":
+    "Tell us who you coach and how Tabbio could support your client work.",
+  "CV writer":
+    "Tell us about the CV work you deliver and how clients receive it today.",
+  "Recruiter or talent specialist":
+    "Tell us who you place or support and where Tabbio fits in the handoff.",
+  Agency:
+    "Tell us about your clients and the Tabbio workflow you would recommend.",
+  Other: "Tell us what you do and how you would introduce people to Tabbio.",
 };
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -60,12 +49,8 @@ function text(value: unknown) {
   return typeof value === "string" ? value : "";
 }
 
-function textList(value: unknown, allowed: readonly string[]) {
-  if (!Array.isArray(value)) return [];
-  return value.filter(
-    (item): item is string =>
-      typeof item === "string" && allowed.includes(item),
-  );
+export function isPartnerLane(value: string): value is PartnerLane {
+  return partnerLanes.includes(value as PartnerLane);
 }
 
 export function readPartnerApplication(
@@ -73,20 +58,15 @@ export function readPartnerApplication(
 ): PartnerApplicationDraft {
   if (!isRecord(value)) return emptyPartnerApplication;
 
+  const legacyLanes = Array.isArray(value.lanes) ? value.lanes : [];
+  const requestedLane = text(value.lane) || text(legacyLanes[0]);
+
   return {
     firstName: text(value.firstName),
     email: text(value.email),
-    profileUrl: text(value.profileUrl),
-    workUrl: text(value.workUrl),
-    country: text(value.country),
+    lane: isPartnerLane(requestedLane) ? requestedLane : "",
+    profileUrl: text(value.profileUrl) || text(value.workUrl),
     about: text(value.about),
-    lanes: textList(value.lanes, partnerLanes),
-    channels: textList(value.channels, partnerChannels),
-    reach: partnerReachOptions.includes(
-      value.reach as (typeof partnerReachOptions)[number],
-    )
-      ? String(value.reach)
-      : "",
     agreed: value.agreed === true,
   };
 }
@@ -96,22 +76,11 @@ export function validatePartnerApplication(draft: PartnerApplicationDraft) {
   if (!draft.firstName.trim()) errors.firstName = "Enter your first name.";
   if (!/^\S+@\S+\.\S+$/.test(draft.email))
     errors.email = "Enter a valid email address.";
-  if (draft.lanes.length === 0) errors.lanes = "Choose at least one lane.";
-  if (draft.channels.length === 0)
-    errors.channels = "Choose at least one channel.";
-  if (!draft.reach) errors.reach = "Choose the closest range.";
+  if (!isPartnerLane(draft.lane)) errors.lane = "Choose your primary lane.";
   if (draft.about.trim().length < 20)
-    errors.about = "Tell us a little more about your work.";
+    errors.about = "Add a little more about your work and audience.";
   if (draft.profileUrl && !/^https?:\/\/\S+$/i.test(draft.profileUrl))
     errors.profileUrl = "Enter a full link beginning with http or https.";
-  if (draft.workUrl && !/^https?:\/\/\S+$/i.test(draft.workUrl))
-    errors.workUrl = "Enter a full link beginning with http or https.";
   if (!draft.agreed) errors.agreed = "Confirm before continuing.";
   return errors;
-}
-
-export function toggleApplicationValue(values: string[], value: string) {
-  return values.includes(value)
-    ? values.filter((item) => item !== value)
-    : [...values, value];
 }

@@ -192,7 +192,7 @@ export default function CreatePage() {
       <PageHeader
         eyebrow="Local content tool"
         title="Content Builder"
-        description="Create a script, post, or article"
+        description="Create a UGC script, social post, or article"
       />
 
       {scenario === "error" && (
@@ -234,7 +234,7 @@ export default function CreatePage() {
                   }}
                   className={`focus-ring min-h-11 min-w-0 rounded-lg px-2 text-sm font-semibold transition-colors min-[600px]:px-3 ${format === item ? "bg-white text-[#4721bd] shadow-sm" : "text-[#59606c] hover:text-[#2b2b2b]"}`}
                 >
-                  {item}
+                  {item === "Script" ? "UGC script" : item}
                 </button>
               ))}
             </div>

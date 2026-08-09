@@ -610,10 +610,11 @@ Consumers are idempotent by `event_id` and source identity. Schema evolution is 
 - Offer, eligibility, 30% recurring definition, payout cadence/threshold, and estimator assumptions are visible and consistent with active program configuration.
 - Calculator uses live plan data, paired numeric inputs, keyboard-accessible sliders, locale currency, and `Estimated commission` language.
 - `Under ten minutes` or `one session` is removed unless measured and scoped to tasks under Tabbio's control. External permit/provider review is never included in a speed promise.
-- Show three useful-work paths: client CV work, creator/education content, and agency/candidate handoff.
-- Keep the public application on the landing page. Ask for identity, lane, channels, practical reach, work description, optional profile/work links, country, and current terms confirmation.
+- Show three useful-work paths before generic program benefits: career coaches and CV writers, UGC creators, and recruiters or agencies. Each path explains the useful work, the tracked handoff, and how an eligible subscription can create recurring commission.
+- Keep a short public application on the landing page. Ask for identity, one primary lane, a work description, an optional profile or best-work link, and current terms confirmation. Capture additional lanes, channels, audience or client reach, territory, compliance, and payout details during onboarding after account handoff.
 - Preserve a recoverable application draft, validate with corrective messages, focus the first invalid control, and never imply transmission or human review while the frontend has no application API.
 - Product previews use clearly labelled sample data. Do not fabricate partner work, creator counts, testimonials, or results.
+- The local application success state provides an explicit `Open demo Partner area` action. In production it routes to a limited applicant state until review is complete.
 - FAQ answers attribution, payout, refund/reversal, advertiser permit, leaving/removal, privacy, agreement, support, and CV style.
 - Program terms, privacy, disclosure guidance, accessibility, and contact are linked.
 
@@ -957,7 +958,7 @@ These are the only material blockers to implementation. The recommended defaults
 | Payout setup gating                              | Product + Finance + Legal     | Does not gate Partner access or earning; blocks payout scheduling/submission only                                                | Onboarding and Phase 5 |
 | Payout cutoff/day/threshold/FX/fees              | Finance                       | Monthly, USD 50 base threshold, provider-reconciled FX/fees                                                                      | Phase 5                |
 | Payout provider                                  | Finance + Legal + Engineering | Stripe Connect only after written UAE feasibility; provider adapter and manual fallback                                          | Phase 5                |
-| Partner lane labels and eligibility              | Product                       | Writers/coaches, creators, agencies; workflows are capabilities, not hard silos                                                  | Phase 3                |
+| Partner lane labels and eligibility              | Product                       | UGC creators, career coaches, CV writers, recruiters/talent specialists, agencies; workflows are capabilities, not hard silos    | Phase 3                |
 | Advertiser-permit decision tree                  | Legal/Compliance              | Conditional by jurisdiction/activity; expiry and registered-account evidence                                                     | Phase 3                |
 | Arabic launch scope                              | Product + Legal               | RTL-ready at launch; production Arabic after professional translation/review                                                     | GA                     |
 | Existing partner/prototype migration             | Product + Engineering         | No migration until a source dataset and identity mapping are supplied                                                            | Pilot                  |

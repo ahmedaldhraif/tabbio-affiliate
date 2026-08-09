@@ -11,58 +11,67 @@ describe("partner application", () => {
     expect(validatePartnerApplication(emptyPartnerApplication)).toEqual({
       firstName: "Enter your first name.",
       email: "Enter a valid email address.",
-      lanes: "Choose at least one lane.",
-      channels: "Choose at least one channel.",
-      reach: "Choose the closest range.",
-      about: "Tell us a little more about your work.",
+      lane: "Choose your primary lane.",
+      about: "Add a little more about your work and audience.",
       agreed: "Confirm before continuing.",
     });
   });
 
-  it("accepts a complete starting-small application", () => {
+  it("accepts a complete UGC creator application", () => {
     expect(
       validatePartnerApplication({
         ...emptyPartnerApplication,
-        firstName: "Ahmed",
-        email: "ahmed@example.com",
-        lanes: ["Career coach"],
-        channels: ["Offline"],
-        reach: "Just starting",
-        about: "I help graduates prepare clear career stories.",
+        firstName: "Maya",
+        email: "maya@example.com",
+        lane: "UGC creator",
+        profileUrl: "https://instagram.com/maya",
+        about: "I make practical career videos for first-job candidates.",
         agreed: true,
       }),
     ).toEqual({});
   });
 
-  it("sanitizes a stale or malformed local draft", () => {
-    expect(
-      readPartnerApplication({
-        firstName: 42,
-        email: "saved@example.com",
-        lanes: ["Recruiter", "Unknown"],
-        channels: "LinkedIn",
-        reach: "Millions",
-        agreed: "yes",
-      }),
-    ).toEqual({
-      ...emptyPartnerApplication,
-      email: "saved@example.com",
-      lanes: ["Recruiter"],
-    });
-  });
-
-  it("validates optional links only when supplied", () => {
+  it("accepts a career coach with no audience-size requirement", () => {
     expect(
       validatePartnerApplication({
         ...emptyPartnerApplication,
         firstName: "Sara",
         email: "sara@example.com",
-        lanes: ["CV writer"],
-        channels: ["LinkedIn"],
-        reach: "1–10 clients",
-        about: "I help early career candidates improve their CVs.",
-        profileUrl: "linkedin.com/in/sara",
+        lane: "Career coach",
+        about: "I coach graduates through interviews and career changes.",
+        agreed: true,
+      }),
+    ).toEqual({});
+  });
+
+  it("migrates a valid lane and work link from the earlier local draft", () => {
+    expect(
+      readPartnerApplication({
+        firstName: "Ahmed",
+        email: "saved@example.com",
+        lanes: ["Career coach", "Unknown"],
         workUrl: "https://example.com/work",
+        channels: "LinkedIn",
+        agreed: "yes",
+      }),
+    ).toEqual({
+      ...emptyPartnerApplication,
+      firstName: "Ahmed",
+      email: "saved@example.com",
+      lane: "Career coach",
+      profileUrl: "https://example.com/work",
+    });
+  });
+
+  it("validates an optional link only when supplied", () => {
+    expect(
+      validatePartnerApplication({
+        ...emptyPartnerApplication,
+        firstName: "Maya",
+        email: "maya@example.com",
+        lane: "UGC creator",
+        about: "I create useful short videos for career changers.",
+        profileUrl: "instagram.com/maya",
         agreed: true,
       }),
     ).toEqual({

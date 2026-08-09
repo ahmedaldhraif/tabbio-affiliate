@@ -36,6 +36,7 @@ import { Textarea } from "@refref/ui/components/textarea";
 import { DEMO_RESET_EVENT, useDemo } from "@/components/demo-provider";
 import { PageHeader, StatusBadge } from "@/components/shared";
 import { readScenarioState } from "@/components/tools/browser-actions";
+import { partnerLanes } from "@/data/partner-application";
 
 const STORAGE_KEY = "tabbio-partner-onboarding-local-v1";
 const AGREEMENT_VERSION = "Prototype 2026-08-09";
@@ -74,6 +75,8 @@ const emptyData: OnboardingData = {
 const steps = ["Your work", "Where you share", "Program rules", "Review"];
 const channelOptions = [
   "LinkedIn",
+  "Instagram",
+  "TikTok",
   "YouTube",
   "Newsletter",
   "Client CVs",
@@ -112,11 +115,17 @@ function readOnboardingData(value: unknown): OnboardingData {
       ]
     : [];
   const lane = readString(value.lane);
+  const migratedLane =
+    lane === "Career services"
+      ? "Career coach"
+      : lane === "Creator / educator"
+        ? "UGC creator"
+        : lane;
 
   return {
     publicName: readString(value.publicName),
-    lane: ["Career services", "Creator / educator", "Agency"].includes(lane)
-      ? lane
+    lane: partnerLanes.includes(migratedLane as (typeof partnerLanes)[number])
+      ? migratedLane
       : "",
     audience: readString(value.audience),
     territory: readString(value.territory),
@@ -565,13 +574,11 @@ export default function OnboardingPage() {
                     <SelectValue placeholder="Choose your lane" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Career services">
-                      Career services
-                    </SelectItem>
-                    <SelectItem value="Creator / educator">
-                      Creator / educator
-                    </SelectItem>
-                    <SelectItem value="Agency">Agency</SelectItem>
+                    {partnerLanes.map((lane) => (
+                      <SelectItem key={lane} value={lane}>
+                        {lane}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -581,7 +588,7 @@ export default function OnboardingPage() {
                   id="audience"
                   value={data.audience}
                   onChange={(event) => update("audience", event.target.value)}
-                  placeholder="e.g. Career coaches and CV writers"
+                  placeholder="e.g. Career changers making their first CV"
                   className="h-11 rounded-xl"
                 />
                 <p className="text-xs leading-5 text-[#6b7280]">

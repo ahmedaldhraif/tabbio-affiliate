@@ -6,13 +6,15 @@ import { publicFaq } from "@/data/marketing";
 export const metadata: Metadata = {
   title: "Partner Program | 30% Recurring Commission",
   description:
-    "Join the Tabbio partner program. Create useful CV and career content, refer eligible customers, and track 30% recurring commission.",
+    "Join the Tabbio partner program for UGC creators, career coaches, CV writers, recruiters, and agencies. Track 30% recurring commission on eligible subscriptions.",
   alternates: { canonical: "/partners" },
   keywords: [
     "Tabbio partner program",
     "Tabbio affiliate program",
     "CV affiliate program",
     "career creator partner program",
+    "UGC creator affiliate program",
+    "career coach affiliate program",
   ],
   openGraph: {
     type: "website",
@@ -20,13 +22,13 @@ export const metadata: Metadata = {
     siteName: "Tabbio",
     title: "Tabbio Partner Program",
     description:
-      "Turn useful CV and career work into eligible recurring commission.",
+      "A partner program for UGC creators, career coaches, CV writers, recruiters, and agencies.",
   },
   twitter: {
     card: "summary",
     title: "Tabbio Partner Program",
     description:
-      "Turn useful CV and career work into eligible recurring commission.",
+      "A partner program for UGC creators, career coaches, CV writers, recruiters, and agencies.",
   },
 };
 
@@ -54,7 +56,7 @@ export default function PartnersPage() {
         url: "https://www.tabbio.com/partners",
         name: "Tabbio Partner Program",
         description:
-          "Create useful CV and career content, refer eligible customers, and track recurring commission.",
+          "UGC creators, career coaches, CV writers, recruiters, and agencies can create useful work, refer eligible customers, and track recurring commission.",
         isPartOf: { "@id": "https://www.tabbio.com/#website" },
         about: { "@id": "https://www.tabbio.com/#organization" },
       },

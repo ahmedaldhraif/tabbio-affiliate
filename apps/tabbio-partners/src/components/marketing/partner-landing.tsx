@@ -2,8 +2,8 @@
 
 /*
  * THESIS: A direct, visual path from useful career work to recurring earnings.
- * COMPOSITION: Calculator hero, six benefits, three product proofs, split form,
- * three-step review path, FAQ, footer.
+ * COMPOSITION: Calculator hero, three partner lanes, real app preview, compact
+ * program facts, split application, three-step review path, FAQ, footer.
  * DEPTH: Tabbio gradient establishes the promise; quiet neutral surfaces carry
  * information; deep violet frames product proof.
  * TYPOGRAPHY: Existing Tabbio display hierarchy with short, literal copy.
@@ -16,20 +16,22 @@ import {
   ArrowUpRight,
   BarChart3,
   BriefcaseBusiness,
+  Building2,
   Check,
   ChevronRight,
   CircleDollarSign,
   ClipboardCheck,
   FileText,
   Globe2,
+  GraduationCap,
   Instagram,
-  Link2,
+  LayoutDashboard,
   Menu,
-  MessageSquareText,
   Music2,
   Plus,
   QrCode,
   ShieldCheck,
+  Video,
   X,
   Youtube,
 } from "lucide-react";
@@ -40,7 +42,14 @@ import { Button } from "@refref/ui/components/button";
 
 import { BrandMark } from "@/components/brand-mark";
 import { PartnerApplicationForm } from "@/components/marketing/partner-application-form";
-import { calculateEstimator, normalizeEstimatorInput } from "@/data/demo-data";
+import {
+  balances,
+  calculateEstimator,
+  formatUsd,
+  ledger,
+  normalizeEstimatorInput,
+  periodTotals,
+} from "@/data/demo-data";
 import { publicFaq } from "@/data/marketing";
 
 const PLAN_PRICE = 14.99;
@@ -55,41 +64,36 @@ const navItems = [
   ["Tools", "https://www.tabbio.com/en/tools"],
 ] as const;
 
-const benefits = [
+const audiencePaths = [
   {
-    icon: CircleDollarSign,
-    title: "30% recurring",
-    copy: "Earn while an eligible referral keeps paying.",
+    icon: GraduationCap,
+    title: "Career coaches & CV writers",
+    copy: "Build or improve a client CV, send the claim link, and earn when an eligible client subscribes.",
+    action: "Client work → claim link → subscription",
   },
   {
-    icon: FileText,
-    title: "Client-ready CVs",
-    copy: "Build useful work your clients can claim.",
+    icon: Video,
+    title: "UGC creators",
+    copy: "Show Tabbio in a useful tutorial, add the disclosure, and share one tracked link across your channels.",
+    action: "Useful content → tracked link → subscription",
   },
   {
-    icon: Link2,
-    title: "Links and QR codes",
-    copy: "Give every channel a trackable path.",
-  },
-  {
-    icon: MessageSquareText,
-    title: "Content toolkit",
-    copy: "Start from clear formats and disclosure copy.",
-  },
-  {
-    icon: BarChart3,
-    title: "Visible earnings",
-    copy: "See pending, payable, and paid amounts.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Partner support",
-    copy: "Use approved assets, guidance, and program rules.",
+    icon: Building2,
+    title: "Recruiters & agencies",
+    copy: "Hand a candidate or client a professional Tabbio path and track the result without spreadsheet guesswork.",
+    action: "Handoff → attribution → clear earnings",
   },
 ] as const;
 
+const programFacts = [
+  [CircleDollarSign, "30% recurring", "Eligible paid subscriptions"],
+  [QrCode, "Tracked links + QR", "A clear path for every channel"],
+  [BarChart3, "Explainable earnings", "Pending, payable, and paid"],
+  [ShieldCheck, "Partner resources", "Approved assets and disclosures"],
+] as const;
+
 const nextSteps = [
-  ["Apply", "Tell us how you help people with careers."],
+  ["Apply", "Choose your lane and show us your best work."],
   ["We review", "A real person checks fit and your work."],
   ["Start sharing", "Get your link, resources, and dashboard."],
 ] as const;
@@ -277,7 +281,7 @@ function Header() {
             <Globe2 aria-hidden="true" /> EN
           </span>
           <Link className="tabbio-sign-in" href="/partner">
-            Sign in
+            Preview app
           </Link>
           <button
             className="tabbio-menu-button"
@@ -301,7 +305,7 @@ function Header() {
               </a>
             ))}
             <Link href="/partner" onClick={() => setOpen(false)}>
-              Open partner area
+              Preview partner app
             </Link>
           </nav>
         )}
@@ -384,8 +388,8 @@ export function PartnerLanding() {
                 <Button asChild className="tabbio-primary-button">
                   <Link href="#form">Become A Partner</Link>
                 </Button>
-                <Link className="tabbio-hero-link" href="#partner-work">
-                  See how it works <ArrowUpRight aria-hidden="true" />
+                <Link className="tabbio-hero-link" href="/partner">
+                  Preview Partner App <ArrowUpRight aria-hidden="true" />
                 </Link>
               </div>
               <ul
@@ -412,21 +416,44 @@ export function PartnerLanding() {
           </div>
         </section>
 
-        <section className="program-benefits" aria-labelledby="benefits-title">
+        <section
+          className="program-audiences"
+          aria-labelledby="audiences-title"
+        >
           <div className="tabbio-landing-wrap">
-            <p className="program-eyebrow">What you get</p>
-            <h2 id="benefits-title">Everything in one partner program.</h2>
-            <div className="program-benefit-grid">
-              {benefits.map(({ icon: Icon, title, copy }) => (
+            <div className="program-section-heading">
+              <p className="program-eyebrow">Choose your path</p>
+              <h2 id="audiences-title">
+                Built around the work you already do.
+              </h2>
+              <p>Pick the path closest to your work today.</p>
+            </div>
+            <div className="program-audience-grid">
+              {audiencePaths.map(({ icon: Icon, title, copy, action }) => (
                 <article key={title}>
-                  <span>
-                    <Icon aria-hidden="true" />
-                  </span>
+                  <div className="program-audience-card__top">
+                    <span>
+                      <Icon aria-hidden="true" />
+                    </span>
+                    <ArrowUpRight aria-hidden="true" />
+                  </div>
                   <div>
                     <h3>{title}</h3>
                     <p>{copy}</p>
                   </div>
+                  <small>{action}</small>
                 </article>
+              ))}
+            </div>
+            <div className="program-fact-strip" aria-label="Program benefits">
+              {programFacts.map(([Icon, title, copy]) => (
+                <div key={title}>
+                  <Icon aria-hidden="true" />
+                  <span>
+                    <strong>{title}</strong>
+                    <small>{copy}</small>
+                  </span>
+                </div>
               ))}
             </div>
           </div>
@@ -434,100 +461,120 @@ export function PartnerLanding() {
 
         <section
           id="partner-work"
-          className="program-showcase"
+          className="program-showcase program-showcase--app"
           aria-labelledby="showcase-title"
         >
           <div className="tabbio-landing-wrap">
-            <p className="program-eyebrow">Made for real partner work</p>
-            <h2 id="showcase-title">
-              From useful work to <span>tracked earnings.</span>
-            </h2>
-            <div className="program-showcase-grid">
-              <article className="program-showcase-card program-showcase-card--cv">
-                <div className="program-showcase-card__copy">
-                  <small>01 · Build</small>
-                  <h3>Create a CV your client can claim.</h3>
-                </div>
-                <div
-                  className="program-cv-preview"
-                  aria-label="Sample CV preview"
-                >
+            <div className="program-showcase-heading">
+              <div>
+                <p className="program-eyebrow">See the real product flow</p>
+                <h2 id="showcase-title">
+                  One place to create, share, and understand every amount.
+                </h2>
+              </div>
+              <Link href="/partner">
+                Open the demo Partner app <ArrowUpRight aria-hidden="true" />
+              </Link>
+            </div>
+
+            <div className="program-app-preview">
+              <aside aria-label="Partner app preview navigation">
+                <BrandMark light compact />
+                <nav>
+                  <span className="is-active">
+                    <LayoutDashboard aria-hidden="true" /> Overview
+                  </span>
+                  <span>
+                    <FileText aria-hidden="true" /> Clients
+                  </span>
+                  <span>
+                    <Video aria-hidden="true" /> Create
+                  </span>
+                  <span>
+                    <QrCode aria-hidden="true" /> Links
+                  </span>
+                  <span>
+                    <BarChart3 aria-hidden="true" /> Earnings
+                  </span>
+                </nav>
+              </aside>
+              <div className="program-app-preview__main">
+                <header>
                   <div>
-                    <span>SK</span>
-                    <p>
-                      <strong>Sara Khan</strong>
-                      <small>Product Designer</small>
-                    </p>
-                    <em>Ready to claim</em>
+                    <small>Partner overview</small>
+                    <strong>Welcome back, Mohamed</strong>
                   </div>
-                  <section>
-                    <small>Selected experience</small>
-                    <strong>Senior Product Designer</strong>
-                    <i />
-                    <i />
-                    <i />
+                  <span>Demo data</span>
+                </header>
+                <div className="program-app-preview__metrics">
+                  <article className="program-app-preview__balance">
+                    <small>Next payout</small>
+                    <strong>{formatUsd(balances.payable)}</strong>
+                  </article>
+                  <article>
+                    <small>Clicks</small>
+                    <strong>
+                      {periodTotals.clicks.toLocaleString("en-US")}
+                    </strong>
+                  </article>
+                  <article>
+                    <small>Signups</small>
+                    <strong>
+                      {periodTotals.signups.toLocaleString("en-US")}
+                    </strong>
+                  </article>
+                  <article>
+                    <small>Paying</small>
+                    <strong>
+                      {periodTotals.paying.toLocaleString("en-US")}
+                    </strong>
+                  </article>
+                </div>
+                <div className="program-app-preview__workspace">
+                  <section aria-labelledby="preview-next-task">
+                    <div>
+                      <small>Next useful task</small>
+                      <h3 id="preview-next-task">
+                        Choose what you want to make.
+                      </h3>
+                    </div>
+                    <div className="program-app-preview__actions">
+                      <span>
+                        <GraduationCap aria-hidden="true" /> Create a client CV
+                      </span>
+                      <span>
+                        <Video aria-hidden="true" /> Draft UGC content
+                      </span>
+                      <span>
+                        <QrCode aria-hidden="true" /> Create tracked link
+                      </span>
+                    </div>
+                  </section>
+                  <section aria-labelledby="preview-ledger-title">
+                    <div>
+                      <small>Recent ledger activity</small>
+                      <h3 id="preview-ledger-title">
+                        Every amount has a source.
+                      </h3>
+                    </div>
+                    <ul>
+                      {ledger.slice(0, 3).map((entry) => (
+                        <li key={entry.id}>
+                          <span>
+                            <strong>{entry.description}</strong>
+                            <small>{entry.status}</small>
+                          </span>
+                          <em>{formatUsd(entry.commission)}</em>
+                        </li>
+                      ))}
+                    </ul>
                   </section>
                 </div>
-              </article>
-
-              <article className="program-showcase-card program-showcase-card--share">
-                <div className="program-showcase-card__copy">
-                  <small>02 · Share</small>
-                  <h3>Turn one idea into a clear path.</h3>
-                </div>
-                <div
-                  className="program-share-preview"
-                  aria-label="Sample tracked share"
-                >
-                  <div className="program-share-preview__post">
-                    <span>3 fixes for a CV that gets ignored</span>
-                    <strong>Make the first six seconds count.</strong>
-                    <small>Partner link · Paid disclosure included</small>
-                  </div>
-                  <div className="program-share-preview__link">
-                    <QrCode aria-hidden="true" />
-                    <p>
-                      <small>Tracked link</small>
-                      <strong>tabbio.com/s/sara</strong>
-                    </p>
-                    <Check aria-hidden="true" />
-                  </div>
-                </div>
-              </article>
-
-              <article className="program-showcase-card program-showcase-card--track">
-                <div className="program-showcase-card__copy">
-                  <small>03 · Track</small>
-                  <h3>See what is pending, payable, and paid.</h3>
-                </div>
-                <div
-                  className="program-ledger-preview"
-                  aria-label="Sample earnings ledger"
-                >
-                  <div>
-                    <small>This month</small>
-                    <strong>$382.24</strong>
-                    <span>+18% from last month</span>
-                  </div>
-                  <ul>
-                    <li>
-                      <span>Pending</span>
-                      <strong>$91.38</strong>
-                    </li>
-                    <li>
-                      <span>Payable</span>
-                      <strong>$126.47</strong>
-                    </li>
-                    <li>
-                      <span>Paid</span>
-                      <strong>$164.39</strong>
-                    </li>
-                  </ul>
-                </div>
-              </article>
+              </div>
             </div>
             <p className="program-preview-note">
-              Product previews use sample data. No fabricated partner results.
+              This is the working local Partner interface with deterministic
+              demo data. It does not represent live partner results.
             </p>
           </div>
         </section>
@@ -542,7 +589,7 @@ export function PartnerLanding() {
               <div>
                 <p className="program-eyebrow">Become a partner</p>
                 <h2 id="form-title">
-                  Tell us how you help people move forward.
+                  Tell us how you create, coach, or help people move forward.
                 </h2>
                 <p>Short, straightforward questions.</p>
               </div>

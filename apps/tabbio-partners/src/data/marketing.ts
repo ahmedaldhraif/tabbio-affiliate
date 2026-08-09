@@ -2,7 +2,7 @@ export const publicFaq = [
   {
     question: "Who can join?",
     answer:
-      "CV writers, career coaches, creators, recruiters, and agencies can apply.",
+      "UGC creators, career coaches, CV writers, recruiters, talent specialists, and agencies can apply.",
   },
   {
     question: "What does 30% lifetime mean?",

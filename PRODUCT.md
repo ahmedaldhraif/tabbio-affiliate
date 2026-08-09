@@ -10,7 +10,7 @@ web
 
 ## Users
 
-- The primary user is an existing or new Tabbio user who also earns as a partner. The initial lanes are career writers/coaches, creators, and agencies. Candidate sourcing and client-CV work are workflows within those lanes, not separate products.
+- The primary user is an existing or new Tabbio user who also earns as a partner. The initial lanes are UGC creators, career coaches, CV writers, recruiters or talent specialists, and agencies. Candidate sourcing, client-CV work, and useful creator content are workflows within those lanes, not separate products.
 - Partner-program operators review applications, eligibility, attribution, claims, compliance, and support cases.
 - Finance operators approve commission adjustments, payout batches, reversals, and reconciliation.
 - Referred visitors and customers receive partner links or CV claim links and must be able to understand who shared them and what happens to their data.
