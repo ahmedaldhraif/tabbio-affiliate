@@ -12,17 +12,21 @@ This checklist converts the current frontend-only scope into a verifiable releas
 
 ## Public experience
 
-- [x] Header, calculator hero, three audience paths, compact program facts, actual Partner app preview, embedded application, review path, FAQ, and oversized wordmark footer are present.
-- [x] Estimator uses paired range and number controls with programmatically associated labels.
-- [x] Default estimator result is USD 2,698.20 and final-month run rate is USD 215.86.
+- [x] Header, direct product hero, three audience paths, one earnings calculator, actual Partner app preview, embedded application, review path, FAQ, and oversized wordmark footer are present.
+- [x] Estimator is swipe-first from 1 to 1,000,000 customers, with a paired editable number field and accessible value text.
+- [x] Default estimator uses four new Pro customers per month and shows a USD 431.86 month-12 estimate.
 - [x] FAQ supports keyboard interaction and multiple expanded answers.
 - [x] Public calls to action move directly to the application or demo Partner app; the local success state also provides a clear app entrance.
 - [x] Terms and safe referral-preview routes render locally.
-- [x] The estimator appears once in the hero, removing the previous duplicate calculation section.
+- [x] The estimator appears once in a dedicated earnings section, keeping the first decision moment focused on audience, offer, and action.
+- [x] The public estimator asks for one value only and states the month-12 and 30% Pro basis once, on a restrained background that never competes with or covers the amount.
 - [x] Visible landing copy is short, plain-language, and paired with a visual or direct action.
-- [x] The application uses visible labels, M3-style filled fields and radio surfaces, 48px targets, inline errors, first-error focus, lane-aware prompts, and a persistent success state.
+- [x] Each public section owns one idea; repeated program benefits and non-clickable arrow affordances are removed.
+- [x] The application uses two progressive steps, visible labels, M3-style filled fields and radio surfaces, 48px targets, inline errors, first-error focus, lane-aware prompts, and a persistent success state.
 - [x] UGC creators, career coaches, CV writers, recruiters or talent specialists, and agencies are explicit primary-lane choices.
-- [x] Application drafts persist locally and the page clearly says they are not transmitted without a backend.
+- [x] Application drafts persist locally; the frontend-only limitation remains documented without adding prototype/debug language to the customer-facing invitation panel.
+- [x] Hero and application visuals use distinct, mixed-ethnicity editorial illustrations with restrained print grain; no perfume, cosmetics, floating icon clouds, or glossy 3D motifs appear.
+- [x] The post-application path uses three short tactile cards and explicitly mentions human review.
 - [x] Product demonstrations identify sample data and do not invent partner testimonials, creator counts, or results.
 
 ## Landing SEO and discoverability
@@ -30,7 +34,7 @@ This checklist converts the current frontend-only scope into a verifiable releas
 - [x] `/partners` is the single canonical landing route and `/` redirects to it.
 - [x] Title, description, H1, and first paragraph state the partner-program intent without keyword stuffing.
 - [x] Semantic landmarks and sequential headings expose the same story shown visually.
-- [x] FAQ JSON-LD matches the eight visible questions and answers.
+- [x] FAQ JSON-LD matches all visible questions and answers, including worldwide eligibility, UAE activity, agency teams, client fees, tools, attribution, payouts, and prohibited promotion.
 - [x] Organization, WebSite, and WebPage JSON-LD identify the page and Tabbio entity.
 - [x] `robots.txt` allows public partner content and excludes the future private partner area and referral previews.
 - [x] `sitemap.xml` includes only the public partner landing and program terms.
@@ -48,11 +52,13 @@ This checklist converts the current frontend-only scope into a verifiable releas
 
 - [x] Onboarding validates, advances, saves locally, resumes, and explains every simulated check.
 - [x] Overview reconciles payable balance, metrics, chart summary/data alternative, activity, currency, period, and timezone.
-- [x] Clients supports search, filters, create, detail, status text, complete compact cards, and local persistence.
+- [x] CV Builder uses familiar Material 3 tabs, a compact search/status toolbar, semantic desktop and mobile client records, and a searchable CV Skills list with All, Tabbio, Community, Yours, instruction preview, and create-entry states.
 - [x] Create supports format/options, deterministic local draft, editing, disclosure, save/history, copy, download, and reset.
 - [x] Links supports a local-origin URL, matching QR, copy/download, create/archive, scoped metrics, and local persistence.
 - [x] Earnings explains every balance, labels its recent ledger as an incomplete sample, shows negative reversals, and offers truthful demo payout and balance-summary details.
 - [x] Resources exposes real local files, version/type/size labels, approved copy actions, disclosure, and unique rules.
+- [x] Resources includes the Tabbio Partner credential system with universal, Creator, Career, and Agency editions; horizontal, compact, and social formats; approved light, dark, and violet applications; direct SVG/PNG downloads; and a complete prototype policy.
+- [x] Credential policy separates active program participation from certification, employment, endorsement, disclosure, and payout status; annual renewal, production issuance, edition assignment, expiry enforcement, and public verification remain backend-dependent.
 - [x] Settings saves profile/notification choices locally, previews the public identity, and labels checks `Not configured`, `Demo only`, or `Not connected`.
 
 ## States and feedback
@@ -91,9 +97,9 @@ This checklist converts the current frontend-only scope into a verifiable releas
 - Text zoom: 8 key routes at 200% root text size, with zero page-level overflow. The 320px checks cover the WCAG 400% reflow viewport equivalent.
 - Automated accessibility: 10 key routes at 390px with zero axe violations. Gradient contrast remained a manual-review item and passed visual review.
 - Persistence: corrupt payload, blocked storage, reset-race, and shared onboarding identity regressions passed.
-- Interaction details: controlled mobile menu, exact 840px shell breakpoint, destination-aware referral preview, fractional estimator normalization, stale-draft invalidation, and 44px shared controls passed.
+- Interaction details: controlled mobile menu, exact 840px shell breakpoint, destination-aware referral preview, progressive 1-to-1M estimator slider without redundant endpoint labels, stale-draft invalidation, and 44px shared controls passed.
 - Downloads: partner kit ZIP and manifest, QR image, recent-ledger sample CSV, and balance summary were opened or content-checked locally. Asset byte counts and SHA-256 values match the current bundled files.
-- Designer-source implementation: the original geometric Tabbio mark path, blue-violet textured field, split calculator, compact typography, neutral surfaces, CV language, app-store badges, social marks, and oversized footer wordmark are implemented from the supplied SVG composition. Copy remains concise.
+- Designer-source implementation: the original geometric Tabbio mark, violet identity, blue and pink supporting colors, compact typography, neutral surfaces, CV language, app-store badges, social marks, and oversized footer wordmark remain. Audience cards use mixed-ethnicity editorial illustrations of the actual partner work, including an app/SaaS UGC recording. The paper-ribbon landscape appears once as a compact transition, while the earnings collage stays contained beside the result.
 - Partnership conversion implementation: Higgsfield informed the page sequence and low-friction application pattern only. Tabbio colors, product previews, form language, proof standard, and M3 behavior remain original to this product.
 - Local lab only: landing and overview recorded approximately 48ms FCP/LCP and zero CLS. These are not field-performance or production-hosting claims.
 

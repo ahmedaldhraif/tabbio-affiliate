@@ -15,6 +15,12 @@ Use the first applicable source when two sources disagree:
 7. The supplied Tabbio SVG exports for visual direction only.
 8. RefRef at commit `81af934fec3b20990a4d9af7ed472d0d14d73a82` for selectively reusable concepts or code, subject to the license gate below.
 
+Read the three companion delivery documents before changing policy, money, or backend boundaries:
+
+- `docs/TABBIO_PARTNER_POLICY_PACK.md`
+- `docs/REFREF_PRODUCTION_GAP_REGISTER.md`
+- `docs/PARTNER_FRONTEND_BACKEND_HANDOFF.md`
+
 Do not let a mockup, an upstream example, or an implementation shortcut silently redefine a rule in the first three documents. If a necessary decision is still open, record it in the PRD and stop at the affected boundary instead of inventing policy.
 
 ## 2. Current status and stop conditions
@@ -34,6 +40,8 @@ Before production or backend implementation begins, the remaining Gate 0 decisio
 - confirm the payout provider and whether its UAE account model supports the required flow.
 
 Never describe a local build, test double, sandbox connection, or unconfigured provider as production-ready.
+
+Tabbio is a UAE-based business, but worldwide partner eligibility and the UAE Advertiser Permit are separate questions. Never turn the permit into a worldwide checkbox. Follow the Legal-owned jurisdiction and activity decision tree when one is approved.
 
 ### Frontend prototype commands
 

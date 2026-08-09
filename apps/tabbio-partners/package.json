@@ -12,9 +12,11 @@
     "type:check": "tsc --noEmit"
   },
   "dependencies": {
+    "@number-flow/react": "^0.6.2",
+    "@phosphor-icons/react": "^2.1.10",
     "@refref/ui": "workspace:*",
-    "jszip": "^3.10.1",
     "lucide-react": "^0.483.0",
+    "motion": "^12.23.24",
     "next": "16.0.7",
     "qrcode.react": "^4.2.0",
     "react": "^19.2.3",

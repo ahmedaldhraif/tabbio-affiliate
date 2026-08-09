@@ -13,6 +13,7 @@ export type PartnerApplicationDraft = {
   firstName: string;
   email: string;
   lane: string;
+  otherWork: string;
   profileUrl: string;
   about: string;
   agreed: boolean;
@@ -22,6 +23,7 @@ export const emptyPartnerApplication: PartnerApplicationDraft = {
   firstName: "",
   email: "",
   lane: "",
+  otherWork: "",
   profileUrl: "",
   about: "",
   agreed: false,
@@ -65,6 +67,7 @@ export function readPartnerApplication(
     firstName: text(value.firstName),
     email: text(value.email),
     lane: isPartnerLane(requestedLane) ? requestedLane : "",
+    otherWork: text(value.otherWork),
     profileUrl: text(value.profileUrl) || text(value.workUrl),
     about: text(value.about),
     agreed: value.agreed === true,

@@ -1,21 +1,24 @@
 /*
-THESIS: Client work is useful before it is promotional, so handoff state is always clearer than referral mechanics.
-OWN-WORLD: A restrained working table, complete mobile records, violet actions, and full-text status markers.
-STORY: A partner finds a client, understands the CV and claim state, inspects the handoff, or creates a private draft.
-FIRST VIEWPORT: Search and two practical filters sit directly under one Create CV action, followed by the current result count.
-FORM: An operate-mode client registry that favors familiar list-detail behavior over a gallery of decorative profile cards.
+THESIS: CV work should feel as familiar as a Google file list, with reusable skills clearly separated from client records.
+OWN-WORLD: Material 3 surfaces, primary tabs, tonal filter chips, emphasized type, and one violet creation action.
+STORY: A partner finds a client CV or opens a reusable skill without learning a new workflow.
+FIRST VIEWPORT: The page title, two clear tabs, and one task toolbar reveal every primary action immediately.
+FORM: A restrained Material 3 Expressive workbench optimized for scanning, touch, and keyboard use.
 */
 "use client";
 
 import { Suspense, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
+  Check,
+  ChevronRight,
   Copy,
   FilePlus2,
   FileText,
+  Layers3,
+  Plus,
   RefreshCw,
   Search,
-  SlidersHorizontal,
   UserRound,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -68,15 +71,80 @@ const statuses: ClientCv["status"][] = [
 
 const styles: ClientCv["style"][] = ["Modern", "Classic", "Minimal"];
 
+type CvSkillSource = "Tabbio" | "Community" | "Mine";
+
+type CvSkill = {
+  id: string;
+  name: string;
+  source: CvSkillSource;
+  summary: string;
+  bestFor: string;
+  instructions: readonly string[];
+};
+
+const cvSkills: readonly CvSkill[] = [
+  {
+    id: "tabbio-clear-story",
+    name: "Clear career story",
+    source: "Tabbio",
+    summary:
+      "Shapes scattered experience into one focused professional direction.",
+    bestFor: "Career changes and broad experience",
+    instructions: [
+      "Choose one target direction before rewriting sections.",
+      "Connect previous experience to the target through transferable proof.",
+      "Keep the summary specific enough to guide the rest of the CV.",
+    ],
+  },
+  {
+    id: "tabbio-proof-first",
+    name: "Proof before adjectives",
+    source: "Tabbio",
+    summary:
+      "Turns vague responsibility statements into concise evidence of work.",
+    bestFor: "Specialists, managers, and portfolio-led roles",
+    instructions: [
+      "Lead with the change, output, or result—not a personality adjective.",
+      "Keep numbers only when the client can explain their source.",
+      "Use plain verbs and remove duplicated responsibility language.",
+    ],
+  },
+  {
+    id: "community-first-role",
+    name: "First-role confidence",
+    source: "Community",
+    summary:
+      "Surfaces projects, coursework, and practical proof when job history is short.",
+    bestFor: "Graduates and early-career candidates",
+    instructions: [
+      "Treat relevant projects as evidence, not filler.",
+      "Explain the candidate's contribution before the project description.",
+      "Use skills only when the CV also shows where they were applied.",
+    ],
+  },
+  {
+    id: "community-shortlist",
+    name: "Recruiter shortlist",
+    source: "Community",
+    summary:
+      "Keeps role fit, availability, and strongest evidence easy to scan.",
+    bestFor: "Recruiters and candidate shortlists",
+    instructions: [
+      "Put role fit and strongest evidence in the opening screen.",
+      "Keep dates, titles, and locations consistent across entries.",
+      "Remove details that do not help a reviewer decide the next step.",
+    ],
+  },
+];
+
 const statusDefinitions: Record<ClientCv["status"], string> = {
   Draft: "Private work in progress. No claim link has been sent.",
-  Sent: "An example claim link was sent, but has not been opened yet.",
-  Viewed: "The client opened the example handoff and has not accepted it.",
+  Sent: "The claim link was sent, but has not been opened yet.",
+  Viewed: "The client opened the handoff and has not accepted it.",
   "Claim pending":
     "The client started the claim flow and still has a step to finish.",
   Claimed: "The client accepted the approved ownership and access handoff.",
-  Expired:
-    "The example claim link passed its validity window and needs a new link.",
+  Expired: "The claim link passed its validity window and needs a new link.",
   Archived: "The CV is retained in history and removed from active work.",
 };
 
@@ -91,11 +159,7 @@ function claimState(status: ClientCv["status"]) {
 
 function ClientsLoading() {
   return (
-    <div
-      className="app-page"
-      aria-busy="true"
-      aria-label="Loading example clients"
-    >
+    <div className="app-page" aria-busy="true" aria-label="Loading clients">
       <div className="mb-8 space-y-3">
         <Skeleton className="h-4 w-24" />
         <Skeleton className="h-11 w-64 max-w-full" />
@@ -112,8 +176,8 @@ function ClientsError({ onRetry }: { onRetry: () => void }) {
     <div className="app-page">
       <PageHeader
         eyebrow="Client CVs"
-        title="We could not load the example clients"
-        description="The prototype is showing its recoverable error state. Your locally saved demo clients remain untouched."
+        title="We could not load your clients"
+        description="Try again. Your client records have not changed."
       />
       <Card className="items-start gap-4 rounded-2xl border-[#ead8dc] bg-[#fff8f8] p-6 shadow-none">
         <span className="grid size-11 place-items-center rounded-xl bg-white text-[#a13246]">
@@ -124,13 +188,12 @@ function ClientsError({ onRetry }: { onRetry: () => void }) {
             Client records are unavailable
           </h2>
           <p className="mt-1 max-w-2xl text-sm leading-6 text-[#6b4d54]">
-            Retry the local view or remove <code>?state=error</code> from the
-            URL. No claim link was created or sent.
+            Check your connection and retry. No claim link was created or sent.
           </p>
         </div>
         <Button className="h-11 rounded-xl" onClick={onRetry}>
           <RefreshCw aria-hidden="true" />
-          Retry example
+          Try again
         </Button>
       </Card>
     </div>
@@ -184,12 +247,16 @@ function CreateClientDialog({
       name: cleanName,
       style,
       status: "Draft",
-      edited: "Aug 9, 2026",
+      edited: new Intl.DateTimeFormat("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      }).format(new Date()),
       claimCode: `${slug}-${clients.length + 1}`,
     };
 
     addClient(client);
-    toast.success(`${cleanName} was added to this local demo`);
+    toast.success(`${cleanName} was added`);
     handleOpenChange(false);
   }
 
@@ -242,7 +309,7 @@ function CreateClientDialog({
                   setName(event.target.value);
                   if (nameError) setNameError("");
                 }}
-                placeholder="For example, Noor Hassan"
+                placeholder="Noor Hassan"
                 className="h-11 rounded-xl bg-white"
                 aria-invalid={Boolean(nameError)}
                 aria-describedby={
@@ -268,7 +335,7 @@ function CreateClientDialog({
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="client-style">CV style</Label>
+              <Label htmlFor="client-style">CV layout</Label>
               <Select
                 value={style}
                 onValueChange={(value) => setStyle(value as ClientCv["style"])}
@@ -288,7 +355,7 @@ function CreateClientDialog({
                 </SelectContent>
               </Select>
               <p className="text-xs leading-5 text-[#6b7280]">
-                You can change the example style before any handoff.
+                You can change the layout before any handoff.
               </p>
             </div>
             <div className="rounded-xl bg-[#f5f1ff] p-4 text-sm leading-6 text-[#4823a8]">
@@ -316,13 +383,190 @@ function CreateClientDialog({
   );
 }
 
+function CvSkillsLibrary() {
+  const [source, setSource] = useState<"All" | CvSkillSource>("All");
+  const [openSkillId, setOpenSkillId] = useState<string | null>(null);
+  const [skillQuery, setSkillQuery] = useState("");
+  const normalizedQuery = skillQuery.trim().toLowerCase();
+  const visibleSkills = cvSkills.filter(
+    (skill) =>
+      (source === "All" || skill.source === source) &&
+      (!normalizedQuery ||
+        skill.name.toLowerCase().includes(normalizedQuery) ||
+        skill.summary.toLowerCase().includes(normalizedQuery) ||
+        skill.bestFor.toLowerCase().includes(normalizedQuery)),
+  );
+
+  return (
+    <section
+      id="cv-skills-panel"
+      role="tabpanel"
+      aria-labelledby="cv-skills-tab"
+      className="mt-6"
+    >
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 className="text-2xl font-semibold tracking-[-.025em]">
+            CV Skills
+          </h2>
+          <p className="mt-1 text-sm leading-6 text-[#6b6473]">
+            Reusable instructions for any client CV.
+          </p>
+        </div>
+        <Button
+          className="min-h-11 rounded-full px-5"
+          disabled
+          title="Skill builder coming soon"
+        >
+          <Plus aria-hidden="true" /> Create skill
+        </Button>
+      </div>
+
+      <div className="mt-6 rounded-2xl bg-[#f5f3f8] p-2 sm:flex sm:items-center sm:gap-3">
+        <div className="relative min-w-0 flex-1">
+          <Search
+            className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-[#6b6473]"
+            aria-hidden="true"
+          />
+          <Input
+            type="search"
+            value={skillQuery}
+            onChange={(event) => setSkillQuery(event.target.value)}
+            placeholder="Search skills"
+            aria-label="Search CV Skills"
+            className="h-12 rounded-xl border-transparent bg-white pl-11 shadow-none focus-visible:border-[#6d48ff]"
+          />
+        </div>
+        <div
+          className="mt-2 flex max-w-full gap-2 overflow-x-auto p-1 [scrollbar-width:none] sm:mt-0 [&::-webkit-scrollbar]:hidden"
+          role="group"
+          aria-label="Filter CV Skills by source"
+        >
+          {(["All", "Tabbio", "Community", "Mine"] as const).map((item) => (
+            <button
+              key={item}
+              type="button"
+              aria-pressed={source === item}
+              className={`focus-ring min-h-10 shrink-0 rounded-full border px-4 text-sm font-semibold transition-[background-color,color,border-color] ${
+                source === item
+                  ? "border-[#5a2aff] bg-[#e9e1ff] text-[#3d169f]"
+                  : "border-[#d6d0dd] bg-transparent text-[#514a58] hover:bg-white"
+              }`}
+              onClick={() => {
+                setSource(item);
+                setOpenSkillId(null);
+              }}
+            >
+              {item === "Mine" ? "Yours" : item}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {visibleSkills.length === 0 ? (
+        <div className="mt-5 grid min-h-64 place-items-center rounded-2xl bg-[#f8f7fa] px-5 py-12 text-center">
+          <div className="max-w-md">
+            <Layers3
+              className="mx-auto size-8 text-[#5a2aff]"
+              aria-hidden="true"
+            />
+            <h3 className="mt-4 text-xl font-semibold">
+              {skillQuery ? "No matching skills" : "No skills here yet"}
+            </h3>
+            <p className="mt-2 text-sm leading-6 text-[#6b6473]">
+              {skillQuery
+                ? "Try another search or source."
+                : "Create a method you can reuse across client CVs."}
+            </p>
+            {!skillQuery && (
+              <Button
+                className="mt-5 min-h-11 rounded-full px-5"
+                disabled
+                title="Skill builder coming soon"
+              >
+                <Plus aria-hidden="true" /> Create skill
+              </Button>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className="mt-5 overflow-hidden rounded-2xl border border-[#e3dee8] bg-white">
+          {visibleSkills.map((skill) => {
+            const isOpen = openSkillId === skill.id;
+            return (
+              <article
+                key={skill.id}
+                className="border-b border-[#ebe7ef] last:border-b-0"
+              >
+                <button
+                  type="button"
+                  className="focus-ring grid w-full gap-3 p-5 text-left transition-colors hover:bg-[#faf9fc] sm:grid-cols-[44px_minmax(0,1fr)_auto] sm:items-center sm:gap-4 sm:p-6"
+                  aria-expanded={isOpen}
+                  aria-controls={`${skill.id}-details`}
+                  onClick={() => setOpenSkillId(isOpen ? null : skill.id)}
+                >
+                  <span className="hidden size-11 place-items-center rounded-[14px] bg-[#eee9ff] text-[#512eff] sm:grid">
+                    <Layers3 className="size-5" aria-hidden="true" />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                      <span className="text-base font-semibold text-[#2f2933] sm:text-lg">
+                        {skill.name}
+                      </span>
+                      <span className="text-xs font-medium text-[#655d6c]">
+                        {skill.source === "Mine" ? "Yours" : skill.source}
+                      </span>
+                    </span>
+                    <span className="mt-1 block max-w-2xl text-sm leading-6 text-[#655d6c]">
+                      {skill.summary}
+                    </span>
+                    <span className="mt-1 block text-xs text-[#7a7281]">
+                      {skill.bestFor}
+                    </span>
+                  </span>
+                  <ChevronRight
+                    className={`size-5 justify-self-end text-[#6b6473] transition-transform ${isOpen ? "rotate-90" : ""}`}
+                    aria-hidden="true"
+                  />
+                </button>
+                {isOpen && (
+                  <div
+                    id={`${skill.id}-details`}
+                    className="border-t border-[#ebe7ef] bg-[#f7f4fc] p-5 sm:pl-[5.25rem] sm:pr-16"
+                  >
+                    <p className="text-sm font-semibold">Instructions</p>
+                    <ul className="mt-3 space-y-3" role="list">
+                      {skill.instructions.map((instruction) => (
+                        <li
+                          key={instruction}
+                          className="grid grid-cols-[18px_minmax(0,1fr)] gap-2 text-sm leading-6 text-[#514a58]"
+                        >
+                          <Check
+                            className="mt-1 size-4 text-[#5a2aff]"
+                            aria-hidden="true"
+                          />
+                          <span>{instruction}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </article>
+            );
+          })}
+        </div>
+      )}
+    </section>
+  );
+}
+
 function ClientsContent() {
   const searchParams = useSearchParams();
   const scenario = searchParams.get("state");
   const { clients, ready } = useDemo();
+  const [activeTab, setActiveTab] = useState<"clients" | "skills">("clients");
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("all");
-  const [style, setStyle] = useState("all");
   const [createOpen, setCreateOpen] = useState(false);
   const createDialogOpenerRef = useRef<HTMLButtonElement | null>(null);
   const [selectedClient, setSelectedClient] = useState<ClientCv | null>(null);
@@ -337,13 +581,11 @@ function ClientsContent() {
         client.name.toLowerCase().includes(normalized) ||
         client.claimCode.toLowerCase().includes(normalized);
       const matchesStatus = status === "all" || client.status === status;
-      const matchesStyle = style === "all" || client.style === style;
-      return matchesQuery && matchesStatus && matchesStyle;
+      return matchesQuery && matchesStatus;
     });
-  }, [clients, query, scenario, status, style]);
+  }, [clients, query, scenario, status]);
 
-  const hasFilters =
-    Boolean(query.trim()) || status !== "all" || style !== "all";
+  const hasFilters = Boolean(query.trim()) || status !== "all";
 
   if (!ready || scenario === "loading") return <ClientsLoading />;
   if (scenario === "error" && !retrySucceeded)
@@ -352,302 +594,346 @@ function ClientsContent() {
   function clearFilters() {
     setQuery("");
     setStatus("all");
-    setStyle("all");
   }
 
   async function copyClaimLink(client: ClientCv) {
-    const exampleUrl = `https://tabbio.example/claim/${client.claimCode}`;
+    const claimUrl = `${window.location.origin}/claim/${client.claimCode}`;
     try {
-      await navigator.clipboard.writeText(exampleUrl);
-      toast.success("Example claim link copied");
+      await navigator.clipboard.writeText(claimUrl);
+      toast.success("Claim link copied");
     } catch {
-      toast.error("The browser could not copy this example link");
+      toast.error("The browser could not copy this link");
     }
   }
 
   return (
     <div className="app-page">
       <PageHeader
-        eyebrow="Client CVs"
-        title="Client CVs"
-        description="Create and manage every client CV"
+        eyebrow="Partner workspace"
+        title="CV Builder"
+        description="Create client CVs and reuse your best methods."
         actions={
-          <CreateClientDialog
-            open={createOpen}
-            onOpenChange={setCreateOpen}
-            openerRef={createDialogOpenerRef}
-          />
+          activeTab === "clients" ? (
+            <CreateClientDialog
+              open={createOpen}
+              onOpenChange={setCreateOpen}
+              openerRef={createDialogOpenerRef}
+            />
+          ) : undefined
         }
       />
 
-      <section
-        className="rounded-2xl border border-[#e5e7eb] bg-[#fbfbfc] p-4 sm:p-5"
-        aria-label="Find and filter example clients"
+      <div
+        className="mb-6 flex gap-2 border-b border-[#ded8e4]"
+        role="tablist"
+        aria-label="CV Builder views"
       >
-        <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_12rem_12rem]">
-          <div className="space-y-2">
-            <Label htmlFor="client-search">Search clients</Label>
-            <div className="relative">
-              <Search
-                className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-[#6b7280]"
-                aria-hidden="true"
-              />
-              <Input
-                id="client-search"
-                type="search"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Name or claim code"
-                className="h-11 rounded-xl bg-white pl-10"
-              />
-            </div>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="client-status-filter">Status</Label>
-            <Select value={status} onValueChange={setStatus}>
-              <SelectTrigger
-                id="client-status-filter"
-                className="h-11 w-full rounded-xl bg-white"
-              >
-                <SelectValue placeholder="All statuses" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All statuses</SelectItem>
-                {statuses.map((item) => (
-                  <SelectItem key={item} value={item}>
-                    {item}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="client-style-filter">Style</Label>
-            <Select value={style} onValueChange={setStyle}>
-              <SelectTrigger
-                id="client-style-filter"
-                className="h-11 w-full rounded-xl bg-white"
-              >
-                <SelectValue placeholder="All styles" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All styles</SelectItem>
-                {styles.map((item) => (
-                  <SelectItem key={item} value={item}>
-                    {item}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#eceef0] pt-4">
-          <p className="text-sm text-[#6b7280]" role="status">
-            <span className="font-semibold text-[#2b2b2b]">
-              {filteredClients.length}
-            </span>{" "}
-            {filteredClients.length === 1
-              ? "example client"
-              : "example clients"}
-          </p>
-          {hasFilters && (
-            <Button
-              variant="ghost"
-              className="min-h-11 rounded-xl text-[#4b23c6]"
-              onClick={clearFilters}
+        {[
+          { id: "clients", label: "Client CVs" },
+          { id: "skills", label: "CV Skills" },
+        ].map((tab) => {
+          const isActive = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              id={`${tab.id === "clients" ? "client-cvs" : "cv-skills"}-tab`}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              aria-controls={`${tab.id === "clients" ? "client-cvs" : "cv-skills"}-panel`}
+              tabIndex={isActive ? 0 : -1}
+              className={`relative min-h-12 rounded-t-xl px-5 text-sm font-semibold transition-colors focus-visible:bg-[#f3efff] focus-visible:outline-none ${
+                isActive
+                  ? "text-[#3f199f] after:absolute after:inset-x-2 after:bottom-[-1px] after:h-[3px] after:rounded-t-full after:bg-[#5a2aff]"
+                  : "text-[#6b6473] hover:text-[#322b39]"
+              }`}
+              onClick={() => setActiveTab(tab.id as "clients" | "skills")}
+              onKeyDown={(event) => {
+                if (event.key !== "ArrowLeft" && event.key !== "ArrowRight")
+                  return;
+                event.preventDefault();
+                const nextTab =
+                  event.key === "ArrowRight"
+                    ? tab.id === "clients"
+                      ? "skills"
+                      : "clients"
+                    : tab.id === "skills"
+                      ? "clients"
+                      : "skills";
+                setActiveTab(nextTab);
+                window.requestAnimationFrame(() => {
+                  document
+                    .getElementById(
+                      `${nextTab === "clients" ? "client-cvs" : "cv-skills"}-tab`,
+                    )
+                    ?.focus();
+                });
+              }}
             >
-              <SlidersHorizontal aria-hidden="true" />
-              Clear filters
-            </Button>
-          )}
-        </div>
-      </section>
+              {tab.label}
+            </button>
+          );
+        })}
+      </div>
 
-      {filteredClients.length === 0 ? (
-        <div className="mt-4">
-          <EmptyState
-            title={
-              hasFilters ? "No example clients match" : "No client CVs yet"
-            }
-            description={
-              hasFilters
-                ? "Try a different name, status, or style. Your saved demo records have not changed."
-                : "Create a private draft when you have permission to work with a client. No link is sent automatically."
-            }
-            action={
-              hasFilters ? (
+      {activeTab === "clients" ? (
+        <div
+          id="client-cvs-panel"
+          role="tabpanel"
+          aria-labelledby="client-cvs-tab"
+        >
+          <section
+            className="rounded-2xl bg-[#f5f3f8] p-2"
+            aria-label="Find and filter clients"
+          >
+            <div className="grid gap-2 md:grid-cols-[minmax(0,1fr)_12rem]">
+              <div>
+                <Label htmlFor="client-search" className="sr-only">
+                  Search clients
+                </Label>
+                <div className="relative">
+                  <Search
+                    className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-[#6b7280]"
+                    aria-hidden="true"
+                  />
+                  <Input
+                    id="client-search"
+                    type="search"
+                    value={query}
+                    onChange={(event) => setQuery(event.target.value)}
+                    placeholder="Search clients"
+                    className="h-12 rounded-xl border-transparent bg-white pl-10 shadow-none focus-visible:border-[#6d48ff]"
+                  />
+                </div>
+              </div>
+              <div>
+                <Label htmlFor="client-status-filter" className="sr-only">
+                  Status
+                </Label>
+                <Select value={status} onValueChange={setStatus}>
+                  <SelectTrigger
+                    id="client-status-filter"
+                    className="h-12 w-full rounded-xl border-transparent bg-white px-4 shadow-none"
+                  >
+                    <SelectValue placeholder="All statuses" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All statuses</SelectItem>
+                    {statuses.map((item) => (
+                      <SelectItem key={item} value={item}>
+                        {item}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="flex flex-wrap items-center justify-between gap-3 px-2 pb-1 pt-3">
+              <p className="text-sm text-[#6b7280]" role="status">
+                <span className="font-semibold text-[#2b2b2b]">
+                  {filteredClients.length}
+                </span>{" "}
+                {filteredClients.length === 1 ? "client" : "clients"}
+              </p>
+              {hasFilters && (
                 <Button
-                  variant="outline"
-                  className="h-11 rounded-xl"
+                  variant="ghost"
+                  className="min-h-10 rounded-full px-4 text-[#4b23c6]"
                   onClick={clearFilters}
                 >
                   Clear filters
                 </Button>
-              ) : (
-                <Button
-                  className="h-11 rounded-xl"
-                  onClick={(event) => {
-                    createDialogOpenerRef.current = event.currentTarget;
-                    setCreateOpen(true);
-                  }}
-                >
-                  <FilePlus2 aria-hidden="true" />
-                  Create first CV
-                </Button>
-              )
-            }
-          />
-        </div>
-      ) : (
-        <section
-          className="mt-4 overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white"
-          aria-labelledby="client-results-title"
-        >
-          <div className="flex items-start justify-between gap-4 border-b border-[#eceef0] px-5 py-4 sm:px-6">
-            <div>
-              <h2 id="client-results-title" className="font-semibold">
-                Client CV records
-              </h2>
-              <p className="mt-1 text-xs text-[#6b7280]">
-                Claim state is shown separately from CV status.
-              </p>
+              )}
             </div>
-            <span className="rounded-full bg-[#f1edff] px-3 py-1.5 text-xs font-semibold text-[#4b23c6]">
-              Local demo
-            </span>
-          </div>
+          </section>
 
-          <div className="hidden md:block">
-            <Table>
-              <TableCaption className="px-6 pb-4 text-left">
-                Example client CVs with complete handoff status.
-              </TableCaption>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="px-6">Client</TableHead>
-                  <TableHead>Style</TableHead>
-                  <TableHead>CV status</TableHead>
-                  <TableHead>Claim link</TableHead>
-                  <TableHead>Last edit</TableHead>
-                  <TableHead className="px-6 text-right">
-                    <span className="visually-hidden">Actions</span>
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
+          {filteredClients.length === 0 ? (
+            <div className="mt-4">
+              <EmptyState
+                title={hasFilters ? "No clients match" : "No client CVs yet"}
+                description={
+                  hasFilters
+                    ? "Try a different name or status."
+                    : "Create a private draft when you have permission to work with a client. No link is sent automatically."
+                }
+                action={
+                  hasFilters ? (
+                    <Button
+                      variant="outline"
+                      className="h-11 rounded-xl"
+                      onClick={clearFilters}
+                    >
+                      Clear filters
+                    </Button>
+                  ) : (
+                    <Button
+                      className="h-11 rounded-xl"
+                      onClick={(event) => {
+                        createDialogOpenerRef.current = event.currentTarget;
+                        setCreateOpen(true);
+                      }}
+                    >
+                      <FilePlus2 aria-hidden="true" />
+                      Create first CV
+                    </Button>
+                  )
+                }
+              />
+            </div>
+          ) : (
+            <section
+              className="mt-4 overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white"
+              aria-labelledby="client-results-title"
+            >
+              <div className="border-b border-[#eceef0] px-5 py-4 sm:px-6">
+                <div>
+                  <h2
+                    id="client-results-title"
+                    className="text-lg font-semibold"
+                  >
+                    Client CVs
+                  </h2>
+                  <p className="mt-1 text-xs text-[#6b7280]">
+                    Claim state is shown separately from CV status.
+                  </p>
+                </div>
+              </div>
+
+              <div className="hidden md:block">
+                <Table>
+                  <TableCaption className="visually-hidden">
+                    Client CVs and their handoff status.
+                  </TableCaption>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="px-6">Client</TableHead>
+                      <TableHead>Layout</TableHead>
+                      <TableHead>CV status</TableHead>
+                      <TableHead>Claim link</TableHead>
+                      <TableHead>Last edit</TableHead>
+                      <TableHead className="px-6 text-right">
+                        <span className="visually-hidden">Actions</span>
+                      </TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {filteredClients.map((client) => (
+                      <TableRow key={client.id}>
+                        <TableCell className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <span className="grid size-10 place-items-center rounded-xl bg-[#f1edff] text-[#4b23c6]">
+                              <UserRound
+                                className="size-4"
+                                aria-hidden="true"
+                              />
+                            </span>
+                            <div>
+                              <p className="font-semibold">{client.name}</p>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell>{client.style}</TableCell>
+                        <TableCell>
+                          <StatusBadge status={client.status} />
+                        </TableCell>
+                        <TableCell>
+                          <span className="text-sm font-medium">
+                            {claimState(client.status)}
+                          </span>
+                        </TableCell>
+                        <TableCell className="tabular-nums text-[#5f6470]">
+                          {client.edited}
+                        </TableCell>
+                        <TableCell className="px-6 text-right">
+                          <Button
+                            variant="ghost"
+                            className="min-h-11 rounded-xl text-[#4b23c6]"
+                            onClick={() => setSelectedClient(client)}
+                          >
+                            View details
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+
+              <div className="divide-y divide-[#eceef0] md:hidden">
                 {filteredClients.map((client) => (
-                  <TableRow key={client.id}>
-                    <TableCell className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <span className="grid size-10 place-items-center rounded-xl bg-[#f1edff] text-[#4b23c6]">
+                  <article
+                    key={client.id}
+                    className="p-5"
+                    aria-labelledby={`${client.id}-name`}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex min-w-0 items-center gap-3">
+                        <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-[#f1edff] text-[#4b23c6]">
                           <UserRound className="size-4" aria-hidden="true" />
                         </span>
-                        <div>
-                          <p className="font-semibold">{client.name}</p>
+                        <div className="min-w-0">
+                          <h3
+                            id={`${client.id}-name`}
+                            className="truncate font-semibold"
+                          >
+                            {client.name}
+                          </h3>
                           <p className="mt-0.5 text-xs text-[#6b7280]">
-                            Example record
+                            {client.style} layout
                           </p>
                         </div>
                       </div>
-                    </TableCell>
-                    <TableCell>{client.style}</TableCell>
-                    <TableCell>
                       <StatusBadge status={client.status} />
-                    </TableCell>
-                    <TableCell>
-                      <span className="text-sm font-medium">
-                        {claimState(client.status)}
-                      </span>
-                    </TableCell>
-                    <TableCell className="tabular-nums text-[#5f6470]">
-                      {client.edited}
-                    </TableCell>
-                    <TableCell className="px-6 text-right">
-                      <Button
-                        variant="ghost"
-                        className="min-h-11 rounded-xl text-[#4b23c6]"
-                        onClick={() => setSelectedClient(client)}
-                      >
-                        View details
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-
-          <div className="divide-y divide-[#eceef0] md:hidden">
-            {filteredClients.map((client) => (
-              <article
-                key={client.id}
-                className="p-5"
-                aria-labelledby={`${client.id}-name`}
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex min-w-0 items-center gap-3">
-                    <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-[#f1edff] text-[#4b23c6]">
-                      <UserRound className="size-4" aria-hidden="true" />
-                    </span>
-                    <div className="min-w-0">
-                      <h3
-                        id={`${client.id}-name`}
-                        className="truncate font-semibold"
-                      >
-                        {client.name}
-                      </h3>
-                      <p className="mt-0.5 text-xs text-[#6b7280]">
-                        {client.style} style
-                      </p>
                     </div>
-                  </div>
-                  <StatusBadge status={client.status} />
-                </div>
-                <dl className="mt-4 grid grid-cols-2 gap-3 rounded-xl bg-[#f7f7f8] p-4 text-sm">
-                  <div>
-                    <dt className="text-xs text-[#6b7280]">Claim link</dt>
-                    <dd className="mt-1 font-semibold">
-                      {claimState(client.status)}
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="text-xs text-[#6b7280]">Last edit</dt>
-                    <dd className="mt-1 font-semibold tabular-nums">
-                      {client.edited}
-                    </dd>
-                  </div>
-                </dl>
-                <Button
-                  variant="outline"
-                  className="mt-4 h-11 w-full rounded-xl"
-                  onClick={() => setSelectedClient(client)}
-                >
-                  <FileText aria-hidden="true" />
-                  View details
-                </Button>
-              </article>
-            ))}
-          </div>
-        </section>
-      )}
-
-      <details className="mt-4 rounded-2xl border border-[#e5e7eb] bg-white p-5 sm:p-6">
-        <summary className="cursor-pointer font-semibold text-[#4b23c6]">
-          Status guide
-        </summary>
-        <div className="mt-5 grid gap-x-8 gap-y-5 md:grid-cols-2">
-          {statuses.map((item) => (
-            <div key={item} className="flex items-start gap-3">
-              <div className="shrink-0">
-                <StatusBadge status={item} />
+                    <dl className="mt-4 grid grid-cols-2 gap-3 rounded-xl bg-[#f7f7f8] p-4 text-sm">
+                      <div>
+                        <dt className="text-xs text-[#6b7280]">Claim link</dt>
+                        <dd className="mt-1 font-semibold">
+                          {claimState(client.status)}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt className="text-xs text-[#6b7280]">Last edit</dt>
+                        <dd className="mt-1 font-semibold tabular-nums">
+                          {client.edited}
+                        </dd>
+                      </div>
+                    </dl>
+                    <Button
+                      variant="outline"
+                      className="mt-4 h-11 w-full rounded-xl"
+                      onClick={() => setSelectedClient(client)}
+                    >
+                      <FileText aria-hidden="true" />
+                      View details
+                    </Button>
+                  </article>
+                ))}
               </div>
-              <p className="text-sm leading-6 text-[#5f6470]">
-                {statusDefinitions[item]}
-              </p>
+            </section>
+          )}
+
+          <details className="mt-4 rounded-2xl border border-[#e5e7eb] bg-white p-5 sm:p-6">
+            <summary className="cursor-pointer font-semibold text-[#4b23c6]">
+              Status guide
+            </summary>
+            <div className="mt-5 grid gap-x-8 gap-y-5 md:grid-cols-2">
+              {statuses.map((item) => (
+                <div key={item} className="flex items-start gap-3">
+                  <div className="shrink-0">
+                    <StatusBadge status={item} />
+                  </div>
+                  <p className="text-sm leading-6 text-[#5f6470]">
+                    {statusDefinitions[item]}
+                  </p>
+                </div>
+              ))}
             </div>
-          ))}
+          </details>
         </div>
-      </details>
+      ) : (
+        <CvSkillsLibrary />
+      )}
 
       <Dialog
         open={selectedClient !== null}
@@ -665,13 +951,13 @@ function ClientsContent() {
                 <DialogTitle className="text-xl leading-7">
                   {selectedClient.name}
                 </DialogTitle>
-                <DialogDescription>Example client CV detail</DialogDescription>
+                <DialogDescription>Client CV details</DialogDescription>
               </DialogHeader>
               <div className="space-y-5 p-6">
                 <dl className="grid gap-4 sm:grid-cols-2">
                   <div>
                     <dt className="text-xs font-medium text-[#6b7280]">
-                      CV style
+                      CV layout
                     </dt>
                     <dd className="mt-1 font-semibold">
                       {selectedClient.style}
@@ -695,7 +981,7 @@ function ClientsContent() {
                   </div>
                   <div>
                     <dt className="text-xs font-medium text-[#6b7280]">
-                      Example claim code
+                      Claim code
                     </dt>
                     <dd className="mt-1 break-all font-semibold">
                       {selectedClient.claimCode}
@@ -711,9 +997,8 @@ function ClientsContent() {
                   </p>
                 </div>
                 <div className="rounded-xl bg-[#f5f1ff] p-4 text-sm leading-6 text-[#4823a8]">
-                  This prototype displays handoff metadata only. A real claim
-                  must transfer only approved ownership and access, never
-                  private CV data from the referral engine.
+                  Claim links transfer only approved ownership and access. CV
+                  content stays separate from referral data.
                 </div>
               </div>
               <DialogFooter className="border-t border-[#eceef0] p-6">
@@ -729,7 +1014,7 @@ function ClientsContent() {
                       onClick={() => copyClaimLink(selectedClient)}
                     >
                       <Copy aria-hidden="true" />
-                      Copy example link
+                      Copy claim link
                     </Button>
                   )}
               </DialogFooter>

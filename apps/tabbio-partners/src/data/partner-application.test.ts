@@ -44,6 +44,19 @@ describe("partner application", () => {
     ).toEqual({});
   });
 
+  it("keeps an optional description for another type of work", () => {
+    expect(
+      readPartnerApplication({
+        lane: "Other",
+        otherWork: "Community manager",
+      }),
+    ).toEqual({
+      ...emptyPartnerApplication,
+      lane: "Other",
+      otherWork: "Community manager",
+    });
+  });
+
   it("migrates a valid lane and work link from the earlier local draft", () => {
     expect(
       readPartnerApplication({

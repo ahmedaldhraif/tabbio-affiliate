@@ -36,7 +36,7 @@ Partners are Tabbio users who earn, not users of a disconnected affiliate micros
 ### Product commitments evidenced by the supplied material
 
 - The proposed offer is 30% recurring commission for the attributed customer's eligible lifetime, monthly payouts, and a USD 50 minimum payout threshold shown in the design as approximately AED 185.
-- The Partner area includes Overview, Client CVs/CV Builder, Content Builder, Links, Earnings, Resources, and Settings.
+- The Partner area includes Overview, CV Builder, Content Builder, Links, Earnings, Resources, and Settings. CV Builder has separate Client CVs and CV Skills tabs; a CV Skill is reusable CV-shaping logic, not a client filter or an employment-skill field.
 - The public experience includes an earnings estimator, the joining steps, Tabbio-native earning workflows, resources, FAQ, and a direct join action.
 - Material 3 is the authority for component logic, interaction, state, adaptive layout, and accessibility. It is not a requirement to install a second UI framework.
 - Material Web `v2.5.0` is an Apache-2.0 implementation reference, not a blanket dependency decision. Its stable controls, tokens, docs, and tests may be reused only if they fit the canonical Tabbio stack; missing product components and all Tabbio-specific compositions remain Tabbio-owned.
@@ -73,6 +73,8 @@ Partners are Tabbio users who earn, not users of a disconnected affiliate micros
 
 - `C:/Users/DESKTOP PC/Downloads/Become a partner.svg` is a 1512 by 6609 public landing-page export. SHA-256: `EFDD1ECAFDD77A2E7E7173109BF859C40D2BA39FF4618822F195616B454649F5`.
 - `C:/Users/DESKTOP PC/Downloads/Tabbio - Karim Fakhry File (1).zip` contains seven 1512 by 982 partner-area SVG exports. SHA-256: `1C438FFC341A0573C8B45C2B26C3B2D101F3830BCB2CBC68263F6650DD090DC5`.
+- `C:/Users/DESKTOP PC/Downloads/Frame 1984078168 (1).svg` is the user-approved 942 by 526 stacked `Tabbio Active Partner 2026` badge. SHA-256: `6B48305699CD792F8C80C1414CF1ADAE94FA3E3B9416DBFB8414A4396781D3DA`.
+- `C:/Users/DESKTOP PC/Downloads/Frame 1984078169.svg` is the user-approved 1658 by 303 horizontal `Tabbio Active Partner 2026` badge. SHA-256: `C43C0D2EC91BFAF05E473094BF5E0032318DF8BF39BAC940D92C81C89B7F1C57`.
 - The current audited RefRef baseline is upstream commit `81af934fec3b20990a4d9af7ed472d0d14d73a82` from 2026-03-20.
 - The current audited Material Web release is `v2.5.0`, commit `b4de401eb665ec63474f39319a4ba8f2145974cc`, released in July 2026 under Apache-2.0. Its README and roadmap still label the project maintenance mode with no planned new components.
 - No verified testimonials, production analytics, customer examples, signed program terms, provider credentials, source Figma file, canonical font files, or live backend are present in this workspace.

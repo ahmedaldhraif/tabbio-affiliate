@@ -43,11 +43,11 @@ The pinned docs list browser floors of Chrome/Edge 120+, Firefox 119+, and Safar
 
 **THESIS:** Useful work compounds. The public page makes recurring commission understandable by showing the stack grow, while the product area makes each source event and money state inspectable. It refuses the generic affiliate pattern of hype, leaderboard gamification, and unexplained totals.
 
-**OWN WORLD:** Bright, quiet operating surfaces use Tabbio violet as the only regular action accent. A violet-to-pink earning gradient is reserved for the calculator, the primary earning total, and the strongest CTA. Thin neutral borders, large clear type, sparse line icons, and generous white space carry the rest.
+**OWN WORLD:** Bright, quiet surfaces use Tabbio violet as the regular action accent. The public hero uses contrasting product shapes—blue creator media, white CV paper, a violet tracked-link action, and a pink commission outcome—rather than a generic gradient field. Thin neutral borders, large clear type, sparse line icons, and generous white space carry the rest.
 
 **STORY:** A visitor understands what qualifies, estimates a non-guaranteed outcome, sees three real Tabbio-native ways to earn, and applies. A partner sees the next useful task, shares or creates work, follows attribution, and reconciles every amount.
 
-**FIRST VIEWPORT:** The public page pairs “Your work keeps paying” and one primary join action with a live, labelled earnings estimator. The authenticated area opens on one earnings focal card, three operational metrics, and one next task, never a wall of equal cards.
+**FIRST VIEWPORT:** The public page says exactly who can earn, states the 30% offer, and connects recognizable Tabbio work artifacts: a useful creator post, a client CV, a tracked link, and recurring commission. One primary apply action owns the viewport; app preview is secondary. The estimator follows after audience fit is established. The authenticated area opens on one earnings focal card, three operational metrics, and one next task, never a wall of equal cards.
 
 **FORM:** Public surfaces are Persuade; authenticated surfaces are Operate. The supplied composition is the pinned direction. Rebuild it semantically and adaptively without running a replacement-style exercise.
 
@@ -57,22 +57,22 @@ The pinned docs list browser floors of Chrome/Edge 120+, Firefox 119+, and Safar
 
 Use a committed brand treatment on the public first viewport and a restrained treatment inside the app.
 
-| Semantic token          |      Provisional value | Use                                                          |
-| ----------------------- | ---------------------: | ------------------------------------------------------------ |
-| `brand.primary`         |              `#5A2AFF` | Primary actions, active navigation, links, focus accents     |
-| `brand.primaryStrong`   |              `#512EFF` | Pressed/strong brand state after contrast verification       |
-| `brand.heroField`       | `#5F9FF4` to `#7968EE` | Public blue-violet textured hero field                       |
-| `brand.earningGradient` | `#5A2AFF` to `#FE97E9` | Calculator result, one earnings focal surface, strongest CTA |
-| `text.strong`           |              `#2B2B2B` | Primary copy and important values                            |
-| `text.default`          |              `#4A4A4D` | Body copy and table values                                   |
-| `text.muted`            |              `#6B7280` | Supporting copy that still passes contrast                   |
-| `surface.canvas`        |              `#F9FBFA` | App background                                               |
-| `surface.default`       |              `#FFFFFF` | Primary working surface                                      |
-| `surface.subtle`        |              `#F3F4F6` | Grouped rows and quiet controls                              |
-| `border.default`        |              `#E5E7EB` | Dividers, fields, and containers                             |
-| `status.success`        |              `#3F996A` | Success only with text/icon                                  |
-| `status.warning`        |              `#FBBA4A` | Warning only with text/icon                                  |
-| `status.error`          |                    TBD | Derive an AA-compliant error pair before implementation      |
+| Semantic token          |      Provisional value | Use                                                       |
+| ----------------------- | ---------------------: | --------------------------------------------------------- |
+| `brand.primary`         |              `#5A2AFF` | Primary actions, active navigation, links, focus accents  |
+| `brand.primaryStrong`   |              `#512EFF` | Pressed/strong brand state after contrast verification    |
+| `brand.heroField`       |              `#F8F6FF` | Quiet public hero surface                                 |
+| `brand.earningGradient` | `#5A2AFF` to `#FE97E9` | App earnings focal surface only; not a default decoration |
+| `text.strong`           |              `#2B2B2B` | Primary copy and important values                         |
+| `text.default`          |              `#4A4A4D` | Body copy and table values                                |
+| `text.muted`            |              `#6B7280` | Supporting copy that still passes contrast                |
+| `surface.canvas`        |              `#F9FBFA` | App background                                            |
+| `surface.default`       |              `#FFFFFF` | Primary working surface                                   |
+| `surface.subtle`        |              `#F3F4F6` | Grouped rows and quiet controls                           |
+| `border.default`        |              `#E5E7EB` | Dividers, fields, and containers                          |
+| `status.success`        |              `#3F996A` | Success only with text/icon                               |
+| `status.warning`        |              `#FBBA4A` | Warning only with text/icon                               |
+| `status.error`          |                    TBD | Derive an AA-compliant error pair before implementation   |
 
 The values above were extracted from the SVG exports and are provisional. Consolidate near-duplicate grays in code, generate hover/pressed/container roles from semantic tokens, and verify every foreground/background pair. Pink is not a general-purpose second accent. Gradients never carry status.
 
@@ -108,9 +108,9 @@ Do not shrink financial explanations below the small-body role. Public long-form
 
 - The geometric violet Tabbio `t` path extracted from the supplied designer SVG is the canonical prototype mark. Do not substitute a sparkle, generic app glyph, rounded-square badge, or invented logo treatment.
 - Use one outlined icon family already present in Tabbio. Every interactive icon has an accessible name and a visible tooltip on hover and focus where its label is otherwise absent.
-- The public textured hero can be rebuilt as an optimized responsive asset or CSS/canvas treatment after performance testing. It must not reduce text contrast.
+- The public hero is a semantic CSS composition of recognizable Tabbio work artifacts. Keep the shapes lightweight, responsive, and readable without depending on a raster scene.
 - The SVG screenshots are not shippable UI. Do not embed them as page images, crop their outlined text, or extract inaccessible controls from them.
-- Real partner examples, customer photos, earnings, permits, badges, or provider logos require verified source material and permission. Label synthetic examples.
+- Real partner examples, customer photos, earnings, permits, status badges, or provider logos require verified source material and permission. The downloadable Tabbio Partner artwork is a clearly labelled prototype until approval and status issuance are connected.
 
 ## 4. Adaptive layout and navigation
 
@@ -152,7 +152,7 @@ On compact screens, prioritize Overview, Create, Links, and Earnings. Put Client
 
 ### Estimator and sliders
 
-- Each slider has a visible label, current value, minimum, maximum, step, and paired numeric input.
+- Each slider has a clear label and current value. The public estimator keeps its endpoints accessible without printing extra `1` and `1M` labels, and uses progressive human-scale stops so low values remain precise while one swipe can still reach 1,000,000.
 - Keyboard arrows, Page Up/Down, Home, and End work where the chosen primitive supports them.
 - Recalculate from live plan data and state assumptions beside the result.
 - Label the output `Estimated commission`, not `earnings` or `guaranteed income`.
@@ -201,13 +201,13 @@ Material 3 does not currently define a data-table component. Use semantic HTML a
 
 ### Public `/partners`
 
-1. Header: existing Tabbio marketing navigation, language switch, sign-in, and `Become a partner`.
-2. First viewport: `Your work keeps paying`, one plain-language sentence, one join action, one `Preview Partner App` action, and the live estimator. The estimator appears once.
-3. Audience paths: three visually committed surfaces name career coaches and CV writers, UGC creators, and recruiters or agencies before listing shared program facts. Each surface shows useful work, the tracked handoff, and the eligible subscription outcome.
+1. Header: Tabbio wordmark, four local decision links, `Preview app`, and one `Join` action. Product-wide navigation and language controls stay outside this campaign header.
+2. First viewport: `Help people move forward. Earn with Tabbio.`, one audience sentence, one primary apply action, one app-preview action, and one editorial scene of real partner work. Three compact artifacts inside that scene show what an approved partner receives: 30% recurring commission, a tracked partner link, and the stacked `Tabbio Active Partner 2026` badge. The 30% stamp may reuse the estimator's money illustration at very low opacity so the earning cue is immediate while the number remains dominant. The badge is a program outcome, not a second call to action. Keep the hero background a single quiet surface without dots, stripes, grain, or decorative texture. Do not rebuild the previous floating-diagram composition. The estimator appears once after audience fit. It asks only for new Pro customers per month through a swipe-first 1-to-1M scale with an editable value and shows the month-12 monthly estimate on a quiet Tabbio color field.
+3. Audience paths: three short tonal surfaces name coaches and CV writers, UGC creators, and recruiters or agencies. Each uses one human editorial illustration, one title, and one literal work example. The agency example frames candidate subscriptions as income separate from client-service fees.
 4. Product proof: one large preview uses the actual Partner app structure, navigation, metrics, task choices, and ledger language with labelled deterministic sample data. Never fabricate partner work, testimonials, or earnings.
-5. Application: one embedded split surface pairs the Tabbio color field with a visible-label M3-style form. Ask for one primary lane, adapt the work prompt to that lane, preserve the draft locally, focus the first error, and show a persistent success state with an explicit demo-app entrance.
-6. Review path: Apply, human review, then access to links, resources, and dashboard. Do not promise instant approval while review infrastructure is absent.
-7. FAQ: eligibility, commission definition, attribution, payout, permit, CV styles, leaving, suspension/removal, privacy, and support.
+5. Application: one embedded editorial split surface pairs a candid career-creator illustration with a two-step visible-label M3-style form: `About you`, then `Your work`. A compact approved-partner badge card sits inside the invitation side as a tangible program outcome and links to the complete badge resources; do not repeat it as a full-width landing section. The role question follows the current Material radio-list pattern: one semantic fieldset, one vertical list at every breakpoint, full-row 58px targets, one short label per option, native single-selection and arrow-key behavior, visible hover/focus/selected states, and no grid of outlined cards. Selecting `Something else` progressively reveals one optional text field directly below the list; the field remains optional and its value is preserved in the draft. Step one validates identity and lane before revealing the lane-aware work prompt. Preserve the draft locally, focus the first error, and show a persistent success state with an explicit demo-app entrance. Storage and backend limitations belong in product documentation, not as debug-like display copy in the invitation panel.
+6. Review path: three tactile, asymmetric cards say hello, confirm a human review, and explain the start. Do not promise instant approval while review infrastructure is absent.
+7. FAQ: worldwide eligibility, UAE advertising activity, agency and team tracking, client-fee separation, eligible plans, tools, commission, attribution, payout, and prohibited promotion. Legal depth stays in the proposed terms page.
 8. Footer: terms, privacy, program terms, disclosure guidance, accessibility, and contact.
 
 The conversion order above is informed by the Higgsfield creator partnership page, not its visual identity. Tabbio retains its supplied blue-violet system, geometric mark, product workflows, copy, and evidence standard.
@@ -215,11 +215,11 @@ The conversion order above is informed by the Higgsfield creator partnership pag
 ### Authenticated Partner area
 
 - **Overview:** one earnings focal card, clicks, attributed signups, paying customers, one next task, an accessible trend, and recent ledger activity.
-- **Clients:** search, create CV, style/status filters, semantic results, claim-link state, last edit, and explicit row action.
+- **CV Builder:** one accessible Material 3 primary-tab pair separates `Client CVs` from `CV Skills`. Client CVs uses one compact tonal toolbar for search and status, a semantic results table, claim-link state, last edit, and an explicit row action. CV Skills uses the same familiar search pattern plus filter chips for All, Tabbio, Community, and Yours; compact expandable list items reveal reusable instructions without editorial hero copy or decorative card grids. CV layout remains record metadata, never a top-level filter. Prototype limitations live in product documentation rather than repeated demo labels inside the working surface.
 - **Create:** Script/Post/Article selection, prompt, optional settings, generated draft, editor, disclosure insertion, save/history, and explicit export/copy. No automatic publishing.
 - **Links:** main link and QR, create tracked link, channel/campaign/destination fields, archive, scoped metrics, and consistent conversion definitions.
 - **Earnings:** balance definitions, ledger, filters, payout history/detail, statement download, provider state, disputes, and support.
-- **Resources:** versioned brand kit, approved copy, correct partner disclosure, promotion rules, writing/playbook resources, and file metadata.
+- **Resources:** a practical partner toolkit, not a developer file inventory. Lead with the official Tabbio branding ZIP, followed by the approved `Tabbio Active Partner 2026` badge in its two canonical compositions, ready-to-copy introduction and disclosure text, promotion rules, and one partner guide. Keep checksums, manifests, local paths, byte counts, prototype labels, and issuance infrastructure out of the partner-facing interface. Supply the exact badge SVG masters, native PNGs, `@2x` PNGs, lightweight previews, guidelines, and one complete badge ZIP. Do not generate role, tier, color, or layout variants beyond these two approved assets. The badge is a program-status mark, never an avatar, co-logo, professional certification, or endorsement.
 - **Settings:** public profile, lane, language, notifications, agreement version, compliance checks, payout account, security handoff, and deactivate/leave flow.
 
 ### Admin and finance
@@ -238,7 +238,9 @@ Admin surfaces inherit the same Operate system but prioritize dense inspection. 
 
 ## 8. Motion
 
-- The signature public motion is the estimator stack updating as inputs change. Use a short 180 to 240ms transform/opacity transition and preserve the exact numeric result.
+- The public hero uses one authored sequence: creator content and a client CV settle first, their paths converge into one tracked link, and only then does the eligible commission state appear. It runs once, stays fully readable without JavaScript, and does not loop.
+- The signature public motion is the estimate value settling as its single input changes. Use a short 180 to 240ms emphasized-decelerate transform/opacity transition and preserve the exact numeric result.
+- `motion` owns the hero sequence and short continuity transitions. `@number-flow/react` owns formatted estimator digits. The earnings panel uses one bespoke Tabbio paper-collage asset (CV, creator video, referral ribbon, reward) as a restrained desktop accent; it is hidden when mobile space is needed for the number. The audience cards use custom editorial illustrations with mixed ethnicities and literal work scenes: CV collaboration, an app/SaaS walkthrough being recorded, and agency candidate screening. One small panoramic paper ribbon appears once between audience fit and earnings as a visual bridge. Phosphor duotone icons are reserved for expressive public illustrations; Lucide remains the familiar operating icon family inside the Partner app.
 - In-product motion communicates continuity: row insertion, status change, panel transition, or copy confirmation. It never delays work.
 - Avoid scroll-jacking, parallax that moves text, infinite decorative motion, and celebratory animation for money that is only pending.
 - Respect `prefers-reduced-motion`; remove nonessential movement and use instant state changes with the same feedback.
@@ -285,8 +287,8 @@ Checklist Design does not replace WCAG, security, privacy, performance, financia
 The 2026-08-09 landing revision treats the supplied 1512px SVG composition as the visual authority while following the user's later instruction to remove repetition and reduce copy.
 
 - `/partners` is the only indexable landing route. `/` redirects to it so the same page is not published twice.
-- The supplied composition repeats the estimator once as a compact calculation proof. Both instances share the same state so the repetition demonstrates the stack without conflicting totals.
-- Visible copy is limited to one offer sentence, four short steps, three earning paths, four toolkit items, six concise questions, and one final action.
-- Visual explanation takes priority: the split estimator, compact calculation proof, CV claim card, generous card whitespace, numbered steps, and oversized footer wordmark carry the story.
+- The estimator appears exactly once. Its direct number field has no arbitrary marketing cap and large results compact safely without changing the exact accessible value.
+- Visible copy stays brief: one offer sentence, short steps, three earning paths, compact toolkit items, collapsible FAQ answers, and one final action.
+- Visual explanation takes priority: the split estimator, CV claim card, generous card whitespace, numbered steps, and oversized footer wordmark carry the story.
 - SEO is implemented through the title, description, canonical URL, semantic headings, concise first paragraph, FAQ JSON-LD, robots, sitemap, and `llms.txt`. It must not add keyword filler or duplicate visible sections.
-- The public design uses the supplied geometric Tabbio mark, blue-violet grain field, neutral surfaces, compact Inter typography, and one violet-to-pink earning gradient.
+- The public design uses the supplied geometric Tabbio mark, Tabbio violet, blue and pink supporting accents derived from the supplied work, neutral surfaces, and compact Inter typography. The original grain field and split hero calculator are retained as source evidence, not copied into the simplified first viewport.

@@ -37,9 +37,10 @@ import { DEMO_RESET_EVENT, useDemo } from "@/components/demo-provider";
 import { PageHeader, StatusBadge } from "@/components/shared";
 import { readScenarioState } from "@/components/tools/browser-actions";
 import { partnerLanes } from "@/data/partner-application";
+import { PROGRAM_POLICY_VERSION } from "@/data/program-policy";
 
 const STORAGE_KEY = "tabbio-partner-onboarding-local-v1";
-const AGREEMENT_VERSION = "Prototype 2026-08-09";
+const AGREEMENT_VERSION = PROGRAM_POLICY_VERSION;
 
 type OnboardingData = {
   publicName: string;
@@ -688,22 +689,32 @@ export default function OnboardingPage() {
               These acknowledgements are stored locally. They are not a signed
               production agreement.
             </p>
+            <p className="mt-3 text-sm leading-6 text-[#514a58]">
+              Review the complete{" "}
+              <Link
+                className="focus-ring rounded font-semibold text-[#5a2aff] underline underline-offset-4"
+                href="/partners/policies"
+              >
+                Partner Policy Centre
+              </Link>{" "}
+              before continuing.
+            </p>
             <div className="mt-6 space-y-3">
               {[
                 [
                   "acceptsProgram",
-                  "I reviewed the prototype program terms",
-                  `Version ${AGREEMENT_VERSION}. Legal approval is still pending.`,
+                  "I reviewed the partner agreement and commission schedule",
+                  `${AGREEMENT_VERSION}. Legal and Finance approval is still pending.`,
                 ],
                 [
                   "acceptsResponsibility",
-                  "I will review claims and disclosures before publishing",
-                  "Tabbio does not publish drafts or approve your content automatically.",
+                  "I reviewed the promotion, disclosure, and brand rules",
+                  "I remain responsible for every claim and disclosure I publish.",
                 ],
                 [
                   "acceptsPrivacy",
-                  "I will not place personal data in referral URLs",
-                  "Links and QR codes should never contain a client name, email, or other private data.",
+                  "I reviewed the privacy and tracking notice",
+                  "I will not place client, candidate, CV, email, or other personal data in referral URLs.",
                 ],
               ].map(([key, label, note]) => (
                 <label

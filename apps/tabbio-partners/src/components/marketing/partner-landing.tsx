@@ -2,10 +2,10 @@
 
 /*
  * THESIS: A direct, visual path from useful career work to recurring earnings.
- * COMPOSITION: Calculator hero, three partner lanes, real app preview, compact
- * program facts, split application, three-step review path, FAQ, footer.
- * DEPTH: Tabbio gradient establishes the promise; quiet neutral surfaces carry
- * information; deep violet frames product proof.
+ * COMPOSITION: Direct promise, Tabbio work artifacts, three partner lanes,
+ * one-input estimate, product proof, application, review path, FAQ, footer.
+ * DEPTH: Expressive Tabbio artifacts carry the hero; quiet neutral surfaces
+ * keep every later section immediately scannable.
  * TYPOGRAPHY: Existing Tabbio display hierarchy with short, literal copy.
  * SPACING: Large section rhythm, compact controls, 48px minimum actions.
  * Higgsfield informs conversion order only; Tabbio owns the colors, product
@@ -15,27 +15,23 @@
 import {
   ArrowUpRight,
   BarChart3,
-  BriefcaseBusiness,
-  Building2,
-  Check,
-  ChevronRight,
-  CircleDollarSign,
-  ClipboardCheck,
   FileText,
-  Globe2,
-  GraduationCap,
   Instagram,
   LayoutDashboard,
   Menu,
   Music2,
   Plus,
   QrCode,
-  ShieldCheck,
   Video,
   X,
   Youtube,
 } from "lucide-react";
+import NumberFlow from "@number-flow/react";
+import { GraduationCapIcon } from "@phosphor-icons/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import Image from "next/image";
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import { useEffect, useState } from "react";
 
 import { Button } from "@refref/ui/components/button";
@@ -47,55 +43,56 @@ import {
   calculateEstimator,
   formatUsd,
   ledger,
-  normalizeEstimatorInput,
   periodTotals,
 } from "@/data/demo-data";
 import { publicFaq } from "@/data/marketing";
 
-const PLAN_PRICE = 14.99;
+const PLAN_PRICE = 29.99;
 const COMMISSION_RATE = 0.3;
+const SIMPLE_ESTIMATE_MONTHS = 12;
+const MAX_CUSTOMERS = 1_000_000;
+
+const CUSTOMER_STOPS = [
+  ...Array.from({ length: 20 }, (_, index) => index + 1),
+  ...Array.from({ length: 16 }, (_, index) => 25 + index * 5),
+  ...Array.from({ length: 36 }, (_, index) => 125 + index * 25),
+  ...Array.from({ length: 36 }, (_, index) => 1_250 + index * 250),
+  ...Array.from({ length: 36 }, (_, index) => 12_500 + index * 2_500),
+  ...Array.from({ length: 36 }, (_, index) => 125_000 + index * 25_000),
+] as const;
 
 const navItems = [
-  ["Home", "https://www.tabbio.com/en"],
-  ["Features", "https://www.tabbio.com/en/features"],
-  ["Pricing", "https://www.tabbio.com/en/pricing"],
-  ["For Employers", "https://www.tabbio.com/en/employers"],
-  ["For Developers", "https://docs.tabbio.com/en"],
-  ["Tools", "https://www.tabbio.com/en/tools"],
+  ["Who it’s for", "#audiences"],
+  ["How it works", "#partner-work"],
+  ["Earnings", "#earnings"],
+  ["FAQ", "#faq"],
 ] as const;
 
 const audiencePaths = [
   {
-    icon: GraduationCap,
-    title: "Career coaches & CV writers",
-    copy: "Build or improve a client CV, send the claim link, and earn when an eligible client subscribes.",
-    action: "Client work → claim link → subscription",
+    image: "/images/audience-cv-professional.png",
+    imageAlt: "Career professional helping a client review a CV",
+    title: "Coaches & CV writers",
+    copy: "Client CVs and claim links.",
   },
   {
-    icon: Video,
+    image: "/images/audience-ugc-creator.png",
+    imageAlt: "UGC creator filming a vertical product video",
     title: "UGC creators",
-    copy: "Show Tabbio in a useful tutorial, add the disclosure, and share one tracked link across your channels.",
-    action: "Useful content → tracked link → subscription",
+    copy: "Useful tutorials and reviews.",
   },
   {
-    icon: Building2,
+    image: "/images/audience-recruiter-agency.png",
+    imageAlt: "Recruitment team reviewing candidate profiles together",
     title: "Recruiters & agencies",
-    copy: "Hand a candidate or client a professional Tabbio path and track the result without spreadsheet guesswork.",
-    action: "Handoff → attribution → clear earnings",
+    copy: "Candidate subscriptions become extra income.",
   },
-] as const;
-
-const programFacts = [
-  [CircleDollarSign, "30% recurring", "Eligible paid subscriptions"],
-  [QrCode, "Tracked links + QR", "A clear path for every channel"],
-  [BarChart3, "Explainable earnings", "Pending, payable, and paid"],
-  [ShieldCheck, "Partner resources", "Approved assets and disclosures"],
 ] as const;
 
 const nextSteps = [
-  ["Apply", "Choose your lane and show us your best work."],
-  ["We review", "A real person checks fit and your work."],
-  ["Start sharing", "Get your link, resources, and dashboard."],
+  ["Say hello", "Tell us what you do."],
+  ["We review", "A real person checks the fit."],
+  ["Start sharing", "Get your link and tools."],
 ] as const;
 
 function money(value: number) {
@@ -107,52 +104,76 @@ function money(value: number) {
   }).format(value);
 }
 
-type EstimatorSliderProps = {
+type CustomerCountInputProps = {
   id: string;
-  label: string;
   value: number;
-  min: number;
-  max: number;
-  suffix?: string;
   onChange: (value: number) => void;
 };
 
-function EstimatorSlider({
-  id,
-  label,
-  value,
-  min,
-  max,
-  suffix,
-  onChange,
-}: EstimatorSliderProps) {
-  const update = (next: number) =>
-    onChange(normalizeEstimatorInput(next, min, max));
+function nearestCustomerStop(value: number) {
+  let closestIndex = 0;
+  let smallestDistance = Number.POSITIVE_INFINITY;
+
+  CUSTOMER_STOPS.forEach((stop, index) => {
+    const distance = Math.abs(stop - value);
+    if (distance < smallestDistance) {
+      smallestDistance = distance;
+      closestIndex = index;
+    }
+  });
+
+  return closestIndex;
+}
+
+function CustomerCountInput({ id, value, onChange }: CustomerCountInputProps) {
+  const [draft, setDraft] = useState(String(value));
+
+  useEffect(() => setDraft(String(value)), [value]);
+
+  const update = (raw: string) => {
+    setDraft(raw);
+    if (!raw.trim()) return;
+
+    const parsed = Number(raw);
+    if (!Number.isFinite(parsed) || parsed < 1) return;
+
+    onChange(Math.min(MAX_CUSTOMERS, Math.round(parsed)));
+  };
+
+  const sliderIndex = nearestCustomerStop(value);
+  const sliderProgress = (sliderIndex / (CUSTOMER_STOPS.length - 1)) * 100;
 
   return (
-    <div className="tabbio-slider">
-      <div className="tabbio-slider__label">
-        <label htmlFor={`${id}-range`}>{label}</label>
-        <div>
-          <input
-            id={`${id}-number`}
-            aria-label={`${label}, numeric value`}
-            type="number"
-            min={min}
-            max={max}
-            value={value}
-            onChange={(event) => update(event.currentTarget.valueAsNumber)}
-          />
-          {suffix && <span>{suffix}</span>}
-        </div>
+    <div className="tabbio-customer-input">
+      <label className="visually-hidden" htmlFor={id}>
+        Customers per month
+      </label>
+      <div className="tabbio-customer-input__value">
+        <input
+          id={id}
+          type="number"
+          inputMode="numeric"
+          min={1}
+          max={MAX_CUSTOMERS}
+          step={1}
+          value={draft}
+          onChange={(event) => update(event.currentTarget.value)}
+          onBlur={() => setDraft(String(value))}
+        />
       </div>
       <input
-        id={`${id}-range`}
+        className="tabbio-customer-input__range"
         type="range"
-        min={min}
-        max={max}
-        value={value}
-        onChange={(event) => update(event.currentTarget.valueAsNumber)}
+        min={0}
+        max={CUSTOMER_STOPS.length - 1}
+        step={1}
+        value={sliderIndex}
+        aria-label="Swipe customers per month"
+        aria-valuetext={`${value.toLocaleString("en-US")} new customers per month`}
+        style={{ "--slider-progress": `${sliderProgress}%` } as CSSProperties}
+        onChange={(event) =>
+          onChange(CUSTOMER_STOPS[Number(event.currentTarget.value)] ?? 1)
+        }
       />
     </div>
   );
@@ -160,94 +181,182 @@ function EstimatorSlider({
 
 function Estimator({
   idPrefix,
-  compact = false,
   referrals,
-  paidMonths,
-  programMonths,
   setReferrals,
-  setPaidMonths,
-  setProgramMonths,
 }: {
   idPrefix: string;
-  compact?: boolean;
   referrals: number;
-  paidMonths: number;
-  programMonths: number;
   setReferrals: (value: number) => void;
-  setPaidMonths: (value: number) => void;
-  setProgramMonths: (value: number) => void;
 }) {
   const result = calculateEstimator(
     referrals,
-    paidMonths,
-    programMonths,
+    SIMPLE_ESTIMATE_MONTHS,
+    SIMPLE_ESTIMATE_MONTHS,
     PLAN_PRICE,
     COMMISSION_RATE,
   );
   const [announcement, setAnnouncement] = useState("");
+  const compactResult = result.finalRunRate >= 1_000_000;
 
   useEffect(() => {
     const timeout = window.setTimeout(
       () =>
-        setAnnouncement(`Estimated total commission ${money(result.total)}`),
+        setAnnouncement(
+          `Estimated monthly commission after 12 months ${money(result.finalRunRate)}`,
+        ),
       350,
     );
     return () => window.clearTimeout(timeout);
-  }, [result.total]);
+  }, [result.finalRunRate]);
 
   return (
     <section
-      className={`tabbio-estimator${compact ? " tabbio-estimator--compact" : ""}`}
+      className="tabbio-estimator"
       aria-labelledby={`${idPrefix}-estimate-title`}
     >
       <div className="tabbio-estimator__controls">
-        <div className="tabbio-plan">
-          <span>Individual plan</span>
-          <strong>Plus, $14.99 monthly</strong>
-          <ChevronRight aria-hidden="true" />
+        <div className="tabbio-estimator__control-heading">
+          <h3>New Pro customers each month</h3>
         </div>
-        <EstimatorSlider
+        <CustomerCountInput
           id={`${idPrefix}-referrals`}
-          label="New paying referrals each month"
           value={referrals}
-          min={1}
-          max={20}
           onChange={setReferrals}
-        />
-        <EstimatorSlider
-          id={`${idPrefix}-paid-months`}
-          label="Average months each customer pays"
-          value={paidMonths}
-          min={1}
-          max={24}
-          onChange={setPaidMonths}
-        />
-        <EstimatorSlider
-          id={`${idPrefix}-program-months`}
-          label="Time in the program"
-          value={programMonths}
-          min={1}
-          max={36}
-          suffix="months"
-          onChange={setProgramMonths}
         />
       </div>
       <div className="tabbio-estimator__result">
-        <p id={`${idPrefix}-estimate-title`}>Estimated total commission</p>
-        <strong>{money(result.total)}</strong>
-      </div>
-      <div className="tabbio-estimator__notes">
-        <p>About {money(result.finalRunRate)} in the final month shown</p>
-        <p>
-          {referrals} referrals × {money(PLAN_PRICE * COMMISSION_RATE)} per paid
-          month
+        <div className="tabbio-estimator__money-art" aria-hidden="true">
+          <Image
+            src="/images/earnings-money-illustration.webp"
+            alt=""
+            fill
+            sizes="(max-width: 720px) 58vw, 28vw"
+          />
+        </div>
+        <div className="tabbio-estimator__result-heading">
+          <p id={`${idPrefix}-estimate-title`}>Estimated monthly</p>
+        </div>
+        <strong>
+          <NumberFlow
+            value={result.finalRunRate}
+            locales="en-US"
+            format={{
+              style: "currency",
+              currency: "USD",
+              notation: compactResult ? "compact" : "standard",
+              minimumFractionDigits: compactResult ? 0 : 2,
+              maximumFractionDigits: compactResult ? 1 : 2,
+            }}
+            transformTiming={{
+              duration: 240,
+              easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+            }}
+            spinTiming={{
+              duration: 240,
+              easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+            }}
+            opacityTiming={{ duration: 120, easing: "ease-out" }}
+            respectMotionPreference
+          />
+        </strong>
+        <p className="tabbio-estimator__result-note">
+          After 12 months · 30% of Pro
         </p>
-        <p>Estimate only. USD. Refunds and eligibility can change totals.</p>
       </div>
       <span className="visually-hidden" aria-live="polite" aria-atomic="true">
         {announcement}
       </span>
     </section>
+  );
+}
+
+function HeroStudio() {
+  const prefersReducedMotion = useReducedMotion();
+  const [playing, setPlaying] = useState(false);
+
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+    const frame = window.requestAnimationFrame(() => setPlaying(true));
+    return () => window.cancelAnimationFrame(frame);
+  }, [prefersReducedMotion]);
+
+  const artifactMotion = (delay: number) => ({
+    animate: playing
+      ? {
+          opacity: [0.82, 1],
+          y: [14, 0],
+          scale: [0.985, 1],
+        }
+      : { opacity: 1, y: 0, scale: 1 },
+    transition: {
+      delay,
+      duration: 0.52,
+      ease: [0.16, 1, 0.3, 1] as const,
+    },
+  });
+
+  return (
+    <div
+      className="tabbio-hero-studio"
+      aria-label="Creators, coaches, and recruiters working with Tabbio"
+    >
+      <motion.div
+        className="tabbio-hero-editorial"
+        initial={false}
+        {...artifactMotion(0.08)}
+      >
+        <Image
+          src="/images/partner-hero-editorial.webp"
+          alt="A UGC creator, career coach, and recruiter working together"
+          fill
+          priority
+          sizes="(max-width: 980px) 92vw, 48vw"
+        />
+      </motion.div>
+
+      <motion.div
+        className="tabbio-hero-stamp"
+        initial={false}
+        {...artifactMotion(0.42)}
+      >
+        <Image
+          className="tabbio-hero-stamp__money"
+          src="/images/earnings-money-illustration.webp"
+          alt=""
+          fill
+          sizes="154px"
+          aria-hidden="true"
+        />
+        <div className="tabbio-hero-stamp__copy">
+          <strong>30%</strong>
+          <span>recurring</span>
+        </div>
+      </motion.div>
+
+      <motion.div
+        className="tabbio-hero-link-card"
+        initial={false}
+        {...artifactMotion(0.62)}
+      >
+        <span>
+          <small>Your partner link</small>
+          <strong>tabbio.com/r/you</strong>
+        </span>
+      </motion.div>
+
+      <motion.div
+        className="tabbio-hero-badge-card"
+        initial={false}
+        {...artifactMotion(0.78)}
+      >
+        <Image
+          src="/brand/partner-badges/2026/tabbio-active-partner-2026-stacked-preview.webp"
+          alt="Tabbio Active Partner 2026 badge"
+          width={942}
+          height={526}
+        />
+      </motion.div>
+    </div>
   );
 }
 
@@ -267,7 +376,7 @@ function Header() {
     <header className="tabbio-marketing-header">
       <div className="tabbio-landing-wrap tabbio-marketing-header__inner">
         <Link href="/" aria-label="Tabbio partner program home">
-          <BrandMark light compact />
+          <BrandMark />
         </Link>
         <nav aria-label="Partner program">
           {navItems.map(([label, href]) => (
@@ -277,9 +386,6 @@ function Header() {
           ))}
         </nav>
         <div className="tabbio-marketing-header__actions">
-          <span className="tabbio-language">
-            <Globe2 aria-hidden="true" /> EN
-          </span>
           <Link className="tabbio-sign-in" href="/partner">
             Preview app
           </Link>
@@ -290,25 +396,37 @@ function Header() {
             aria-controls="mobile-partner-nav"
             onClick={() => setOpen((current) => !current)}
           >
-            <span className="visually-hidden">Open navigation</span>
+            <span className="visually-hidden">
+              {open ? "Close navigation" : "Open navigation"}
+            </span>
             {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
           </button>
           <Link className="tabbio-header-cta" href="#form">
             Join
           </Link>
         </div>
-        {open && (
-          <nav id="mobile-partner-nav" className="tabbio-mobile-nav">
-            {navItems.map(([label, href]) => (
-              <a key={href} href={href} onClick={() => setOpen(false)}>
-                {label}
-              </a>
-            ))}
-            <Link href="/partner" onClick={() => setOpen(false)}>
-              Preview partner app
-            </Link>
-          </nav>
-        )}
+        <AnimatePresence>
+          {open && (
+            <motion.nav
+              id="mobile-partner-nav"
+              className="tabbio-mobile-nav"
+              aria-label="Mobile partner program"
+              initial={{ opacity: 0, y: -8, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -5, scale: 0.99 }}
+              transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {navItems.map(([label, href]) => (
+                <a key={href} href={href} onClick={() => setOpen(false)}>
+                  {label}
+                </a>
+              ))}
+              <Link href="/partner" onClick={() => setOpen(false)}>
+                Preview partner app
+              </Link>
+            </motion.nav>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   );
@@ -332,9 +450,16 @@ function Footer() {
         </div>
         <div>
           <strong>Legal</strong>
-          <Link href="/partners/terms">Program terms</Link>
-          <Link href="/partners/terms#privacy">Privacy</Link>
-          <Link href="/partners/terms#disclosure">Disclosure</Link>
+          <Link href="/partners/policies">Policy centre</Link>
+          <Link href="/partners/policies/partner-agreement">
+            Partner agreement
+          </Link>
+          <Link href="/partners/policies/privacy-tracking">
+            Privacy &amp; tracking
+          </Link>
+          <Link href="/partners/policies/promotion-disclosure">
+            Promotion &amp; disclosure
+          </Link>
         </div>
         <div className="tabbio-footer-downloads">
           <div>
@@ -366,8 +491,6 @@ function Footer() {
 
 export function PartnerLanding() {
   const [referrals, setReferrals] = useState(4);
-  const [paidMonths, setPaidMonths] = useState(12);
-  const [programMonths, setProgramMonths] = useState(18);
 
   return (
     <div className="tabbio-public-page">
@@ -376,86 +499,96 @@ export function PartnerLanding() {
         <section className="tabbio-hero" aria-labelledby="partner-hero-title">
           <div className="tabbio-landing-wrap tabbio-hero__grid">
             <div className="tabbio-hero__copy">
+              <p className="tabbio-hero__label">Tabbio Partner</p>
               <h1 id="partner-hero-title">
-                <span>Your work</span>
-                keeps paying.
+                Help people move forward. Earn with Tabbio.
               </h1>
               <p>
-                Build useful career work, share one clear link, and earn 30% on
-                eligible subscriptions.
+                For creators, coaches, CV writers, recruiters, and agencies.
+                Earn 30% on eligible subscriptions.
               </p>
               <div className="tabbio-hero__actions">
                 <Button asChild className="tabbio-primary-button">
-                  <Link href="#form">Become A Partner</Link>
+                  <Link href="#form">Apply now</Link>
                 </Button>
                 <Link className="tabbio-hero-link" href="/partner">
-                  Preview Partner App <ArrowUpRight aria-hidden="true" />
+                  Preview app <ArrowUpRight aria-hidden="true" />
                 </Link>
               </div>
-              <ul
-                className="tabbio-hero__facts"
-                aria-label="Program highlights"
-              >
-                <li>
-                  <Check aria-hidden="true" /> 30% recurring commission
-                </li>
-                <li>
-                  <Check aria-hidden="true" /> Monthly payouts
-                </li>
-              </ul>
             </div>
-            <Estimator
-              idPrefix="hero"
-              referrals={referrals}
-              paidMonths={paidMonths}
-              programMonths={programMonths}
-              setReferrals={setReferrals}
-              setPaidMonths={setPaidMonths}
-              setProgramMonths={setProgramMonths}
-            />
+            <HeroStudio />
           </div>
         </section>
 
         <section
+          id="audiences"
           className="program-audiences"
           aria-labelledby="audiences-title"
         >
           <div className="tabbio-landing-wrap">
             <div className="program-section-heading">
-              <p className="program-eyebrow">Choose your path</p>
-              <h2 id="audiences-title">
-                Built around the work you already do.
-              </h2>
-              <p>Pick the path closest to your work today.</p>
+              <h2 id="audiences-title">Made for useful work.</h2>
+              <p>Pick your path.</p>
             </div>
             <div className="program-audience-grid">
-              {audiencePaths.map(({ icon: Icon, title, copy, action }) => (
+              {audiencePaths.map(({ image, imageAlt, title, copy }, index) => (
                 <article key={title}>
-                  <div className="program-audience-card__top">
-                    <span>
-                      <Icon aria-hidden="true" />
-                    </span>
-                    <ArrowUpRight aria-hidden="true" />
+                  <div
+                    className="program-audience-card__media"
+                    style={{
+                      position: "relative",
+                      minHeight: 220,
+                      overflow: "hidden",
+                    }}
+                  >
+                    <Image
+                      src={image}
+                      alt={imageAlt}
+                      width={1456}
+                      height={1092}
+                      loading={index === 0 ? "eager" : "lazy"}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                      sizes="(max-width: 720px) 100vw, (max-width: 1040px) 50vw, 33vw"
+                    />
                   </div>
                   <div>
                     <h3>{title}</h3>
                     <p>{copy}</p>
                   </div>
-                  <small>{action}</small>
                 </article>
               ))}
             </div>
-            <div className="program-fact-strip" aria-label="Program benefits">
-              {programFacts.map(([Icon, title, copy]) => (
-                <div key={title}>
-                  <Icon aria-hidden="true" />
-                  <span>
-                    <strong>{title}</strong>
-                    <small>{copy}</small>
-                  </span>
-                </div>
-              ))}
+          </div>
+          <div className="program-paper-bridge" aria-hidden="true">
+            <Image
+              className="program-paper-bridge__image"
+              src="/images/partner-paper-ribbon-landscape.png"
+              alt=""
+              width={1792}
+              height={1075}
+              sizes="(max-width: 720px) 96vw, 760px"
+            />
+          </div>
+        </section>
+
+        <section
+          id="earnings"
+          className="program-estimator"
+          aria-labelledby="earnings-title"
+        >
+          <div className="tabbio-landing-wrap">
+            <div className="program-section-heading">
+              <h2 id="earnings-title">Estimate earnings.</h2>
             </div>
+            <Estimator
+              idPrefix="earnings"
+              referrals={referrals}
+              setReferrals={setReferrals}
+            />
           </div>
         </section>
 
@@ -467,13 +600,10 @@ export function PartnerLanding() {
           <div className="tabbio-landing-wrap">
             <div className="program-showcase-heading">
               <div>
-                <p className="program-eyebrow">See the real product flow</p>
-                <h2 id="showcase-title">
-                  One place to create, share, and understand every amount.
-                </h2>
+                <h2 id="showcase-title">Create. Share. Track.</h2>
               </div>
               <Link href="/partner">
-                Open the demo Partner app <ArrowUpRight aria-hidden="true" />
+                Open demo <ArrowUpRight aria-hidden="true" />
               </Link>
             </div>
 
@@ -501,8 +631,7 @@ export function PartnerLanding() {
               <div className="program-app-preview__main">
                 <header>
                   <div>
-                    <small>Partner overview</small>
-                    <strong>Welcome back, Mohamed</strong>
+                    <strong>Partner overview</strong>
                   </div>
                   <span>Demo data</span>
                 </header>
@@ -533,14 +662,15 @@ export function PartnerLanding() {
                 <div className="program-app-preview__workspace">
                   <section aria-labelledby="preview-next-task">
                     <div>
-                      <small>Next useful task</small>
-                      <h3 id="preview-next-task">
-                        Choose what you want to make.
-                      </h3>
+                      <h3 id="preview-next-task">Create something useful.</h3>
                     </div>
                     <div className="program-app-preview__actions">
                       <span>
-                        <GraduationCap aria-hidden="true" /> Create a client CV
+                        <GraduationCapIcon
+                          weight="duotone"
+                          aria-hidden="true"
+                        />{" "}
+                        Create a client CV
                       </span>
                       <span>
                         <Video aria-hidden="true" /> Draft UGC content
@@ -552,10 +682,7 @@ export function PartnerLanding() {
                   </section>
                   <section aria-labelledby="preview-ledger-title">
                     <div>
-                      <small>Recent ledger activity</small>
-                      <h3 id="preview-ledger-title">
-                        Every amount has a source.
-                      </h3>
+                      <h3 id="preview-ledger-title">Recent earnings.</h3>
                     </div>
                     <ul>
                       {ledger.slice(0, 3).map((entry) => (
@@ -572,10 +699,7 @@ export function PartnerLanding() {
                 </div>
               </div>
             </div>
-            <p className="program-preview-note">
-              This is the working local Partner interface with deterministic
-              demo data. It does not represent live partner results.
-            </p>
+            <p className="program-preview-note">Demo data only.</p>
           </div>
         </section>
 
@@ -587,38 +711,31 @@ export function PartnerLanding() {
           <div className="tabbio-landing-wrap program-form-shell">
             <div className="program-form-intro">
               <div>
-                <p className="program-eyebrow">Become a partner</p>
-                <h2 id="form-title">
-                  Tell us how you create, coach, or help people move forward.
-                </h2>
-                <p>Short, straightforward questions.</p>
+                <h2 id="form-title">Apply to Tabbio Partner.</h2>
+                <p>Two quick steps.</p>
               </div>
-              <ul>
-                <li>
-                  <CircleDollarSign aria-hidden="true" />
-                  <span>
-                    <strong>30% recurring</strong>
-                    On eligible paid subscriptions
-                  </span>
-                </li>
-                <li>
-                  <ClipboardCheck aria-hidden="true" />
-                  <span>
-                    <strong>Human review</strong>
-                    No instant or automated approval promise
-                  </span>
-                </li>
-                <li>
-                  <BriefcaseBusiness aria-hidden="true" />
-                  <span>
-                    <strong>Your work matters</strong>
-                    Starting small does not disqualify you
-                  </span>
-                </li>
-              </ul>
-              <p className="program-form-intro__note">
-                Local frontend preview · Nothing is transmitted yet
-              </p>
+              <div className="program-form-portrait">
+                <Image
+                  src="/images/partner-apply-editorial.webp"
+                  alt="A career creator working on a CV and recording an app tutorial"
+                  fill
+                  sizes="(max-width: 980px) 100vw, 36vw"
+                />
+                <span aria-hidden="true">30% recurring</span>
+              </div>
+              <Link className="program-form-badge" href="/partner/resources">
+                <Image
+                  src="/brand/partner-badges/2026/tabbio-active-partner-2026-stacked-preview.webp"
+                  alt="Tabbio Active Partner 2026 badge"
+                  width={942}
+                  height={526}
+                />
+                <span>
+                  <strong>Your Partner badge</strong>
+                  <small>Shows you&apos;re an active Tabbio Partner.</small>
+                </span>
+                <ArrowUpRight aria-hidden="true" />
+              </Link>
             </div>
             <div className="program-form-panel">
               <PartnerApplicationForm />
@@ -628,17 +745,15 @@ export function PartnerLanding() {
 
         <section className="program-next" aria-labelledby="next-title">
           <div className="tabbio-landing-wrap">
-            <p className="program-eyebrow">What happens next</p>
-            <h2 id="next-title">Three clear steps.</h2>
+            <h2 id="next-title">Three steps. That’s it.</h2>
             <ol>
               {nextSteps.map(([title, copy], index) => (
                 <li key={title}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <span>{index + 1}</span>
                   <div>
                     <h3>{title}</h3>
                     <p>{copy}</p>
                   </div>
-                  <ArrowUpRight aria-hidden="true" />
                 </li>
               ))}
             </ol>
@@ -648,10 +763,7 @@ export function PartnerLanding() {
         <section id="faq" className="tabbio-faq" aria-labelledby="faq-title">
           <div className="tabbio-landing-wrap">
             <div className="tabbio-faq__heading">
-              <h2 id="faq-title">
-                Frequently Asked <span>Questions</span>
-              </h2>
-              <p>Quick answers. Clear terms.</p>
+              <h2 id="faq-title">Questions.</h2>
             </div>
             <div className="tabbio-faq__list">
               {publicFaq.map(({ question, answer }) => (

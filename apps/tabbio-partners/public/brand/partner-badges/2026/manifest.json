@@ -1,0 +1,75 @@
+{
+  "name": "Tabbio Active Partner 2026 badge kit",
+  "version": "2026.2",
+  "status": "Approved artwork; production program and legal approval still required",
+  "issuedFor": "Active Tabbio Partner Program participants",
+  "validYear": 2026,
+  "altText": "Tabbio Active Partner 2026",
+  "assets": [
+    {
+      "id": "stacked",
+      "name": "Tabbio Active Partner 2026 — stacked",
+      "use": "Profile credentials, media kits, proposals, LinkedIn Featured, and social announcements",
+      "dimensions": {
+        "width": 942,
+        "height": 526
+      },
+      "aspectRatio": 1.791,
+      "exports": {
+        "svg": {
+          "filename": "tabbio-active-partner-2026-stacked.svg",
+          "bytes": 8032540,
+          "sha256": "6B48305699CD792F8C80C1414CF1ADAE94FA3E3B9416DBFB8414A4396781D3DA"
+        },
+        "png": {
+          "filename": "tabbio-active-partner-2026-stacked.png",
+          "bytes": 416720,
+          "sha256": "4EFF01794FB78177F3734EC1D85FB3AD8B4F40C64C3698ABEF092802740A0019"
+        },
+        "png2x": {
+          "filename": "tabbio-active-partner-2026-stacked@2x.png",
+          "bytes": 1417282,
+          "sha256": "A18647C3368B4CFA59B6D41E5950F301654E36AC6E54066ABE5DDCA2082BF552"
+        },
+        "webp": {
+          "filename": "tabbio-active-partner-2026-stacked-preview.webp",
+          "bytes": 29348,
+          "sha256": "B1C63567C84686EDE8163E56E0F68FD4402D6157882CDAF521D8A593544FC11E"
+        }
+      }
+    },
+    {
+      "id": "horizontal",
+      "name": "Tabbio Active Partner 2026 — horizontal",
+      "use": "Websites, email signatures, CVs, portfolios, presentations, and document footers",
+      "dimensions": {
+        "width": 1658,
+        "height": 303
+      },
+      "aspectRatio": 5.472,
+      "exports": {
+        "svg": {
+          "filename": "tabbio-active-partner-2026-horizontal.svg",
+          "bytes": 20355,
+          "sha256": "C43C0D2EC91BFAF05E473094BF5E0032318DF8BF39BAC940D92C81C89B7F1C57"
+        },
+        "png": {
+          "filename": "tabbio-active-partner-2026-horizontal.png",
+          "bytes": 89802,
+          "sha256": "7090397587E7C5FE6ADE82C973805225515789C066705D4D098238E7A6C9614D"
+        },
+        "png2x": {
+          "filename": "tabbio-active-partner-2026-horizontal@2x.png",
+          "bytes": 378861,
+          "sha256": "C6389E42B08A9E7B24EF5AD8795BBCDD7D09F96E9907DFEDDEFC93E4C5E8BF6F"
+        },
+        "webp": {
+          "filename": "tabbio-active-partner-2026-horizontal-preview.webp",
+          "bytes": 21848,
+          "sha256": "657C17D5CC9BD9D43A5369C50BC381A92B5DB1AB0F68C40636BB34D153A19BE1"
+        }
+      }
+    }
+  ],
+  "guidelines": "GUIDELINES.md"
+}

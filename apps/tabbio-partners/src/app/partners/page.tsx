@@ -6,7 +6,7 @@ import { publicFaq } from "@/data/marketing";
 export const metadata: Metadata = {
   title: "Partner Program | 30% Recurring Commission",
   description:
-    "Join the Tabbio partner program for UGC creators, career coaches, CV writers, recruiters, and agencies. Track 30% recurring commission on eligible subscriptions.",
+    "Join the global Tabbio partner program for creators, career coaches, CV writers, recruiters, and agencies. Earn 30% recurring commission on eligible subscriptions.",
   alternates: { canonical: "/partners" },
   keywords: [
     "Tabbio partner program",
@@ -15,6 +15,8 @@ export const metadata: Metadata = {
     "career creator partner program",
     "UGC creator affiliate program",
     "career coach affiliate program",
+    "recruiter affiliate program",
+    "recruitment agency referral program",
   ],
   openGraph: {
     type: "website",
@@ -22,13 +24,13 @@ export const metadata: Metadata = {
     siteName: "Tabbio",
     title: "Tabbio Partner Program",
     description:
-      "A partner program for UGC creators, career coaches, CV writers, recruiters, and agencies.",
+      "A global partner program for creators, career coaches, CV writers, recruiters, and agencies.",
   },
   twitter: {
     card: "summary",
     title: "Tabbio Partner Program",
     description:
-      "A partner program for UGC creators, career coaches, CV writers, recruiters, and agencies.",
+      "A global partner program for creators, career coaches, CV writers, recruiters, and agencies.",
   },
 };
 
@@ -56,7 +58,7 @@ export default function PartnersPage() {
         url: "https://www.tabbio.com/partners",
         name: "Tabbio Partner Program",
         description:
-          "UGC creators, career coaches, CV writers, recruiters, and agencies can create useful work, refer eligible customers, and track recurring commission.",
+          "Creators, career coaches, CV writers, recruiters, and agencies worldwide can refer eligible customers and track recurring commission.",
         isPartOf: { "@id": "https://www.tabbio.com/#website" },
         about: { "@id": "https://www.tabbio.com/#organization" },
       },

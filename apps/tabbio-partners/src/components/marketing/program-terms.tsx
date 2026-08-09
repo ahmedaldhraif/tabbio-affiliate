@@ -21,10 +21,34 @@ const sections = [
     ],
   },
   {
+    id: "eligibility",
+    title: "Worldwide eligibility and territory",
+    body: [
+      "The proposed program accepts applications from UGC creators, career coaches, CV writers, recruiters, talent teams, and agencies worldwide. Acceptance is not automatic and may depend on age, identity, lawful business activity, promotion quality, sanctions screening, local law, tax requirements, and payout-provider coverage.",
+      "The UAE Advertiser Permit is not a worldwide requirement. Official UAE guidance applies to advertising activity carried out from within the UAE. Citizens and residents have one permit route, while visiting advertisers have a separate route through an accredited advertising or talent agency. Every partner remains responsible for rules that apply where they operate and where their audience is located.",
+    ],
+  },
+  {
+    id: "agencies",
+    title: "Recruiters, agencies, and team links",
+    body: [
+      "A recruiter or agency may screen or shortlist a candidate, create the candidate's Tabbio CV, and send a tracked partner or claim link. If an eligible attributed candidate pays for an eligible subscription, the proposed commission belongs to the approved agency partner account.",
+      "The planned agency model can issue team-level links that roll up to the agency. The agency remains the program counterparty, controls team access, and is responsible for staff conduct. Any internal commission split, salary, bonus, or contractor payment stays between the agency and its team. RefRef's current data model does not natively provide a multi-level sub-affiliate payout chain, so this requires dedicated production design and testing.",
+    ],
+  },
+  {
+    id: "client-relationship",
+    title: "Your client relationship stays yours",
+    body: [
+      "Tabbio is not a party to the partner's coaching, recruitment, CV-writing, content, consulting, or other client-service agreement. The partner sets and manages its own scope, fees, invoices, delivery, support, cancellations, refunds, and client disputes.",
+      "Tabbio partner commission is separate from those client fees and is calculated only from eligible Tabbio subscription revenue. A partner must not imply that Tabbio employs, certifies, endorses, or guarantees the partner or the partner's services unless Tabbio has given that permission in writing.",
+    ],
+  },
+  {
     id: "commission",
     title: "Proposed commission model",
     body: [
-      "The design proposes 30% recurring commission on eligible net revenue from settled, attributed payments. A signup or subscription-created event alone would not create commission.",
+      "The design proposes 30% recurring commission on eligible net revenue from settled, attributed payments for paid Tabbio plans named in the final program schedule. A signup, free account, trial, invoice, or subscription-created event alone would not create commission.",
       "Lifetime refers to future eligible payments while the attribution and applicable program terms remain valid. It does not promise income for any period or for a person's lifetime.",
     ],
   },
@@ -45,6 +69,14 @@ const sections = [
     ],
   },
   {
+    id: "integrity",
+    title: "Attribution integrity and prohibited conduct",
+    body: [
+      "Partners must not use self-referrals, fake or automated traffic, duplicate identities, cookie stuffing, forced redirects, misleading claims, spam, impersonation, undisclosed incentives, prohibited trademark bidding, or attempts to override another partner's valid attribution. Candidate or client personal data must never be placed in referral URLs.",
+      "Tabbio may hold or reject a reward while investigating suspicious activity. A production decision must record the evidence, reason, reviewer, and appeal path. RefRef provides product-scoped referral codes, event-linked rewards, status handling, and idempotency concepts, but its fraud-prevention documentation is currently incomplete and cannot replace a Tabbio fraud policy or monitoring system.",
+    ],
+  },
+  {
     id: "payouts",
     title: "Payout proposal",
     body: [
@@ -58,6 +90,14 @@ const sections = [
     body: [
       "Application status, program membership, promotion eligibility, and payout readiness are separate states. A payout restriction should block scheduling, not hide already accrued amounts or silently suspend membership.",
       "Paid history remains visible. Legal, Product, and Finance must approve the effect of leaving, suspension, or termination on future, held, payable, and recovery balances.",
+    ],
+  },
+  {
+    id: "partner-duty",
+    title: "Independent partner duties",
+    body: [
+      "A partner acts as an independent business or individual, not as a Tabbio employee, agent, franchisee, or legal representative. The partner cannot bind Tabbio, make guarantees on Tabbio's behalf, or present estimated earnings as promised results.",
+      "The partner is responsible for its own registrations, licences, permits, taxes, invoices, records, insurance, and legally required disclosures. Tabbio may request current evidence before enabling promotion or payout, but a check by Tabbio does not transfer that responsibility.",
     ],
   },
   {
@@ -77,6 +117,30 @@ const sections = [
     ],
   },
   {
+    id: "brand",
+    title: "Brand, content, and approved tools",
+    body: [
+      "Partners may use only current, approved Tabbio names, marks, product claims, pricing, screenshots, and kit assets. They must not register confusing domains or social handles, alter the logo, imply exclusive status, or publish false claims about jobs, recruiters, subscriptions, earnings, or product results.",
+      "The planned toolkit can provide tracked links and QR codes, candidate CV and claim flows, brand assets, content drafts, disclosure copy, resources, and earnings records. Drafts require partner review. No AI or publishing tool posts content automatically in this prototype.",
+    ],
+  },
+  {
+    id: "partner-badge",
+    title: "Partner credential status and use",
+    body: [
+      "The proposed Tabbio Partner credential identifies an approved, active program participant and may show the approved Creator, Career, or Agency path. It is not a professional certification, employment mark, agency appointment, endorsement of the partner's services, or promise of results. Credential access should begin only after approval and end immediately when participation expires, is suspended, or terminates.",
+      "Partners may place the unchanged current-year credential on websites, email signatures, proposals, presentations, media kits, and social posts. They must not switch editions, remove the active year, use it as an avatar, account name, social handle, app icon, or part of their own logo; alter its words, colors, proportions, or elements; display it more prominently than their own brand; or use it without a nearby commission disclosure where one is required. A production digital credential should link to a public status-verification page.",
+    ],
+  },
+  {
+    id: "records",
+    title: "Records, changes, and appeals",
+    body: [
+      "A production program should keep auditable records for application decisions, terms acceptance, links, attribution, source payments, reward calculations, holds, reversals, approvals, payouts, disputes, and policy versions. Material program changes should have an effective date and reasonable notice where required.",
+      "Partners should have a clear support and appeal route for rejected attribution, held rewards, suspensions, and data requests. Emergency action may be needed for security, fraud, or legal risk, but the reason and authorized owner should still be recorded.",
+    ],
+  },
+  {
     id: "accessibility",
     title: "Accessibility commitment",
     body: [
@@ -89,6 +153,33 @@ const sections = [
     body: [
       "A production legal contact, privacy contact, accessibility channel, and partner-support route are not configured in this local prototype. They must be added before launch and must show response ownership without inventing a response-time promise.",
     ],
+  },
+] as const;
+
+const references = [
+  {
+    label: "UAE Advertiser Permit guidance",
+    href: "https://uaemc.gov.ae/en/%D8%AA%D8%B5%D8%B1%D9%8A%D8%AD-%D9%85%D8%B9%D9%84%D9%86/",
+  },
+  {
+    label: "Tabbio pricing",
+    href: "https://www.tabbio.com/en/pricing",
+  },
+  {
+    label: "RefRef source and alpha notice",
+    href: "https://github.com/refrefhq/refref",
+  },
+  {
+    label: "Google Partners badge guidelines",
+    href: "https://support.google.com/google-ads/answer/9028798",
+  },
+  {
+    label: "Shopify Partner branding guidance",
+    href: "https://help.shopify.com/en/partners/partner-program/shopify-branding",
+  },
+  {
+    label: "Atlassian Marketplace Partner brand guidelines",
+    href: "https://developer.atlassian.com/platform/marketplace/atlassian-brand-guidelines-for-marketplace-partners/",
   },
 ] as const;
 
@@ -206,6 +297,29 @@ export function ProgramTerms() {
                 </div>
               </section>
             ))}
+
+            <section className="border-t border-[#ded6ed] py-9">
+              <h2 className="text-2xl font-semibold tracking-[-.025em]">
+                Source checks
+              </h2>
+              <p className="mt-3 text-base leading-7 text-[#5e5270]">
+                These sources informed the prototype. Final terms still need
+                qualified legal, finance, privacy, and tax review.
+              </p>
+              <ul className="mt-5 space-y-2">
+                {references.map((reference) => (
+                  <li key={reference.href}>
+                    <a
+                      className="focus-ring inline-flex min-h-11 items-center gap-2 rounded-lg font-semibold text-[#4721bd] hover:text-[#321792]"
+                      href={reference.href}
+                    >
+                      {reference.label}
+                      <ArrowUpRight className="size-4" aria-hidden="true" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
 
             <div className="mt-10 rounded-2xl bg-[#271251] p-7 text-white sm:p-9">
               <h2 className="text-2xl font-semibold tracking-[-.025em]">

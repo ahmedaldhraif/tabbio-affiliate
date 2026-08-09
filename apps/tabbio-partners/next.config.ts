@@ -12,6 +12,9 @@ const nextConfig: NextConfig = {
   turbopack: { root: path.resolve(appDirectory, "../..") },
   images: { unoptimized: true },
   transpilePackages: ["@refref/ui"],
+  experimental: {
+    optimizePackageImports: ["@phosphor-icons/react", "motion"],
+  },
 };
 
 export default nextConfig;
